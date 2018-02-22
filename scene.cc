@@ -3,6 +3,10 @@
 
 #include <libxml/xmlreader.h>
 
+#include "SceneObject.hh"
+#include "Scene.hh"
+#include "SceneParser.hh"
+
 /* Threading note: unless otherwise noted, it is unsafe to invoke multiple
  * method calls on a single given instance of any of these classes across
  * multiple threads simultaneously, without using some kind of external
@@ -21,38 +25,6 @@
  * primitives in certain parts of the code without requiring significant
  * reorganisation.
  */
-
-class SceneObject
-{
-public:
-	SceneObject();
-	virtual ~SceneObject();
-};
-
-class Scene: public SceneObject
-{
-public:
-	Scene();
-	
-	int load(const char *pathname);
-};
-
-class SceneParser
-{
-public:
-	static SceneParser *parserForFile(const char *pathname);
-	
-	virtual ~SceneParser();
-	
-	int parseIntoScene(Scene *scene);
-protected:
-	xmlTextReaderPtr reader;
-	SceneObject *parent;
-	
-	SceneParser(xmlTextReaderPtr reader);
-	
-	int processNode(Scene *scene);
-};
 
 SceneObject::SceneObject()
 {
