@@ -16,10 +16,11 @@ public:
 protected:
 	xmlTextReaderPtr reader;
 	SceneObject *parent;
+	bool root;
 	
 	SceneParser(xmlTextReaderPtr reader);
 	
-	int processNode(Scene *scene);
+	int processNode();
 };
 
 #endif /*!SCENEPARSER_HH_*/
