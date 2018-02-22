@@ -6,5 +6,8 @@ LIBS = `xml2-config --libs` -g
 
 all: $(OUT)
 
+clean:
+	rm -f $(OUT) $(OBJ)
+
 $(OUT): $(OBJ)
 	$(CXX) $(LDFLAGS) -o $(OUT) $(OBJ) $(LIBS)
