@@ -6,35 +6,67 @@ class Scene
 {
 public:
 	int load(const char *pathname);
-protected:
-	int processNode(xmlTextReaderPtr reader);
 };
 
-int
-Scene::load(const char *pathname)
+class SceneParser
+{
+public:
+	static SceneParser *parserForFile(const char *pathname);
+	
+	virtual ~SceneParser();
+	
+	int parseIntoScene(Scene *scene);
+protected:
+	xmlTextReaderPtr reader;
+	
+	SceneParser(xmlTextReaderPtr reader);
+	
+	int processNode(Scene *scene);
+};
+
+SceneParser *
+SceneParser::parserForFile(const char *pathname)
 {
 	xmlTextReaderPtr reader;
-	int ret;
 
 	reader = xmlReaderForFile(pathname, NULL, 0);
 	if (!reader)
 	{
-		return -1;
+		return NULL;
 	}
+	/* Create a new SceneParser instance which take ownership of the
+	 * xmlTextReader.
+	 */
+	return new SceneParser(reader);
+}
+
+SceneParser::SceneParser(xmlTextReaderPtr reader): reader(reader)
+{
+}
+
+SceneParser::~SceneParser()
+{
+	xmlFreeTextReader(reader);
+}
+
+int
+SceneParser::parseIntoScene(Scene *scene)
+{
+	int ret;
+
 	ret = xmlTextReaderRead(reader);
 	/* xmlTextReaderRead() returns 1 for 'more remaining', 0 for 'complete',
 	 * any other value for an error
 	 */
 	while(ret == 1)
 	{
-		if((ret = processNode(reader)))
+		if((ret = processNode(scene)))
 		{
 			/* processNode() returns non-zero on error */
 			break;
 		}
 		ret = xmlTextReaderRead(reader);
 	}
-	xmlFreeTextReader(reader);
 	if(ret)
 	{
 		/* At this point, ret should be zero if the file was
@@ -47,7 +79,7 @@ Scene::load(const char *pathname)
 }
 
 int
-Scene::processNode(xmlTextReaderPtr reader)
+SceneParser::processNode(Scene *scene)
 {
 	const xmlChar *name, *ns;
 	int type;
@@ -64,6 +96,23 @@ Scene::processNode(xmlTextReaderPtr reader)
 		std::clog << "Found node type " << type << ", name = '" << ((const char *) name) << "'\n";
 	}
 	return 0;
+}
+
+
+int
+Scene::load(const char *pathname)
+{
+	SceneParser *parser;
+	int ret;
+	
+	parser = SceneParser::parserForFile(pathname);
+	if(!parser)
+	{
+		return -1;
+	}
+	ret = parser->parseIntoScene(this);
+	delete parser;
+	return ret;
 }
 
 int
