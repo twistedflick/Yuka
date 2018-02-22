@@ -1,10 +1,39 @@
 #include <iostream>
+#include <iomanip>
 
 #include <libxml/xmlreader.h>
 
-class Scene
+/* Threading note: unless otherwise noted, it is unsafe to invoke multiple
+ * method calls on a single given instance of any of these classes across
+ * multiple threads simultaneously, without using some kind of external
+ * barrier (such as a POSIX mutex or a spinlock).
+ *
+ * However, it is perfectly safe to use them in multiple threads so long
+ * as no single object is being accessed by two threads at the same time.
+ * Particular care must be taken with scenes and the objects within them -
+ * if one thread is touching part of a scene, you can't assume it's safe
+ * to modify a different part of the scene at the same time in a different
+ * thread. In contrast, if you have two threads which are each manipulating
+ * independent scenes, then no concurrency issues will arise.
+ *
+ * This is unquestionably a limitation of the implementation, but it's a
+ * limitation which can be removed in future by adding and using locking
+ * primitives in certain parts of the code without requiring significant
+ * reorganisation.
+ */
+
+class SceneObject
 {
 public:
+	SceneObject();
+	virtual ~SceneObject();
+};
+
+class Scene: public SceneObject
+{
+public:
+	Scene();
+	
 	int load(const char *pathname);
 };
 
@@ -18,11 +47,22 @@ public:
 	int parseIntoScene(Scene *scene);
 protected:
 	xmlTextReaderPtr reader;
+	SceneObject *parent;
 	
 	SceneParser(xmlTextReaderPtr reader);
 	
 	int processNode(Scene *scene);
 };
+
+SceneObject::SceneObject()
+{
+	std::clog << "++ SceneObject 0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "\n";
+}
+
+SceneObject::~SceneObject()
+{
+	std::clog << "-- SceneObject 0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "\n";
+}
 
 SceneParser *
 SceneParser::parserForFile(const char *pathname)
@@ -40,7 +80,9 @@ SceneParser::parserForFile(const char *pathname)
 	return new SceneParser(reader);
 }
 
-SceneParser::SceneParser(xmlTextReaderPtr reader): reader(reader)
+SceneParser::SceneParser(xmlTextReaderPtr reader):
+	reader(reader),
+	parent(NULL)
 {
 }
 
@@ -53,7 +95,8 @@ int
 SceneParser::parseIntoScene(Scene *scene)
 {
 	int ret;
-
+	
+	parent = scene;
 	ret = xmlTextReaderRead(reader);
 	/* xmlTextReaderRead() returns 1 for 'more remaining', 0 for 'complete',
 	 * any other value for an error
@@ -67,6 +110,7 @@ SceneParser::parseIntoScene(Scene *scene)
 		}
 		ret = xmlTextReaderRead(reader);
 	}
+	parent = NULL;
 	if(ret)
 	{
 		/* At this point, ret should be zero if the file was
@@ -85,6 +129,7 @@ SceneParser::processNode(Scene *scene)
 	int type;
 	
 	type = xmlTextReaderNodeType(reader);
+	
 	ns = xmlTextReaderConstNamespaceUri(reader);
 	name = xmlTextReaderConstName(reader);
 	if(ns)
@@ -98,6 +143,10 @@ SceneParser::processNode(Scene *scene)
 	return 0;
 }
 
+Scene::Scene():
+	SceneObject()
+{
+}
 
 int
 Scene::load(const char *pathname)
