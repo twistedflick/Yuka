@@ -1,0 +1,7 @@
+*.exe
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+/scene
