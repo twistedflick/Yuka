@@ -101,16 +101,23 @@ SceneParser::processNode(Scene *scene)
 	int type;
 	
 	type = xmlTextReaderNodeType(reader);
-	
 	ns = xmlTextReaderConstNamespaceUri(reader);
 	name = xmlTextReaderConstName(reader);
-	if(ns)
+	
+	switch(type)
 	{
-		std::clog << "Found node type " << type << ", name = '" << ((const char *) ns) << ((const char *) name) << "'\n";
-	}
-	else
-	{
-		std::clog << "Found node type " << type << ", name = '" << ((const char *) name) << "'\n";
+		case XML_READER_TYPE_ELEMENT:
+			if(ns)
+			{
+				std::clog << "Found element, name = '" << ((const char *) ns) << ((const char *) name) << "'\n";
+			}
+			else
+			{
+				std::clog << "Found element, name = '" << ((const char *) name) << "'\n";
+			}
+			break;
+		default:
+			std::clog << "Ignoring node " << type << ", name = '" << ((const char *) name) << "'\n";
 	}
 	return 0;
 }
