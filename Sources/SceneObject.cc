@@ -58,11 +58,11 @@ SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties prope
 	/* We could accomplish this with a map of constructors, or something of
 	 * that ilk
 	 */
-	if(kind == "sphere")
+	if(kind == "Sphere")
 	{
 		obj = new Sphere(kind);
 	}
-	else if(kind == "cube")
+	else if(kind == "Cube")
 	{
 		obj = new Cube(kind);
 	}

@@ -27,7 +27,7 @@ namespace Yuka
 	public:
 		static Scene *sceneFromPath(const char *pathname);
 		
-		Scene(): SceneObject("scene") { };
+		Scene(): SceneObject("Scene") { };
 	
 		int load(const char *pathname);
 	protected:

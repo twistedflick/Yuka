@@ -148,7 +148,7 @@ SceneParser::processNode()
 			}
 			if(root)
 			{
-				if(objname == "scene")
+				if(objname == "Scene")
 				{
 					/* Skip the root, because this->parent is already set */
 					root = false;
@@ -156,14 +156,14 @@ SceneParser::processNode()
 				}
 				else
 				{
-					std::cerr << "Expected a root <scene /> element in namespace <" NS_YUKA ">, found <" << name << " /> in namespace <" << ns << ">\n";
+					std::cerr << "Expected a root <Scene /> element in namespace <" NS_YUKA ">, found <" << name << " /> in namespace <" << ns << ">\n";
 					return -1;
 				}
 			}
 			obj = SceneObject::sceneObjectWithKind(objname, attributes);
 			if(!obj)
 			{
-				std::clog << "Unable to create a new scene object for <" << name << ">\n";
+				std::cerr << "Unable to create a new scene object for <" << name << ">\n";
 				return -1;
 			}
 			parent->add(obj);
