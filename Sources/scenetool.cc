@@ -24,7 +24,7 @@
 int
 main(int argc, char **argv)
 {
-	Yuka::Scene s;
+	Yuka::Scene *scene;
 	
 	/* Check command-line arguments */
 	if(argc != 2)
@@ -36,7 +36,8 @@ main(int argc, char **argv)
 		return 0;
 	}
 	/* Attempt to load the scene from the named file */
-	if(s.load(argv[1]))
+	scene = Yuka::Scene::sceneFromPath(argv[1]);
+	if(!scene)
 	{
 		std::cerr << argv[0] << ": failed to load scene '" << argv[1] << "'.\n";
 		return 1;
@@ -44,6 +45,7 @@ main(int argc, char **argv)
 	/* We don't DO anything with the loaded scene, so we can just
 	 * return success after cleaning up.
 	 */
-	std::cout << s << "\n";
+	std::cout << scene << "\n";
+	delete scene;
 	return 0;
 }
