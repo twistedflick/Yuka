@@ -38,5 +38,7 @@
 # include "SceneObject.hh"
 # include "Scene.hh"
 # include "SceneParser.hh"
+# include "Prop.hh"
+# include "Primitives.hh"
 
 #endif /*!YUKA_HH_*/

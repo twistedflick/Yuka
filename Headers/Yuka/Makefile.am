@@ -12,4 +12,5 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-pkginclude_HEADERS = decl.h Scene.hh SceneObject.hh SceneParser.hh
+pkginclude_HEADERS = decl.h Scene.hh SceneObject.hh SceneParser.hh \
+	Prop.hh Primitives.hh

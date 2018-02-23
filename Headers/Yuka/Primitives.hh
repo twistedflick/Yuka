@@ -13,41 +13,37 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_SCENEOBJECT_HH_
-# define YUKA_SCENEOBJECT_HH_          1
+#ifndef YUKA_PRIMITIVES_HH_
+# define YUKA_PRIMITIVES_HH_           1
 
-#include <string>
-#include <unordered_map>
-
-#include "decl.h"
+# include "Prop.hh"
+# include "decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ SceneObject
+	/* Primitives are the group of Prop classes which represent
+	 * primitive 3D objects: sphere, cuboid, plane, etc.
+	 */
+	class Primitive: public Prop
 	{
-	public:
-		typedef std::unordered_map<std::string, std::string> Properties;
-	
-		static SceneObject *sceneObjectWithKind(std::string kind, Properties properties);
-	
-		virtual ~SceneObject();
-	
-		virtual int add(SceneObject *child);
-		virtual int apply(Properties properties);
-	
-		virtual SceneObject *parent(void);
 	protected:
-	
-		class List;
-	
-		SceneObject(std::string kind);
+		Primitive(std::string kind): Prop(kind) { };
+	};
 
-		std::string kind;
-		std::string id;
-		SceneObject *container;
-		List *children;
+	class YUKA_EXPORT_ Sphere: public Primitive
+	{
+		friend class SceneObject;
+	protected:
+		Sphere(std::string kind): Primitive(kind) { };
+	};
+
+	class YUKA_EXPORT_ Cube: public Primitive
+	{
+		friend class SceneObject;
+	protected:
+		Cube(std::string kind): Primitive(kind) { };
 	};
 
 };
 
-#endif /*!SCENEOBJECT_HH_*/
+#endif /*!YUKA_PRIMITIVES_HH_*/

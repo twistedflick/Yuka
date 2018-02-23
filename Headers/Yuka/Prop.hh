@@ -13,41 +13,24 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_SCENEOBJECT_HH_
-# define YUKA_SCENEOBJECT_HH_          1
+#ifndef YUKA_PROP_HH_
+# define YUKA_PROP_HH_                 1
 
-#include <string>
-#include <unordered_map>
-
-#include "decl.h"
+# include "SceneObject.hh"
+# include "decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ SceneObject
-	{
-	public:
-		typedef std::unordered_map<std::string, std::string> Properties;
-	
-		static SceneObject *sceneObjectWithKind(std::string kind, Properties properties);
-	
-		virtual ~SceneObject();
-	
-		virtual int add(SceneObject *child);
-		virtual int apply(Properties properties);
-	
-		virtual SceneObject *parent(void);
-	protected:
-	
-		class List;
-	
-		SceneObject(std::string kind);
+	/* A prop is any kind of potentially-visible scene object
+	 * which may have physics properties.
+	 */
 
-		std::string kind;
-		std::string id;
-		SceneObject *container;
-		List *children;
+	class Prop: public SceneObject
+	{
+	protected:
+		Prop(std::string kind): SceneObject(kind) { };
 	};
 
 };
 
-#endif /*!SCENEOBJECT_HH_*/
+#endif /*!YUKA_PROP_HH_*/
