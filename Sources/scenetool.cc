@@ -13,6 +13,10 @@
  *  limitations under the License.
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <iostream>
 
 #include "Yuka/Yuka.hh"
