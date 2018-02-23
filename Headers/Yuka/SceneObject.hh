@@ -55,4 +55,4 @@ namespace Yuka
 
 };
 
-#endif /*!SCENEOBJECT_HH_*/
+#endif /*!YUKA_SCENEOBJECT_HH_*/

@@ -17,13 +17,14 @@
 # define YUKA_SCENEOBJECTLIST_HH_      1
 
 # include "Yuka/SceneObject.hh"
+# include "Yuka/decl.h"
 
 namespace Yuka
 {
 	/* This is a private implementation of linked list to track scene objects
 	 * which is used by a SceneObject to organise the graph.
 	 */
-	class SceneObject::List
+	class YUKA_PRIVATE_ SceneObject::List
 	{
 	public:
 		List();

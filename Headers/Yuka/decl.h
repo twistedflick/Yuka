@@ -13,9 +13,18 @@
  *  limitations under the License.
  */
 
+/* This header will redefine various macros at the point that it is
+ * included. These macros are used to decorate class and function
+ * definitions depending upon what is being compiled, for which platform,
+ * and for which compiler.
+ */
+
 #undef YUKA_EXPORT_
+#undef YUKA_PRIVATE_
 #ifdef __GNUC__
 # define YUKA_EXPORT_ __attribute__((visibility ("default")))
+# define YUKA_PRIVATE_ __attribute__((visibility ("hidden")))
 #else
 # define YUKA_EXPORT_
+# define YUKA_PRIVATE_
 #endif

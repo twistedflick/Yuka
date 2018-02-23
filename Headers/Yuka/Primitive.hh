@@ -25,7 +25,7 @@ namespace Yuka
 	/* Primitives are the group of Prop classes which represent
 	 * primitive 3D objects: sphere, cuboid, plane, etc.
 	 */
-	class Primitive: public Prop
+	class YUKA_EXPORT_ Primitive: public Prop
 	{
 	protected:
 		Primitive(std::string kind): Prop(kind) { };

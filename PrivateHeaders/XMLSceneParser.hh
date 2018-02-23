@@ -22,7 +22,7 @@
 
 namespace Yuka
 {
-	class XMLSceneParser: public SceneParser
+	class YUKA_PRIVATE_ XMLSceneParser: public SceneParser
 	{
 	public:
 		static XMLSceneParser *parserFromPath(const char *pathname);
