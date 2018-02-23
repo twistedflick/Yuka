@@ -21,62 +21,66 @@
 
 #include "decl.h"
 
-class YUKA_EXPORT_ SceneObject
+namespace Yuka
 {
-public:
-	typedef std::unordered_map<std::string, std::string> Properties;
+	class YUKA_EXPORT_ SceneObject
+	{
+	public:
+		typedef std::unordered_map<std::string, std::string> Properties;
 	
-	static SceneObject *sceneObjectWithKind(std::string kind, Properties properties);
+		static SceneObject *sceneObjectWithKind(std::string kind, Properties properties);
 	
-	virtual ~SceneObject();
+		virtual ~SceneObject();
 	
-	virtual int add(SceneObject *child);
-	virtual int apply(Properties properties);
+		virtual int add(SceneObject *child);
+		virtual int apply(Properties properties);
 	
-	virtual SceneObject *parent(void);
-protected:
+		virtual SceneObject *parent(void);
+	protected:
 	
-	class List;
+		class List;
 	
-	SceneObject(std::string kind);
+		SceneObject(std::string kind);
 
-	std::string kind;
-	std::string id;
-	SceneObject *container;
-	List *children;
-};
+		std::string kind;
+		std::string id;
+		SceneObject *container;
+		List *children;
+	};
 
-/* A prop is any kind of potentially-visible scene object
- * which may have physics properties.
- */
+	/* A prop is any kind of potentially-visible scene object
+	 * which may have physics properties.
+	 */
 
-class Prop: public SceneObject
-{
-protected:
-	Prop(std::string kind): SceneObject(kind) { };
-};
+	class Prop: public SceneObject
+	{
+	protected:
+		Prop(std::string kind): SceneObject(kind) { };
+	};
 
-/* Primitives are the group of Prop classes which represent
- * primitive 3D objects: sphere, cuboid, plane, etc.
- */
-class Primitive: public Prop
-{
-protected:
-	Primitive(std::string kind): Prop(kind) { };
-};
+	/* Primitives are the group of Prop classes which represent
+	 * primitive 3D objects: sphere, cuboid, plane, etc.
+	 */
+	class Primitive: public Prop
+	{
+	protected:
+		Primitive(std::string kind): Prop(kind) { };
+	};
 
-class Sphere: public Primitive
-{
-	friend class SceneObject;
-protected:
-	Sphere(std::string kind): Primitive(kind) { };
-};
+	class Sphere: public Primitive
+	{
+		friend class SceneObject;
+	protected:
+		Sphere(std::string kind): Primitive(kind) { };
+	};
 
-class Cube: public Primitive
-{
-	friend class SceneObject;
-protected:
-	Cube(std::string kind): Primitive(kind) { };
+	class Cube: public Primitive
+	{
+		friend class SceneObject;
+	protected:
+		Cube(std::string kind): Primitive(kind) { };
+	};
+
 };
 
 #endif /*!SCENEOBJECT_HH_*/

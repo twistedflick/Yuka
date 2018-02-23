@@ -17,4 +17,6 @@
 # define NS_XML                        "http://www.w3.org/XML/1998/namespace"
 # define NS_XMLNS                      "http://www.w3.org/2000/xmlns/"
 
+using namespace Yuka;
+
 #endif /*!P_YUKA_HH_*/

@@ -18,24 +18,27 @@
 
 # include "Yuka/SceneObject.hh"
 
-/* This is a private implementation of linked list to track scene objects
- * which is used by a SceneObject to organise the graph.
- */
-class SceneObject::List
+namespace Yuka
 {
-public:
-	List();
-	virtual ~List();
-	
-	int add(SceneObject *object);
-protected:
-	struct Entry
+	/* This is a private implementation of linked list to track scene objects
+	 * which is used by a SceneObject to organise the graph.
+	 */
+	class SceneObject::List
 	{
-		Entry *prev, *next;
-		SceneObject *obj;
-	};
+	public:
+		List();
+		virtual ~List();
 	
-	Entry *first, *last;
+		int add(SceneObject *object);
+	protected:
+		struct Entry
+		{
+			Entry *prev, *next;
+			SceneObject *obj;
+		};
+	
+		Entry *first, *last;
+	};
 };
 
 #endif /*!YUKA_SCENEOBJECTLIST_HH_*/

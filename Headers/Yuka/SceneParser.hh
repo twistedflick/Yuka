@@ -22,22 +22,25 @@
 
 #include "decl.h"
 
-class YUKA_EXPORT_ SceneParser
+namespace Yuka
 {
-public:
-	static SceneParser *parserForFile(const char *pathname);
+	class YUKA_EXPORT_ SceneParser
+	{
+	public:
+		static SceneParser *parserForFile(const char *pathname);
 	
-	virtual ~SceneParser();
+		virtual ~SceneParser();
 	
-	int parseIntoScene(Scene *scene);
-protected:
-	xmlTextReaderPtr reader;
-	SceneObject *parent;
-	bool root;
+		int parseIntoScene(Scene *scene);
+	protected:
+		xmlTextReaderPtr reader;
+		SceneObject *parent;
+		bool root;
 	
-	SceneParser(xmlTextReaderPtr reader);
+		SceneParser(xmlTextReaderPtr reader);
 	
-	int processNode();
+		int processNode();
+	};
 };
 
 #endif /*!SCENEPARSER_HH_*/

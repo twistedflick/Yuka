@@ -21,12 +21,17 @@
 # include "SceneObject.hh"
 # include "decl.h"
 
-class YUKA_EXPORT_ Scene: public SceneObject
+namespace Yuka
 {
-public:
-	Scene(): SceneObject(NS_YUKA "scene") { };
+
+	class YUKA_EXPORT_ Scene: public SceneObject
+	{
+	public:
+		Scene(): SceneObject(NS_YUKA "scene") { };
 	
-	int load(const char *pathname);
+		int load(const char *pathname);
+	};
+
 };
 
 #endif /*!SCENE_HH_*/

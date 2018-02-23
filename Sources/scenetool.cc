@@ -24,7 +24,7 @@
 int
 main(int argc, char **argv)
 {
-	Scene s;
+	Yuka::Scene s;
 	
 	/* Check command-line arguments */
 	if(argc != 2)
