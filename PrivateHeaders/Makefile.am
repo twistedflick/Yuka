@@ -12,4 +12,5 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-noinst_HEADERS = SceneObjectList.hh
+noinst_HEADERS = SceneObjectList.hh XMLSceneParser.hh
+

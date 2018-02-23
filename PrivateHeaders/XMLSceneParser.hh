@@ -13,18 +13,32 @@
  *  limitations under the License.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#ifndef YUKA_XMLSCENEPARSER_HH_
+# define YUKA_XMLSCENEPARSER_HH_       1
 
-#include "p_Yuka.hh"
+# include <libxml/xmlreader.h>
+# include "Yuka/SceneParser.hh"
+# include "Yuka/decl.h"
 
-SceneParser *
-SceneParser::parserFromPath(const char *pathname)
+namespace Yuka
 {
-	return XMLSceneParser::parserFromPath(pathname);
-}
+	class XMLSceneParser: public SceneParser
+	{
+	public:
+		static XMLSceneParser *parserFromPath(const char *pathname);
+	
+		virtual ~XMLSceneParser();
+	
+		virtual int parseIntoScene(Scene *scene);
+	protected:
+		xmlTextReaderPtr reader;
+		SceneObject *parent;
+		bool root;
+	
+		XMLSceneParser(xmlTextReaderPtr reader);
+	
+		int processNode();
+	};
+};
 
-SceneParser::~SceneParser()
-{
-}
+#endif /*!YUKA_XMLSCENEPARSER_HH_*/

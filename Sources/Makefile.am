@@ -18,7 +18,8 @@ lib_LTLIBRARIES = libYuka.la
 
 libYuka_la_SOURCES = p_Yuka.hh \
 	SceneObject.cc Scene.cc SceneParser.cc SceneObjectList.cc Prop.cc \
-	Primitive.cc Sphere.cc Cube.cc
+	Primitive.cc Sphere.cc Cube.cc \
+	XMLSceneParser.cc
 
 libYuka_la_LDFLAGS = -avoid-version -no-undefined
 

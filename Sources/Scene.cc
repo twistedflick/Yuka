@@ -39,7 +39,7 @@ Scene::load(const char *pathname)
 	SceneParser *parser;
 	int ret;
 	
-	parser = SceneParser::parserForFile(pathname);
+	parser = SceneParser::parserFromPath(pathname);
 	if(!parser)
 	{
 		return -1;

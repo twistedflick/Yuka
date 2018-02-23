@@ -16,8 +16,6 @@
 #ifndef YUKA_SCENEPARSER_HH_
 # define YUKA_SCENEPARSER_HH_          1
 
-#include <libxml/xmlreader.h>
-
 #include "Scene.hh"
 
 #include "decl.h"
@@ -27,20 +25,12 @@ namespace Yuka
 	class YUKA_EXPORT_ SceneParser
 	{
 	public:
-		static SceneParser *parserForFile(const char *pathname);
+		static SceneParser *parserFromPath(const char *pathname);
 	
 		virtual ~SceneParser();
 	
-		int parseIntoScene(Scene *scene);
-	protected:
-		xmlTextReaderPtr reader;
-		SceneObject *parent;
-		bool root;
-	
-		SceneParser(xmlTextReaderPtr reader);
-	
-		int processNode();
+		virtual int parseIntoScene(Scene *scene) = 0;
 	};
 };
 
-#endif /*!SCENEPARSER_HH_*/
+#endif /*!YUKA_SCENEPARSER_HH_*/
