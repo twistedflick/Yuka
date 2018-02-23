@@ -39,6 +39,9 @@ if test x"$GXX" = x"yes" ; then
 	AS_VAR_APPEND([AM_CXXFLAGS], ['-g '])
 fi
 
+AS_VAR_APPEND([AM_CPPFLAGS], ['-I${top_srcdir}/PrivateHeaders '])
+AS_VAR_APPEND([AM_CPPFLAGS], ['-I${top_builddir}/PrivateHeaders '])
+
 AS_VAR_APPEND([AM_CPPFLAGS], ['-I${top_srcdir}/Headers '])
 AS_VAR_APPEND([AM_CPPFLAGS], ['-I${top_builddir}/Headers '])
 
@@ -60,6 +63,7 @@ AM_PATH_XML2
 
 AC_CONFIG_FILES([
 Makefile
+PrivateHeaders/Makefile
 Headers/Makefile
 Headers/Yuka/Makefile
 Sources/Makefile

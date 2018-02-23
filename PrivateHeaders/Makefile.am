@@ -12,10 +12,4 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-ACLOCAL_AMFLAGS = -I M4
-
-SUBDIRS = PrivateHeaders Headers Sources Examples
-
-EXTRA_DIST = README.md LICENSE-2.0
-
-
+noinst_HEADERS = SceneObjectList.hh

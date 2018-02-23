@@ -19,63 +19,7 @@
 #include "Yuka/Scene.hh"
 #include "Yuka/SceneObject.hh"
 
-/* This is a private implementation of linked list to track scene objects
- * which is used by a SceneObject to organise the graph.
- */
-class SceneObjectList
-{
-public:
-	SceneObjectList();
-	virtual ~SceneObjectList();
-	
-	int add(SceneObject *object);
-protected:
-	struct Entry
-	{
-		Entry *prev, *next;
-		SceneObject *obj;
-	};
-	
-	Entry *first, *last;
-};
-
-SceneObjectList::SceneObjectList() :
-	first(NULL),
-	last(NULL)
-{	
-}
-
-SceneObjectList::~SceneObjectList()
-{
-	SceneObjectList::Entry *e, *next;
-
-	for(e = first; e; e = next)
-	{
-		next = e->next;
-		delete e->obj;
-		delete e;
-	}
-}
-
-int
-SceneObjectList::add(SceneObject *object)
-{
-	SceneObjectList::Entry *e;
-	
-	e = new SceneObjectList::Entry();
-	e->prev = last;
-	e->obj = object;
-	if(first)
-	{
-		last->next = e;
-	}
-	else
-	{
-		first = e;
-	}
-	last = e;
-	return 0;
-}
+#include "SceneObjectList.hh"
 
 SceneObject *
 SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties properties)
@@ -138,7 +82,7 @@ SceneObject::add(SceneObject *child)
 {
 	if(!children)
 	{
-		children = new SceneObjectList();
+		children = new SceneObject::List();
 	}
 	children->add(child);
 	child->container = this;

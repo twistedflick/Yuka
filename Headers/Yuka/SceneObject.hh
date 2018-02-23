@@ -21,8 +21,6 @@
 
 #include "decl.h"
 
-class SceneObjectList;
-
 class YUKA_EXPORT_ SceneObject
 {
 public:
@@ -38,12 +36,14 @@ public:
 	virtual SceneObject *parent(void);
 protected:
 	
+	class List;
+	
 	SceneObject(std::string kind);
 
 	std::string kind;
 	std::string id;
 	SceneObject *container;
-	SceneObjectList *children;
+	List *children;
 };
 
 /* A prop is any kind of potentially-visible scene object
