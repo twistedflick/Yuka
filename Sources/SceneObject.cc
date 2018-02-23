@@ -13,13 +13,7 @@
  *  limitations under the License.
  */
 
-#include <iostream>
-#include <iomanip>
-
-#include "Yuka/Scene.hh"
-#include "Yuka/SceneObject.hh"
-
-#include "SceneObjectList.hh"
+#include "p_Yuka.hh"
 
 SceneObject *
 SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties properties)

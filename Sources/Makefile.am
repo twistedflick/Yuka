@@ -16,7 +16,8 @@ AM_CPPFLAGS = @AM_CPPFLAGS@ @XML_CPPFLAGS@
 
 lib_LTLIBRARIES = libYuka.la
 
-libYuka_la_SOURCES = SceneObject.cc Scene.cc SceneParser.cc SceneObjectList.cc
+libYuka_la_SOURCES = p_Yuka.hh \
+	SceneObject.cc Scene.cc SceneParser.cc SceneObjectList.cc
 
 libYuka_la_LDFLAGS = -avoid-version -no-undefined
 

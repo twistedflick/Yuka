@@ -13,7 +13,7 @@
  *  limitations under the License.
  */
 
-#include "SceneObjectList.hh"
+#include "p_Yuka.hh"
 
 /* Implements the private SceneObject::List class */
 

@@ -13,8 +13,7 @@
  *  limitations under the License.
  */
 
-#include "Yuka/Scene.hh"
-#include "Yuka/SceneParser.hh"
+#include "p_Yuka.hh"
 
 int
 Scene::load(const char *pathname)
