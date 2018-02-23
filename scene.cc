@@ -1,13 +1,17 @@
 #include <iostream>
 #include <iomanip>
 #include <cstring>
+#include <string>
+#include <unordered_map>
+
 #include <libxml/xmlreader.h>
 
 #include "SceneObject.hh"
 #include "Scene.hh"
 #include "SceneParser.hh"
 
-#define NS_SCENE                       "https://twistedflick.github.io/scene/"
+#define NS_XML                         "http://www.w3.org/XML/1998/namespace"
+#define NS_XMLNS                       "http://www.w3.org/2000/xmlns/"
 
 /* Threading note: unless otherwise noted, it is unsafe to invoke multiple
  * method calls on a single given instance of any of these classes across
@@ -87,17 +91,53 @@ SceneObjectList::add(SceneObject *object)
 	return 0;
 }
 
-SceneObject::SceneObject():
+SceneObject *
+SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties properties)
+{
+	SceneObject *obj = NULL;
+	
+	/* We could accomplish this with a map of constructors, or something of
+	 * that ilk
+	 */
+	if(kind == NS_SCENE "sphere")
+	{
+		obj = new Sphere(kind);
+	}
+	else if(kind == NS_SCENE "cube")
+	{
+		obj = new Cube(kind);
+	}
+	if(obj)
+	{
+		if(obj->apply(properties) < 0)
+		{
+			/* There was a hard error applying the properties */
+			delete obj;
+			return NULL;
+		}
+	}
+	return obj;
+}
+
+SceneObject::SceneObject(std::string kind):
+	kind(kind),
 	container(NULL),
 	children(NULL)
 {
-	std::clog << "++ SceneObject 0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "\n";
+	std::clog << "++ SceneObject[0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
 }
 
 SceneObject::~SceneObject()
 {
 	delete children;
-	std::clog << "-- SceneObject 0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "\n";
+	if(id.length())
+	{
+		std::clog << "-- SceneObject[" << id << "=0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
+	}
+	else
+	{
+		std::clog << "-- SceneObject[0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
+	}
 }
 
 /* Add a scene object to the scene graph as a child of this one. This won't
@@ -123,6 +163,30 @@ SceneObject *
 SceneObject::parent(void)
 {
 	return container;
+}
+
+/* Apply a SceneObject::Properties map to this object, warning about any
+ * properties we don't understand. Descendents should override this method
+ * to catch properties it knows about before invoking this implementation.
+ */
+int
+SceneObject::apply(SceneObject::Properties properties)
+{
+	SceneObject::Properties::iterator i;
+	int e;
+	
+	e = 0;
+	for(i = properties.begin(); i != properties.end(); ++i)
+	{
+		if(i->first == "@id")
+		{
+			id = i->second;
+			continue;
+		}
+		std::clog << "Warning: Unsupported property '" << i->first << "' in definition of <" << kind << ">\n";
+		e = 1;
+	}
+	return e;
 }
 
 SceneParser *
@@ -187,63 +251,98 @@ SceneParser::parseIntoScene(Scene *scene)
 int
 SceneParser::processNode()
 {
-	const char *name, *ns;
+	const char *name, *lname, *ns;
 	int type;
 	SceneObject *obj;
+	bool isempty;
 	
 	type = xmlTextReaderNodeType(reader);
 	ns = (const char *) xmlTextReaderConstNamespaceUri(reader);
 	name = (const char *) xmlTextReaderConstName(reader);
+	lname = (const char *) xmlTextReaderConstLocalName(reader);
+	isempty = xmlTextReaderIsEmptyElement(reader);
 	
 	switch(type)
 	{
 		case XML_READER_TYPE_ELEMENT:
-			if(ns)
+		{
+			SceneObject::Properties attributes;
+			std::string objname;
+			
+			int ac, c;
+			
+			if(!ns)
 			{
-				std::clog << "Found element, name = '" << ns << name << "'\n";
-				if(strcmp(ns, NS_SCENE))
-				{
-					std::cerr << "Scene description contains XML elements in an unsupported namespace (<" << ns << "> was specified where <" << NS_SCENE << "> was expected)\n";
-					return -1;
-				}
-				if(root)
-				{
-					if(!strcmp(ns, NS_SCENE) && !strcmp(name, "scene"))
-					{
-						/* Skip the root, because this->parent is already set */
-						root = false;
-						return 0;
-					}
-					else
-					{
-						std::cerr << "Expected a root <scene /> element, found <" << name << " />\n";
-						return -1;
-					}
-				}
-			}
-			else
-			{
-				std::clog << "Found element, name = '" << ((const char *) name) << "'\n";
 				std::cerr << "Scene description contains XML elements without a namespace at <" << name << ">\n";
 				return -1;
 			}
-			obj = new SceneObject();
+			objname = ns;
+			objname.append(lname);
+			ac = xmlTextReaderAttributeCount(reader);
+			for(c = 0; c < ac; c++)
+			{
+				const char *atns, *atname;
+				std::string key, value;
+				
+				xmlTextReaderMoveToAttributeNo(reader, c);
+				atns = (const char *) xmlTextReaderConstNamespaceUri(reader);
+				atname = (const char *) xmlTextReaderConstLocalName(reader);
+				value = (const char *) xmlTextReaderConstValue(reader);
+				if(atns)
+				{
+					if(!strcmp(atns, NS_XMLNS))
+					{
+						continue;
+					}
+					if(!strcmp(atns, NS_XML))
+					{
+						atns = "@";
+					}
+					key = atns;
+					key.append(atname);
+				}
+				else
+				{
+					key = atname;
+				}
+				attributes[key] = value;
+			}
+			if(root)
+			{
+				if(objname == NS_SCENE "scene")
+				{
+					/* Skip the root, because this->parent is already set */
+					root = false;
+					return 0;
+				}
+				else
+				{
+					std::cerr << "Expected a root <scene /> element, found <" << name << " />\n";
+					return -1;
+				}
+			}
+			obj = SceneObject::sceneObjectWithKind(objname, attributes);
+			if(!obj)
+			{
+				std::clog << "Unable to create a new scene object for <" << name << ">\n";
+				return -1;
+			}
 			parent->add(obj);
-			parent = obj;
+			if(!isempty)
+			{
+				parent = obj;
+			}
 			break;
+		}
 		case XML_READER_TYPE_END_ELEMENT:
-			std::clog << "End of element, name = '" << ((const char *) name) << "'\n";
 			parent = parent->parent();
 			break;
+/*
 		default:
 			std::clog << "Ignoring node " << type << ", name = '" << ((const char *) name) << "'\n";
+*/
 	}
 	return 0;
-}
-
-Scene::Scene():
-	SceneObject()
-{
 }
 
 int
