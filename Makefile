@@ -1,5 +1,5 @@
 OUT = scene
-OBJ = scene.o
+OBJ = scenetool.o SceneObject.o Scene.o SceneParser.o
 
 CXXFLAGS = `xml2-config --cflags` -g -O0 -W -Wall
 LIBS = `xml2-config --libs` -g
