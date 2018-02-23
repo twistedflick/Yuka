@@ -25,6 +25,8 @@ namespace Yuka
 	class YUKA_EXPORT_ Scene: public SceneObject
 	{
 	public:
+		static Scene *sceneFromPath(const char *pathname);
+		
 		Scene(): SceneObject("scene") { };
 	
 		int load(const char *pathname);

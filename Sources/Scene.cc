@@ -19,6 +19,20 @@
 
 #include "p_Yuka.hh"
 
+Scene *
+Scene::sceneFromPath(const char *pathname)
+{
+	Scene *obj;
+	
+	obj = new Scene();
+	if(obj->load(pathname))
+	{
+		delete obj;
+		return NULL;
+	}
+	return obj;
+}
+
 int
 Scene::load(const char *pathname)
 {
