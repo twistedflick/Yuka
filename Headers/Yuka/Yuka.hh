@@ -37,7 +37,16 @@
  * reorganisation.
  */
 
+/* Ultimate ancestor */
+
 # include "Object.hh"
+
+/* Intrinsics */
+
+# include "Point.hh"
+
+/* Scene-graph objects */
+
 # include "SceneObject.hh"
 # include "Scene.hh"
 # include "SceneParser.hh"
@@ -45,5 +54,9 @@
 # include "Primitive.hh"
 # include "Sphere.hh"
 # include "Cube.hh"
+
+/* Behaviours */
+
+# include "Transform.hh"
 
 #endif /*!YUKA_HH_*/

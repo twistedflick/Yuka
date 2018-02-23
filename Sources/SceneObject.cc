@@ -87,7 +87,8 @@ SceneObject::SceneObject(std::string kind):
 	Object(),
 	kind(kind),
 	container(NULL),
-	children(NULL)
+	children(NULL),
+	transform(NULL)
 {
 /*	std::clog << "** SceneObject[0x" << std::hex << std::setw(8) << instanceId() << ":" << tag() << "]<" << kind << ">\n"; */
 }
@@ -98,6 +99,10 @@ SceneObject::~SceneObject()
 	if(children)
 	{
 		children->release();
+	}
+	if(transform)
+	{
+		transform->release();
 	}
 /*
 	if(id.length())
@@ -169,5 +174,12 @@ SceneObject::dump(std::ostream &stream, int depth) const
 	std::string indent(depth, '\t');
 	
 	stream << indent << "/* SceneObject properties */\n";
+	
+	if(transform)
+	{
+		stream << indent << "double x = " << transform->x() <<";\n";
+		stream << indent << "double y = " << transform->y() <<";\n";
+		stream << indent << "double z = " << transform->z() <<";\n";
+	}
 	return stream;
 }

@@ -21,6 +21,7 @@
 #include <unordered_map>
 
 #include "Object.hh"
+#include "Transform.hh"
 #include "decl.h"
 
 namespace Yuka
@@ -46,6 +47,8 @@ namespace Yuka
 		std::string id;
 		SceneObject *container;
 		List *children;
+	
+		Transform *transform;
 	
 		SceneObject(std::string kind);
 		virtual ~SceneObject();
