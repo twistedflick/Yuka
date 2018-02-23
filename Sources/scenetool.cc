@@ -14,7 +14,6 @@
  */
 
 #include <iostream>
-#include <libxml/xmlreader.h>
 
 #include "Yuka/Yuka.hh"
 
@@ -45,6 +44,5 @@ main(int argc, char **argv)
 	/* We don't DO anything with the loaded scene, so we can just
 	 * return success after cleaning up.
 	 */
-	xmlCleanupParser();
 	return 0;
 }
