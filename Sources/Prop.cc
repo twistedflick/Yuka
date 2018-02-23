@@ -19,6 +19,12 @@
 
 #include "p_Yuka.hh"
 
+/* Protected constructor for Prop objects */
+Prop::Prop(std::string kind):
+	SceneObject(kind)
+{
+}
+
 /* Dump our object properties to an ostream at the specified indent level */
 std::ostream &
 Prop::dump(std::ostream &stream, int depth) const

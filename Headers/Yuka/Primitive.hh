@@ -28,7 +28,7 @@ namespace Yuka
 	class YUKA_EXPORT_ Primitive: public Prop
 	{
 	protected:
-		Primitive(std::string kind): Prop(kind) { };
+		Primitive(std::string kind);
 		
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};

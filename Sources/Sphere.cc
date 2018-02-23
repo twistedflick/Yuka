@@ -19,6 +19,12 @@
 
 #include "p_Yuka.hh"
 
+/* Protected constructor for Sphere objects */
+Sphere::Sphere(std::string name):
+	Primitive(name)
+{
+}
+
 /* Dump our object properties to an ostream at the specified indent level */
 std::ostream &
 Sphere::dump(std::ostream &stream, int depth) const

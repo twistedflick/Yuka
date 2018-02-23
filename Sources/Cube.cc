@@ -19,6 +19,12 @@
 
 #include "p_Yuka.hh"
 
+/* Protected constructor for Cube objects */
+Cube::Cube(std::string kind):
+	Primitive(kind)
+{
+}
+
 /* Dump our object properties to an ostream at the specified indent level */
 std::ostream &
 Cube::dump(std::ostream &stream, int depth) const

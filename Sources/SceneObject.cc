@@ -19,6 +19,9 @@
 
 #include "p_Yuka.hh"
 
+/* Allow a const SceneObject pointer to be serialised to a std::ostream
+ * using the conventional stream << sceneobj notation.
+ */
 std::ostream&
 Yuka::operator<<(std::ostream& os, const SceneObject *me)
 {
@@ -50,6 +53,7 @@ Yuka::operator<<(std::ostream& os, const SceneObject *me)
 	return os;
 }
 
+/* Public factory method for new SceneObjects */
 SceneObject *
 SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties properties)
 {
@@ -78,6 +82,7 @@ SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties prope
 	return obj;
 }
 
+/* Protected constructor for SceneObjects */
 SceneObject::SceneObject(std::string kind):
 	kind(kind),
 	container(NULL),
@@ -86,6 +91,7 @@ SceneObject::SceneObject(std::string kind):
 //	std::clog << "++ SceneObject[0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
 }
 
+/* Public destructor for SceneObjects */
 SceneObject::~SceneObject()
 {
 	delete children;
@@ -118,6 +124,7 @@ SceneObject::add(SceneObject *child)
 	return 0;
 }
 
+/* Return a pointer to our parent (containing) SceneObject */
 SceneObject *
 SceneObject::parent(void)
 {

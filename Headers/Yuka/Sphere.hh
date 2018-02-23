@@ -26,7 +26,7 @@ namespace Yuka
 	{
 		friend class SceneObject;
 	protected:
-		Sphere(std::string kind): Primitive(kind) { };
+		Sphere(std::string kind);
 		
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};

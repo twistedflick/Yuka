@@ -19,6 +19,7 @@
 
 #include "p_Yuka.hh"
 
+/* Public factory for creating and populating a Scene object from a file */
 Scene *
 Scene::sceneFromPath(const char *pathname)
 {
@@ -33,6 +34,21 @@ Scene::sceneFromPath(const char *pathname)
 	return obj;
 }
 
+/* Public constructor for Scene objects */
+Scene::Scene():
+	SceneObject("Scene")
+{
+}
+
+/* Protected constructor for Scene objects */
+Scene::Scene(std::string kind):
+	SceneObject(kind)
+{
+}
+
+/* Convenience method to load the contents of a file into an existing
+ * scene.
+ */
 int
 Scene::load(const char *pathname)
 {

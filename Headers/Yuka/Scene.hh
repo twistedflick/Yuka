@@ -27,10 +27,12 @@ namespace Yuka
 	public:
 		static Scene *sceneFromPath(const char *pathname);
 		
-		Scene(): SceneObject("Scene") { };
+		Scene();
 	
-		int load(const char *pathname);
+		virtual int load(const char *pathname);
 	protected:
+		Scene(std::string kind);
+		
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};
 

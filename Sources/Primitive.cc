@@ -19,6 +19,12 @@
 
 #include "p_Yuka.hh"
 
+/* Protected constructor for Primitive objects */
+Primitive::Primitive(std::string kind):
+	Prop(kind)
+{
+}
+
 /* Dump our object properties to an ostream at the specified indent level */
 std::ostream &
 Primitive::dump(std::ostream &stream, int depth) const
