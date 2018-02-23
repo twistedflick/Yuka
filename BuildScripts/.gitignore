@@ -1,0 +1,15 @@
+/ar-lib
+/compile
+/config.guess
+/config.sub
+/depcomp
+/install-sh
+/mdate-sh
+/missing
+/mkinstalldirs
+/py-compile
+/tap-driver.sh
+/test-driver
+/texinfo.tex
+/ylwrap
+/ltmain.sh
