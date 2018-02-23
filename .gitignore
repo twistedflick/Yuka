@@ -31,4 +31,6 @@ Makefile.in
 /confdefs.h
 /libtool
 /DockerBuild
+/BuildProducts
 /filelist.*
+xcuserdata
