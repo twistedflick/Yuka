@@ -39,6 +39,10 @@ SceneParser::SceneParser(xmlTextReaderPtr reader):
 	reader(reader),
 	parent(NULL)
 {
+	/* Ensure that we're linked against a compatible version of the
+	* libxml2 runtime
+	*/
+	LIBXML_TEST_VERSION;
 }
 
 SceneParser::~SceneParser()

@@ -26,10 +26,6 @@ main(int argc, char **argv)
 {
 	Scene s;
 	
-	/* Ensure that we're linked against a compatible version of the
-	 * libxml2 runtime
-	 */
-	LIBXML_TEST_VERSION;
 	/* Check command-line arguments */
 	if(argc != 2)
 	{
