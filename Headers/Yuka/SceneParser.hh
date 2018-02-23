@@ -5,7 +5,9 @@
 
 #include "Scene.hh"
 
-class SceneParser
+#include "decl.h"
+
+class YUKA_EXPORT_ SceneParser
 {
 public:
 	static SceneParser *parserForFile(const char *pathname);

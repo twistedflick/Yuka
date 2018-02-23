@@ -4,8 +4,9 @@
 # define NS_YUKA                       "https://twistedflick.github.io/Yuka/"
 
 # include "SceneObject.hh"
+# include "decl.h"
 
-class Scene: public SceneObject
+class YUKA_EXPORT_ Scene: public SceneObject
 {
 public:
 	Scene(): SceneObject(NS_YUKA "scene") { };

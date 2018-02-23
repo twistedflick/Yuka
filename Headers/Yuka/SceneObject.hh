@@ -4,9 +4,11 @@
 #include <string>
 #include <unordered_map>
 
+#include "decl.h"
+
 class SceneObjectList;
 
-class SceneObject
+class YUKA_EXPORT_ SceneObject
 {
 public:
 	typedef std::unordered_map<std::string, std::string> Properties;
