@@ -19,6 +19,39 @@
 
 #include "p_Yuka.hh"
 
+std::ostream&
+Yuka::operator<<(std::ostream& os, const SceneObject& me)
+{
+	static thread_local int depth;
+	
+	SceneObject::List::Iterator i;
+	SceneObject *object;
+	std::string indent(depth, '\t');
+	int c;
+	
+	os << indent << me.kind << " ";
+	if(me.id.length())
+	{
+		os << '"' << me.id << '"';
+	}
+	os << "\n" << indent << "{\n";
+	i = NULL;
+	depth++;
+	c = 0;
+	while(me.children && me.children->next(&i, &object))
+	{
+		if(c)
+		{
+			os << "\n";
+		}
+		os << *object;
+		c++;
+	}
+	depth--;
+	os << indent << "};\n";
+	return os;
+}
+
 SceneObject *
 SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties properties)
 {
@@ -27,11 +60,11 @@ SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties prope
 	/* We could accomplish this with a map of constructors, or something of
 	 * that ilk
 	 */
-	if(kind == NS_YUKA "sphere")
+	if(kind == "sphere")
 	{
 		obj = new Sphere(kind);
 	}
-	else if(kind == NS_YUKA "cube")
+	else if(kind == "cube")
 	{
 		obj = new Cube(kind);
 	}

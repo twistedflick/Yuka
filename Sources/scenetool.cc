@@ -44,5 +44,6 @@ main(int argc, char **argv)
 	/* We don't DO anything with the loaded scene, so we can just
 	 * return success after cleaning up.
 	 */
+	std::cout << s << "\n";
 	return 0;
 }

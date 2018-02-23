@@ -38,6 +38,9 @@ namespace Yuka
 		};
 	
 		Entry *first, *last;
+	public:
+		typedef struct List::Entry *Iterator;
+		int next(Iterator *iterator, SceneObject **object);
 	};
 };
 

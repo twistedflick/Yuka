@@ -110,6 +110,11 @@ SceneParser::processNode()
 				std::cerr << "Scene description contains XML elements without a namespace at <" << name << ">\n";
 				return -1;
 			}
+			if(!strcmp(ns, NS_YUKA))
+			{
+				/* Make this *our* default namespace */
+				ns = "";
+			}
 			objname = ns;
 			objname.append(lname);
 			ac = xmlTextReaderAttributeCount(reader);
@@ -143,7 +148,7 @@ SceneParser::processNode()
 			}
 			if(root)
 			{
-				if(objname == NS_YUKA "scene")
+				if(objname == "scene")
 				{
 					/* Skip the root, because this->parent is already set */
 					root = false;

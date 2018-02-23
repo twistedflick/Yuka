@@ -16,6 +16,8 @@
 #ifndef YUKA_HH_
 # define YUKA_HH_                      1
 
+# define NS_YUKA                       "https://twistedflick.github.io/Yuka/"
+
 /* Threading note: unless otherwise noted, it is unsafe to invoke multiple
  * method calls on a single given instance of any of these classes across
  * multiple threads simultaneously, without using some kind of external

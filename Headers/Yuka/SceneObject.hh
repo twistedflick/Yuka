@@ -16,6 +16,7 @@
 #ifndef YUKA_SCENEOBJECT_HH_
 # define YUKA_SCENEOBJECT_HH_          1
 
+#include <iostream>
 #include <string>
 #include <unordered_map>
 
@@ -36,6 +37,8 @@ namespace Yuka
 		virtual int apply(Properties properties);
 	
 		virtual SceneObject *parent(void);
+		
+		friend YUKA_EXPORT_ std::ostream& operator<<(std::ostream& os, const SceneObject& me);
 	protected:
 	
 		class List;

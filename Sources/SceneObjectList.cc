@@ -58,3 +58,23 @@ SceneObject::List::add(SceneObject *object)
 	last = e;
 	return 0;
 }
+
+int
+SceneObject::List::next(SceneObject::List::Iterator *i, SceneObject **object)
+{
+	*object = NULL;
+	if(*i)
+	{
+		*i = (*i)->next;
+	}
+	else
+	{
+		*i = first;
+	}
+	if(*i)
+	{
+		*object = (*i)->obj;
+		return 1;
+	}
+	return 0;
+}
