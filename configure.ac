@@ -37,6 +37,7 @@ if test x"$GXX" = x"yes" ; then
 	AS_VAR_APPEND([AM_CXXFLAGS], ['-fvisibility=hidden '])
 	AS_VAR_APPEND([AM_CXXFLAGS], ['-O0 '])
 	AS_VAR_APPEND([AM_CXXFLAGS], ['-g '])
+	AS_VAR_APPEND([AM_CXXFLAGS], ['-std=c++11 '])
 fi
 
 AS_VAR_APPEND([AM_CPPFLAGS], ['-I${top_srcdir}/PrivateHeaders '])
