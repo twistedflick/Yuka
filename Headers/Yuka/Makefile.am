@@ -13,4 +13,4 @@
 ##  limitations under the License.
 
 pkginclude_HEADERS = decl.h Scene.hh SceneObject.hh SceneParser.hh \
-	Prop.hh Primitives.hh
+	Prop.hh Primitive.hh Sphere.hh Cube.hh

@@ -13,37 +13,24 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_PRIMITIVES_HH_
-# define YUKA_PRIMITIVES_HH_           1
+#ifndef YUKA_SPHERE_HH_
+# define YUKA_SPHERE_HH_               1
 
-# include "Prop.hh"
+# include "Primitive.hh"
 # include "decl.h"
 
 namespace Yuka
 {
-	/* Primitives are the group of Prop classes which represent
-	 * primitive 3D objects: sphere, cuboid, plane, etc.
-	 */
-	class Primitive: public Prop
-	{
-	protected:
-		Primitive(std::string kind): Prop(kind) { };
-	};
 
 	class YUKA_EXPORT_ Sphere: public Primitive
 	{
 		friend class SceneObject;
 	protected:
 		Sphere(std::string kind): Primitive(kind) { };
-	};
-
-	class YUKA_EXPORT_ Cube: public Primitive
-	{
-		friend class SceneObject;
-	protected:
-		Cube(std::string kind): Primitive(kind) { };
+		
+		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};
 
 };
 
-#endif /*!YUKA_PRIMITIVES_HH_*/
+#endif /*!YUKA_SPHERE_HH_*/

@@ -13,27 +13,24 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_SCENE_HH_
-# define YUKA_SCENE_HH_                1
+#ifndef YUKA_CUBE_HH_
+# define YUKA_CUBE_HH_                 1
 
-# include "SceneObject.hh"
+# include "Primitive.hh"
 # include "decl.h"
 
 namespace Yuka
 {
 
-	class YUKA_EXPORT_ Scene: public SceneObject
+	class YUKA_EXPORT_ Cube: public Primitive
 	{
-	public:
-		static Scene *sceneFromPath(const char *pathname);
-		
-		Scene(): SceneObject("scene") { };
-	
-		int load(const char *pathname);
+		friend class SceneObject;
 	protected:
+		Cube(std::string kind): Primitive(kind) { };
+		
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};
 
 };
 
-#endif /*!SCENE_HH_*/
+#endif /*!YUKA_CUBE_HH_*/

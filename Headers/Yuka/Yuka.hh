@@ -41,6 +41,8 @@
 # include "Scene.hh"
 # include "SceneParser.hh"
 # include "Prop.hh"
-# include "Primitives.hh"
+# include "Primitive.hh"
+# include "Sphere.hh"
+# include "Cube.hh"
 
 #endif /*!YUKA_HH_*/

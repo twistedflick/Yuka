@@ -48,3 +48,15 @@ Scene::load(const char *pathname)
 	delete parser;
 	return ret;
 }
+
+/* Dump our object properties to an ostream at the specified indent level */
+std::ostream &
+Scene::dump(std::ostream &stream, int depth) const
+{
+	std::string indent(depth, '\t');
+	
+	SceneObject::dump(stream, depth);
+	stream << indent << "/* Scene properties */\n";
+
+	return stream;
+}

@@ -13,27 +13,21 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_SCENE_HH_
-# define YUKA_SCENE_HH_                1
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
-# include "SceneObject.hh"
-# include "decl.h"
+#include "p_Yuka.hh"
 
-namespace Yuka
+/* Dump our object properties to an ostream at the specified indent level */
+std::ostream &
+Prop::dump(std::ostream &stream, int depth) const
 {
+	std::string indent(depth, '\t');
 
-	class YUKA_EXPORT_ Scene: public SceneObject
-	{
-	public:
-		static Scene *sceneFromPath(const char *pathname);
-		
-		Scene(): SceneObject("scene") { };
+	SceneObject::dump(stream, depth);
 	
-		int load(const char *pathname);
-	protected:
-		virtual std::ostream &dump(std::ostream &stream, int depth) const;
-	};
+	stream << indent << "/* Prop properties */\n";
 
-};
-
-#endif /*!SCENE_HH_*/
+	return stream;
+}

@@ -38,17 +38,19 @@ namespace Yuka
 	
 		virtual SceneObject *parent(void);
 		
-		friend YUKA_EXPORT_ std::ostream& operator<<(std::ostream& os, const SceneObject& me);
+		friend YUKA_EXPORT_ std::ostream& operator<<(std::ostream &os, const SceneObject *me);
 	protected:
 	
 		class List;
-	
-		SceneObject(std::string kind);
 
 		std::string kind;
 		std::string id;
 		SceneObject *container;
 		List *children;
+	
+		SceneObject(std::string kind);
+
+		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};
 
 };

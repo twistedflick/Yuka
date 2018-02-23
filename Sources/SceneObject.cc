@@ -20,7 +20,7 @@
 #include "p_Yuka.hh"
 
 std::ostream&
-Yuka::operator<<(std::ostream& os, const SceneObject& me)
+Yuka::operator<<(std::ostream& os, const SceneObject *me)
 {
 	static thread_local int depth;
 	
@@ -29,22 +29,20 @@ Yuka::operator<<(std::ostream& os, const SceneObject& me)
 	std::string indent(depth, '\t');
 	int c;
 	
-	os << indent << me.kind << " ";
-	if(me.id.length())
+	os << indent << me->kind << " ";
+	if(me->id.length())
 	{
-		os << '"' << me.id << '"';
+		os << '"' << me->id << '"';
 	}
 	os << "\n" << indent << "{\n";
+	me->dump(os, depth + 1);
 	i = NULL;
 	depth++;
 	c = 0;
-	while(me.children && me.children->next(&i, &object))
+	while(me->children && me->children->next(&i, &object))
 	{
-		if(c)
-		{
-			os << "\n";
-		}
-		os << *object;
+		os << "\n";
+		os << object;
 		c++;
 	}
 	depth--;
@@ -85,20 +83,20 @@ SceneObject::SceneObject(std::string kind):
 	container(NULL),
 	children(NULL)
 {
-	std::clog << "++ SceneObject[0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
+//	std::clog << "++ SceneObject[0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
 }
 
 SceneObject::~SceneObject()
 {
 	delete children;
-	if(id.length())
-	{
-		std::clog << "-- SceneObject[" << id << "=0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
-	}
-	else
-	{
-		std::clog << "-- SceneObject[0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
-	}
+//	if(id.length())
+//	{
+//		std::clog << "-- SceneObject[" << id << "=0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
+//	}
+//	else
+//	{
+//		std::clog << "-- SceneObject[0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
+//	}
 }
 
 /* Add a scene object to the scene graph as a child of this one. This won't
@@ -144,8 +142,18 @@ SceneObject::apply(SceneObject::Properties properties)
 			id = i->second;
 			continue;
 		}
-		std::clog << "Warning: Unsupported property '" << i->first << "' in definition of <" << kind << ">\n";
+		std::cerr << "Warning: Unsupported property '" << i->first << "' in definition of <" << kind << ">\n";
 		e = 1;
 	}
 	return e;
+}
+
+/* Dump our object properties to an ostream at the specified indent level */
+std::ostream &
+SceneObject::dump(std::ostream &stream, int depth) const
+{
+	std::string indent(depth, '\t');
+	
+	stream << indent << "/* SceneObject properties */\n";
+	return stream;
 }
