@@ -20,19 +20,18 @@
 #include <string>
 #include <unordered_map>
 
+#include "Object.hh"
 #include "decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ SceneObject
+	class YUKA_EXPORT_ SceneObject: public Object
 	{
 	public:
 		typedef std::unordered_map<std::string, std::string> Properties;
 	
 		static SceneObject *sceneObjectWithKind(std::string kind, Properties properties);
-	
-		virtual ~SceneObject();
-	
+		
 		virtual int add(SceneObject *child);
 		virtual int apply(Properties properties);
 	
@@ -49,6 +48,7 @@ namespace Yuka
 		List *children;
 	
 		SceneObject(std::string kind);
+		virtual ~SceneObject();
 
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};

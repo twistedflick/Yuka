@@ -75,7 +75,7 @@ SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties prope
 		if(obj->apply(properties) < 0)
 		{
 			/* There was a hard error applying the properties */
-			delete obj;
+			obj->release();
 			return NULL;
 		}
 	}
@@ -84,25 +84,31 @@ SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties prope
 
 /* Protected constructor for SceneObjects */
 SceneObject::SceneObject(std::string kind):
+	Object(),
 	kind(kind),
 	container(NULL),
 	children(NULL)
 {
-//	std::clog << "++ SceneObject[0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
+/*	std::clog << "** SceneObject[0x" << std::hex << std::setw(8) << instanceId() << ":" << tag() << "]<" << kind << ">\n"; */
 }
 
 /* Public destructor for SceneObjects */
 SceneObject::~SceneObject()
 {
-	delete children;
-//	if(id.length())
-//	{
-//		std::clog << "-- SceneObject[" << id << "=0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
-//	}
-//	else
-//	{
-//		std::clog << "-- SceneObject[0x" << std::hex << std::setw(8) << (unsigned long) static_cast<void *>(this) << "] <" << kind << ">\n";
-//	}
+	if(children)
+	{
+		children->release();
+	}
+/*
+	if(id.length())
+	{
+		std::clog << "~~ SceneObject[" << id << "=0x" << std::hex << std::setw(8) << instanceId() << ":" << tag() << "]<" << kind << ">\n";
+	}
+	else
+	{
+		std::clog << "~~ SceneObject[0x" << std::hex << std::setw(8) << instanceId() << ":" << tag() << "]<" << kind << ">\n";
+	}
+*/
 }
 
 /* Add a scene object to the scene graph as a child of this one. This won't
@@ -119,6 +125,7 @@ SceneObject::add(SceneObject *child)
 	{
 		children = new SceneObject::List();
 	}
+	child->retain();
 	children->add(child);
 	child->container = this;
 	return 0;

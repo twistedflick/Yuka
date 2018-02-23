@@ -28,7 +28,7 @@ Scene::sceneFromPath(const char *pathname)
 	obj = new Scene();
 	if(obj->load(pathname))
 	{
-		delete obj;
+		obj->release();
 		return NULL;
 	}
 	return obj;
@@ -61,7 +61,7 @@ Scene::load(const char *pathname)
 		return -1;
 	}
 	ret = parser->parseIntoScene(this);
-	delete parser;
+	parser->release();
 	return ret;
 }
 

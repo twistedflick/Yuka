@@ -46,6 +46,6 @@ main(int argc, char **argv)
 	 * return success after cleaning up.
 	 */
 	std::cout << scene << "\n";
-	delete scene;
+	scene->release();
 	return 0;
 }

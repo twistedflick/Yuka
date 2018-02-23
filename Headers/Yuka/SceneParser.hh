@@ -16,20 +16,20 @@
 #ifndef YUKA_SCENEPARSER_HH_
 # define YUKA_SCENEPARSER_HH_          1
 
+#include "Object.hh"
 #include "Scene.hh"
-
 #include "decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ SceneParser
+	class YUKA_EXPORT_ SceneParser: public Object
 	{
 	public:
 		static SceneParser *parserFromPath(const char *pathname);
 	
-		virtual ~SceneParser();
-	
 		virtual int parseIntoScene(Scene *scene) = 0;
+	protected:
+		virtual ~SceneParser();
 	};
 };
 

@@ -41,6 +41,7 @@ XMLSceneParser::parserFromPath(const char *pathname)
 }
 
 XMLSceneParser::XMLSceneParser(xmlTextReaderPtr reader):
+	SceneParser(),
 	reader(reader),
 	parent(NULL),
 	root(false)
@@ -61,6 +62,7 @@ XMLSceneParser::parseIntoScene(Scene *scene)
 {
 	int ret;
 	
+	scene->retain();
 	parent = scene;
 	root = true;
 	ret = xmlTextReaderRead(reader);
@@ -76,6 +78,7 @@ XMLSceneParser::parseIntoScene(Scene *scene)
 		}
 		ret = xmlTextReaderRead(reader);
 	}
+	scene->release();
 	parent = NULL;
 	if(ret)
 	{
@@ -93,7 +96,7 @@ XMLSceneParser::processNode()
 {
 	const char *name, *lname, *ns;
 	int type;
-	SceneObject *obj;
+	SceneObject *obj, *oldp;
 	bool isempty;
 	
 	type = xmlTextReaderNodeType(reader);
@@ -173,14 +176,26 @@ XMLSceneParser::processNode()
 				return -1;
 			}
 			parent->add(obj);
-			if(!isempty)
+			if(isempty)
+			{
+				obj->release();
+			}
+			else
 			{
 				parent = obj;
 			}
 			break;
 		}
 		case XML_READER_TYPE_END_ELEMENT:
+			oldp = parent;
 			parent = parent->parent();
+			if(xmlTextReaderDepth(reader))
+			{
+				/* Only release objects we've created - the root Scene instance
+				 * doesn't belong to us
+				 */
+				oldp->release();
+			}
 			break;
 /*
 		default:

@@ -22,6 +22,7 @@
 /* Implements the private SceneObject::List class */
 
 SceneObject::List::List() :
+	Object(),
 	first(NULL),
 	last(NULL)
 {	
@@ -34,7 +35,7 @@ SceneObject::List::~List()
 	for(e = first; e; e = next)
 	{
 		next = e->next;
-		delete e->obj;
+		e->obj->release();
 		delete e;
 	}
 }

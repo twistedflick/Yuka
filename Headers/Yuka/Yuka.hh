@@ -37,6 +37,7 @@
  * reorganisation.
  */
 
+# include "Object.hh"
 # include "SceneObject.hh"
 # include "Scene.hh"
 # include "SceneParser.hh"
