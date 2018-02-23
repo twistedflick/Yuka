@@ -1,14 +1,7 @@
 #include <iostream>
-#include <iomanip>
-#include <cstring>
-#include <string>
-#include <unordered_map>
-
 #include <libxml/xmlreader.h>
 
-#include "SceneObject.hh"
-#include "Scene.hh"
-#include "SceneParser.hh"
+#include "Yuka/Yuka.hh"
 
 /* Threading note: unless otherwise noted, it is unsafe to invoke multiple
  * method calls on a single given instance of any of these classes across

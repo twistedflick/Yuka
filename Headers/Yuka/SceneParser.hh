@@ -1,5 +1,5 @@
-#ifndef SCENEPARSER_HH_
-# define SCENEPARSER_HH_               1
+#ifndef YUKA_SCENEPARSER_HH_
+# define YUKA_SCENEPARSER_HH_          1
 
 #include <libxml/xmlreader.h>
 

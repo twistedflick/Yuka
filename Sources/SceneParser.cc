@@ -6,7 +6,7 @@
 
 #include <libxml/xmlreader.h>
 
-#include "SceneParser.hh"
+#include "Yuka/SceneParser.hh"
 
 #define NS_XML                         "http://www.w3.org/XML/1998/namespace"
 #define NS_XMLNS                       "http://www.w3.org/2000/xmlns/"
@@ -131,7 +131,7 @@ SceneParser::processNode()
 			}
 			if(root)
 			{
-				if(objname == NS_SCENE "scene")
+				if(objname == NS_YUKA "scene")
 				{
 					/* Skip the root, because this->parent is already set */
 					root = false;
@@ -139,7 +139,7 @@ SceneParser::processNode()
 				}
 				else
 				{
-					std::cerr << "Expected a root <scene /> element, found <" << name << " />\n";
+					std::cerr << "Expected a root <scene /> element in namespace <" NS_YUKA ">, found <" << name << " /> in namespace <" << ns << ">\n";
 					return -1;
 				}
 			}

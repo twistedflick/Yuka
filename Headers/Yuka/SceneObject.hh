@@ -1,5 +1,5 @@
-#ifndef SCENEOBJECT_HH_
-# define SCENEOBJECT_HH_               1
+#ifndef YUKA_SCENEOBJECT_HH_
+# define YUKA_SCENEOBJECT_HH_          1
 
 #include <string>
 #include <unordered_map>
@@ -15,10 +15,10 @@ public:
 	
 	virtual ~SceneObject();
 	
-	int add(SceneObject *child);
-	int apply(Properties properties);
+	virtual int add(SceneObject *child);
+	virtual int apply(Properties properties);
 	
-	SceneObject *parent(void);
+	virtual SceneObject *parent(void);
 protected:
 	
 	SceneObject(std::string kind);
@@ -29,12 +29,19 @@ protected:
 	SceneObjectList *children;
 };
 
+/* A prop is any kind of potentially-visible scene object
+ * which may have physics properties.
+ */
+
 class Prop: public SceneObject
 {
 protected:
 	Prop(std::string kind): SceneObject(kind) { };
 };
 
+/* Primitives are the group of Prop classes which represent
+ * primitive 3D objects: sphere, cuboid, plane, etc.
+ */
 class Primitive: public Prop
 {
 protected:

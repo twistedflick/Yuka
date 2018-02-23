@@ -1,1 +1,1 @@
-EXTRA_DIST = scene1.scenex
+EXTRA_DIST = scene1.yukax

@@ -2,7 +2,7 @@
 ## Initialise Autoconf and Automake with project-specific information      ##
 #############################################################################
 
-AC_INIT([scene],[develop])
+AC_INIT([Yuka],[develop])
 AC_CONFIG_AUX_DIR([BuildScripts])
 AC_CONFIG_MACRO_DIR([M4])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
@@ -47,7 +47,9 @@ AM_PATH_XML2
 AC_CONFIG_FILES([
 Makefile
 Headers/Makefile
+Headers/Yuka/Makefile
 Sources/Makefile
+Examples/Makefile
 ])
 
 AC_OUTPUT

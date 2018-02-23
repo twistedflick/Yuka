@@ -1,5 +1,5 @@
-#include "Scene.hh"
-#include "SceneParser.hh"
+#include "Yuka/Scene.hh"
+#include "Yuka/SceneParser.hh"
 
 int
 Scene::load(const char *pathname)

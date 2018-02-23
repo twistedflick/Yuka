@@ -1,8 +1,8 @@
 #include <iostream>
 #include <iomanip>
 
-#include "Scene.hh"
-#include "SceneObject.hh"
+#include "Yuka/Scene.hh"
+#include "Yuka/SceneObject.hh"
 
 /* This is a private implementation of linked list to track scene objects
  * which is used by a SceneObject to organise the graph.
@@ -70,11 +70,11 @@ SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties prope
 	/* We could accomplish this with a map of constructors, or something of
 	 * that ilk
 	 */
-	if(kind == NS_SCENE "sphere")
+	if(kind == NS_YUKA "sphere")
 	{
 		obj = new Sphere(kind);
 	}
-	else if(kind == NS_SCENE "cube")
+	else if(kind == NS_YUKA "cube")
 	{
 		obj = new Cube(kind);
 	}
