@@ -1,0 +1,28 @@
+language: c
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: clang
+      env:
+        - FOR=linux-trusty-clang
+      before_install:
+        - sudo apt-get -qq update && sudo apt-get install -qq -y build-essential clang libxml2-dev autoconf automake libtool
+    - os: linux
+      dist: precise
+      sudo: required
+      env:
+        - FOR=linux-precise-gcc
+      before_install:
+        - sudo apt-get -qq update && sudo apt-get install -qq -y build-essential libxml2-dev autoconf automake libtool
+    - os: osx
+      env:
+        - FOR=osx
+
+before_script:
+- autoreconf -fvi
+
+script:
+- ./configure && make && make check
