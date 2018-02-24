@@ -17,6 +17,9 @@
 # define YUKA_TRANSFORM_HH_            1
 
 #include "../Behaviour.hh"
+#include "../Intrinsics/Point.hh"
+#include "../Intrinsics/Orientation.hh"
+#include "../Intrinsics/Scale.hh"
 #include "../decl.h"
 
 namespace Yuka
@@ -29,6 +32,8 @@ namespace Yuka
 		Transform(const double px, const double py, const double pz);
 		
 		virtual Point position(void) const;
+		virtual void setPosition(const Point pos);
+		
 		virtual double x(void) const;
 		virtual void setX(double nx);
 		virtual bool setX(const std::string nx);
@@ -41,11 +46,32 @@ namespace Yuka
 		virtual void setZ(double nx);
 		virtual bool setZ(const std::string nx);
 		
+		virtual Orientation rotation(void) const;
+		virtual void setRotation(const Orientation rot);
+
+		virtual double rotX(void) const;
+		virtual void setRotX(double nx);
+		virtual bool setRotX(const std::string nx);
+
+		virtual double rotY(void) const;
+		virtual void setRotY(double nx);
+		virtual bool setRotY(const std::string nx);
+
+		virtual double rotZ(void) const;
+		virtual void setRotZ(double nx);
+		virtual bool setRotZ(const std::string nx);
+		
+		virtual Scale scale(void) const;
+		virtual void setScale(const Scale factor);
+		virtual void setScale(const double factor);
+		
 		virtual std::string kind(void) const;
 	protected:
 		virtual std::ostream &printProperties(std::ostream &stream) const;
 	private:
 		Point m_position;
+		Orientation m_rotation;
+		Scale m_scale;
 	};
 
 };

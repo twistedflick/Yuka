@@ -13,26 +13,25 @@
  *  limitations under the License.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#ifndef YUKA_ORIENTATION_HH_
+# define YUKA_ORIENTATION_HH_          1
 
-#include "p_Yuka.hh"
+# include <string>
 
-/* Public constructors for Point objects */
+# include "Vector.hh"
+# include "../decl.h"
 
-Point::Point():
-	Vector()
+namespace Yuka
 {
-}
+	/* Yuka::Orientation represents an orientation in three-dimensional space */
+	struct YUKA_EXPORT_ Orientation: public Vector
+	{
+		Orientation();
+		Orientation(const double nx, const double ny, const double nz);
+		
+		virtual std::string kind(void) const;
+	};
+	
+};
 
-Point::Point(const double px, const double py, const double pz):
-	Vector(px, py, pz)
-{
-}
-
-std::string
-Point::kind(void) const
-{
-	return "Point";
-}
+#endif /*!YUKA_ORIENTATION_HH_*/

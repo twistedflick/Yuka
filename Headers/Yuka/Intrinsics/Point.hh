@@ -13,26 +13,25 @@
  *  limitations under the License.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#ifndef YUKA_POINT_HH_
+# define YUKA_POINT_HH_                1
 
-#include "p_Yuka.hh"
+# include <string>
 
-/* Public constructors for Point objects */
+# include "Vector.hh"
+# include "../decl.h"
 
-Point::Point():
-	Vector()
+namespace Yuka
 {
-}
+	/* Yuka::Point represents a point in three-dimensional space */
+	struct YUKA_EXPORT_ Point: public Vector
+	{
+		Point();
+		Point(const double nx, const double ny, const double nz);
+		
+		virtual std::string kind(void) const;
+	};
+	
+};
 
-Point::Point(const double px, const double py, const double pz):
-	Vector(px, py, pz)
-{
-}
-
-std::string
-Point::kind(void) const
-{
-	return "Point";
-}
+#endif /*!YUKA_POINT_HH_*/

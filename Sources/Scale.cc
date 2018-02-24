@@ -19,20 +19,25 @@
 
 #include "p_Yuka.hh"
 
-/* Public constructors for Point objects */
+/* Public constructors for Scale objects */
 
-Point::Point():
-	Vector()
+Scale::Scale():
+	Vector(1, 1, 1)
 {
 }
 
-Point::Point(const double px, const double py, const double pz):
+Scale::Scale(const double factor):
+	Vector(factor, factor, factor)
+{
+}
+
+Scale::Scale(const double px, const double py, const double pz):
 	Vector(px, py, pz)
 {
 }
 
 std::string
-Point::kind(void) const
+Scale::kind(void) const
 {
-	return "Point";
+	return "Scale";
 }

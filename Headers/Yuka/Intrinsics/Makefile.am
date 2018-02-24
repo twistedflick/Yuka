@@ -12,28 +12,7 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-AM_CPPFLAGS = @AM_CPPFLAGS@ @XML_CPPFLAGS@
+incdir = ${pkgincludedir}/Intrinsics
 
-lib_LTLIBRARIES = libYuka.la
+inc_HEADERS = Vector.hh Point.hh Orientation.hh Scale.hh
 
-libYuka_la_SOURCES = p_Yuka.hh \
-	Vector.cc Point.cc Orientation.cc Scale.cc \
-	Object.cc \
-	SceneObject.cc SceneObjectList.cc \
-	Scene.cc \
-	Prop.cc \
-	Primitive.cc Sphere.cc Cube.cc \
-	Light.cc PointLight.cc \
-	SceneParser.cc XMLSceneParser.cc \
-	Behaviour.cc Transform.cc
-
-libYuka_la_LDFLAGS = -avoid-version -no-undefined
-
-libYuka_la_LIBADD = @XML_LIBS@
-
-
-noinst_PROGRAMS = scenetool
-
-scenetool_SOURCES = scenetool.cc 
-
-scenetool_LDADD = libYuka.la

@@ -19,20 +19,20 @@
 
 #include "p_Yuka.hh"
 
-/* Public constructors for Point objects */
+/* Public constructors for Orientation objects */
 
-Point::Point():
+Orientation::Orientation():
 	Vector()
 {
 }
 
-Point::Point(const double px, const double py, const double pz):
+Orientation::Orientation(const double px, const double py, const double pz):
 	Vector(px, py, pz)
 {
 }
 
 std::string
-Point::kind(void) const
+Orientation::kind(void) const
 {
-	return "Point";
+	return "Orientation";
 }

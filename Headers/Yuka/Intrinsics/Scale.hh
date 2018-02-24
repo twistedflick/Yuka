@@ -13,35 +13,26 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_POINT_HH_
-# define YUKA_POINT_HH_                1
+#ifndef YUKA_SCALE_HH_
+# define YUKA_SCALE_HH_          1
 
 # include <string>
 
-# include "decl.h"
+# include "Vector.hh"
+# include "../decl.h"
 
 namespace Yuka
 {
-	/* Yuka::Point represents a point in three-dimensional space */
-	struct YUKA_EXPORT_ Point
+	/* Yuka::Scale represents a scale factor in three-dimensional space */
+	struct YUKA_EXPORT_ Scale: public Vector
 	{
-		double x;
-		double y;
-		double z;
+		Scale(),
+		Scale(const double amount);
+		Scale(const double nx, const double ny, const double nz);
 		
-		Point(const double nx, const double ny, const double nz);
-		
-		void setX(const double nx);
-		bool setX(const std::string nx);
-		void setY(const double ny);
-		bool setY(const std::string ny);
-		void setZ(const double nz);
-		bool setZ(const std::string nz);
-		
-		friend std::ostream &operator<<(std::ostream &stream, const Point &point);
-		friend std::ostream &operator<<(std::ostream &stream, const Point *point);
+		virtual std::string kind(void) const;
 	};
 	
 };
 
-#endif /*!YUKA_POINT_HH_*/
+#endif /*!YUKA_SCALE_HH_*/
