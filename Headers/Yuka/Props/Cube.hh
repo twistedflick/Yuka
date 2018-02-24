@@ -17,7 +17,7 @@
 # define YUKA_CUBE_HH_                 1
 
 # include "Primitive.hh"
-# include "decl.h"
+# include "../decl.h"
 
 namespace Yuka
 {

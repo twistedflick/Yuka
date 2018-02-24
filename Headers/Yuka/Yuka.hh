@@ -51,19 +51,22 @@
 
 # include "Scene.hh"
 
-# include "Prop.hh"
+/* Props */
 
-# include "Primitive.hh"
-# include "Sphere.hh"
-# include "Cube.hh"
+# include "Prop.hh"
+# include "Props/Primitive.hh"
+# include "Props/Sphere.hh"
+# include "Props/Cube.hh"
+
+/* Lights */
 
 # include "Light.hh"
-# include "PointLight.hh"
+# include "Lights/PointLight.hh"
 
 /* Behaviours */
 
 # include "Behaviour.hh"
-# include "Transform.hh"
+# include "Behaviours/Transform.hh"
 
 /* I/O */
 

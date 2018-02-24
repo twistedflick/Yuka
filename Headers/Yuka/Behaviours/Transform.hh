@@ -16,8 +16,8 @@
 #ifndef YUKA_TRANSFORM_HH_
 # define YUKA_TRANSFORM_HH_            1
 
-#include "Behaviour.hh"
-#include "decl.h"
+#include "../Behaviour.hh"
+#include "../decl.h"
 
 namespace Yuka
 {

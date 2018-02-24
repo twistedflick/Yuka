@@ -12,13 +12,8 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-SUBDIRS = Props Lights Behaviours
+incdir = ${pkgincludedir}/Props
 
-pkginclude_HEADERS = decl.h \
-	Object.hh \
-	SceneObject.hh \
-	Scene.hh \
-	SceneParser.hh \
-	Prop.hh \
-	Light.hh \
-	Behaviour.hh
+inc_HEADERS = Primitive.hh \
+	Sphere.hh Cube.hh
+

@@ -13,28 +13,24 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_PRIMITIVE_HH_
-# define YUKA_PRIMITIVE_HH_           1
+#ifndef YUKA_POINTLIGHT_HH_
+# define YUKA_POINTLIGHT_HH_           1
 
-# include "Prop.hh"
-# include "decl.h"
+# include "../Light.hh"
+# include "../SceneObject.hh"
+# include "../decl.h"
 
 namespace Yuka
 {
-
-	/* Primitives are the group of Prop classes which represent
-	 * primitive 3D objects: sphere, cuboid, plane, etc. which do
-	 * not require a model to be loaded in order to be represented
-	 * fully.
-	 */
-	class YUKA_EXPORT_ Primitive: public Prop
+	class YUKA_EXPORT_ PointLight: public Light
 	{
+		friend class SceneObject;
 	protected:
-		Primitive(const std::string kind);
+		PointLight(const std::string kind);
 		
 		virtual std::ostream &printProperties(std::ostream &stream) const;
 	};
 
 };
 
-#endif /*!YUKA_PRIMITIVE_HH_*/
+#endif /*!YUKA_POINTLIGHT_HH_*/

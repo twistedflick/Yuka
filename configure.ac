@@ -67,6 +67,9 @@ Makefile
 PrivateHeaders/Makefile
 Headers/Makefile
 Headers/Yuka/Makefile
+Headers/Yuka/Props/Makefile
+Headers/Yuka/Behaviours/Makefile
+Headers/Yuka/Lights/Makefile
 Sources/Makefile
 Examples/Makefile
 ])

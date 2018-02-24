@@ -13,24 +13,24 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_POINTLIGHT_HH_
-# define YUKA_POINTLIGHT_HH_           1
+#ifndef YUKA_SPHERE_HH_
+# define YUKA_SPHERE_HH_               1
 
-# include "Light.hh"
-# include "SceneObject.hh"
-# include "decl.h"
+# include "Primitive.hh"
+# include "../decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ PointLight: public Light
+
+	class YUKA_EXPORT_ Sphere: public Primitive
 	{
 		friend class SceneObject;
 	protected:
-		PointLight(const std::string kind);
+		Sphere(const std::string kind);
 		
 		virtual std::ostream &printProperties(std::ostream &stream) const;
 	};
 
 };
 
-#endif /*!YUKA_POINTLIGHT_HH_*/
+#endif /*!YUKA_SPHERE_HH_*/

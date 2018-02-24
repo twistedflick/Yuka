@@ -21,7 +21,7 @@
 #include <unordered_map>
 
 #include "Object.hh"
-#include "Transform.hh"
+#include "Behaviours/Transform.hh"
 #include "decl.h"
 
 namespace Yuka
