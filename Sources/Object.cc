@@ -180,7 +180,7 @@ Object::parseInt(const std::string str, int *out)
 	int d;
 	
 	endp = NULL;
-	d = (int) ::strtol(str.c_str(), &endp, 0);
+	d = (int) strtol(str.c_str(), &endp, 0);
 	if(endp && *endp)
 	{
 		std::cerr << "Error: Cannot convert '" << str << "' to an integer value\n";
@@ -193,24 +193,29 @@ Object::parseInt(const std::string str, int *out)
 bool
 Object::parseBool(const std::string str, bool *out)
 {
-	std::string lstr;
+	const char *cstr;
 	char *endp;
 	int d;
 	
-	lstr = str;
-	std::transform(lstr.begin(), lstr.end(), lstr.begin(), [](unsigned char c){ return std::tolower(c); });
-	if(lstr == "t" || lstr == "true" || lstr == "yes" || lstr == "y" || lstr == "on")
+	cstr = str.c_str();
+	if(!strcasecmp(cstr, "t") ||
+		!strcasecmp(cstr, "true") ||
+		!strcasecmp(cstr, "yes") ||
+		!strcasecmp(cstr, "on"))
 	{
 		*out = true;
 		return true;
 	}
-	if(lstr == "f" || lstr == "false" || lstr == "no" || lstr == "no" || lstr == "on")
+	if(!strcasecmp(cstr, "f") ||
+		!strcasecmp(cstr, "false") ||
+		!strcasecmp(cstr, "no") ||
+		!strcasecmp(cstr, "off"))
 	{
 		*out = false;
 		return true;
 	}
 	endp = NULL;
-	d = (int) ::strtol(str.c_str(), &endp, 0);
+	d = (int) strtol(cstr, &endp, 0);
 	if(endp && *endp)
 	{
 		std::cerr << "Error: Cannot convert '" << str << "' to boolean value\n";
@@ -226,7 +231,7 @@ Object::parseDouble(const std::string str, double *out)
 	double d;
 	
 	endp = NULL;
-	d = ::strtod(str.c_str(), &endp);
+	d = strtod(str.c_str(), &endp);
 	if(endp && *endp)
 	{
 		std::cerr << "Error: Cannot convert '" << str << "' to a double-precision floating point value\n";
