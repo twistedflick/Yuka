@@ -14,5 +14,5 @@
 
 incdir = ${pkgincludedir}/Intrinsics
 
-inc_HEADERS = Vector.hh Point.hh Orientation.hh Scale.hh
+inc_HEADERS = Vector.hh Point.hh Orientation.hh Size.hh
 

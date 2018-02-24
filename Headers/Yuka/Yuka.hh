@@ -46,7 +46,7 @@
 # include "Intrinsics/Vector.hh"
 # include "Intrinsics/Point.hh"
 # include "Intrinsics/Orientation.hh"
-# include "Intrinsics/Scale.hh"
+# include "Intrinsics/Size.hh"
 
 /* Scene-graph objects */
 

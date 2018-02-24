@@ -17,7 +17,7 @@ AM_CPPFLAGS = @AM_CPPFLAGS@ @XML_CPPFLAGS@
 lib_LTLIBRARIES = libYuka.la
 
 libYuka_la_SOURCES = p_Yuka.hh \
-	Vector.cc Point.cc Orientation.cc Scale.cc \
+	Vector.cc Point.cc Orientation.cc Size.cc \
 	Object.cc \
 	SceneObject.cc SceneObjectList.cc \
 	Scene.cc \

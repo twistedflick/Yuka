@@ -19,7 +19,7 @@
 #include "../Behaviour.hh"
 #include "../Intrinsics/Point.hh"
 #include "../Intrinsics/Orientation.hh"
-#include "../Intrinsics/Scale.hh"
+#include "../Intrinsics/Size.hh"
 #include "../decl.h"
 
 namespace Yuka
@@ -61,8 +61,8 @@ namespace Yuka
 		virtual void setRotZ(double nx);
 		virtual bool setRotZ(const std::string nx);
 		
-		virtual Scale scale(void) const;
-		virtual void setScale(const Scale factor);
+		virtual Size scale(void) const;
+		virtual void setScale(const Size factor);
 		virtual void setScale(const double factor);
 		virtual bool setScale(const std::string factor);
 		
@@ -85,7 +85,7 @@ namespace Yuka
 	private:
 		Point m_position;
 		Orientation m_rotation;
-		Scale m_scale;
+		Size m_scale;
 	};
 
 };

@@ -19,25 +19,25 @@
 
 #include "p_Yuka.hh"
 
-/* Public constructors for Scale objects */
+/* Public constructors for Size objects */
 
-Scale::Scale():
+Size::Size():
 	Vector(1, 1, 1)
 {
 }
 
-Scale::Scale(const double factor):
+Size::Size(const double factor):
 	Vector(factor, factor, factor)
 {
 }
 
-Scale::Scale(const double px, const double py, const double pz):
+Size::Size(const double px, const double py, const double pz):
 	Vector(px, py, pz)
 {
 }
 
 std::string
-Scale::kind(void) const
+Size::kind(void) const
 {
-	return "Scale";
+	return "Size";
 }

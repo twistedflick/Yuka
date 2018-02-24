@@ -34,7 +34,7 @@ Transform::Transform(const Point pos):
 
 Transform::Transform(const double px, const double py, const double pz):
 	Behaviour(),
-	m_position(Point(px, py, pz))
+	m_position(px, py, pz)
 {
 }
 
@@ -193,7 +193,7 @@ Transform::setRotZ(const std::string nz)
 }
 
 /* Return the scale factor vector of this transform */
-Scale
+Size
 Transform::scale(void) const
 {
 	return m_scale;
@@ -201,7 +201,7 @@ Transform::scale(void) const
 
 /* Set the scale factor vector of this transform */
 void
-Transform::setScale(const Scale factor)
+Transform::setScale(const Size factor)
 {
 	m_scale = factor;
 }
@@ -209,7 +209,7 @@ Transform::setScale(const Scale factor)
 void
 Transform::setScale(const double factor)
 {
-	m_scale = Scale(factor);
+	m_scale = Size(factor);
 }
 
 bool
@@ -221,7 +221,7 @@ Transform::setScale(const std::string factor)
 	{
 		return false;
 	}
-	m_scale = Scale(fac);
+	m_scale = Size(fac);
 	return true;
 }
 

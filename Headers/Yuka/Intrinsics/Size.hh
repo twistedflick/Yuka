@@ -13,8 +13,8 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_SCALE_HH_
-# define YUKA_SCALE_HH_          1
+#ifndef YUKA_SIZE_HH_
+# define YUKA_SIZE_HH_          1
 
 # include <string>
 
@@ -23,16 +23,18 @@
 
 namespace Yuka
 {
-	/* Yuka::Scale represents a scale factor in three-dimensional space */
-	struct YUKA_EXPORT_ Scale: public Vector
+	/* Yuka::Size represents a distance or scale factor in three-dimensional
+	 * space
+	 */
+	struct YUKA_EXPORT_ Size: public Vector
 	{
-		Scale(),
-		Scale(const double amount);
-		Scale(const double nx, const double ny, const double nz);
+		Size(),
+		Size(const double amount);
+		Size(const double nx, const double ny, const double nz);
 		
 		virtual std::string kind(void) const;
 	};
 	
 };
 
-#endif /*!YUKA_SCALE_HH_*/
+#endif /*!YUKA_SIZE_HH_*/
