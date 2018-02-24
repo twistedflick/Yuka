@@ -23,6 +23,7 @@ libYuka_la_SOURCES = p_Yuka.hh \
 	Scene.cc \
 	Prop.cc \
 	Primitive.cc Sphere.cc Cube.cc \
+	Light.cc PointLight.cc \
 	SceneParser.cc XMLSceneParser.cc \
 	Transform.cc
 

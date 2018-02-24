@@ -37,7 +37,7 @@
  * reorganisation.
  */
 
-/* Ultimate ancestor */
+/* Ultimate ancestor for all other classes */
 
 # include "Object.hh"
 
@@ -48,15 +48,24 @@
 /* Scene-graph objects */
 
 # include "SceneObject.hh"
+
 # include "Scene.hh"
-# include "SceneParser.hh"
+
 # include "Prop.hh"
+
 # include "Primitive.hh"
 # include "Sphere.hh"
 # include "Cube.hh"
 
+# include "Light.hh"
+# include "PointLight.hh"
+
 /* Behaviours */
 
 # include "Transform.hh"
+
+/* I/O */
+
+# include "SceneParser.hh"
 
 #endif /*!YUKA_HH_*/

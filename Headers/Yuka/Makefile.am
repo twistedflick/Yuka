@@ -17,4 +17,5 @@ pkginclude_HEADERS = decl.h \
 	SceneObject.hh \
 	Scene.hh \
 	SceneParser.hh \
-	Prop.hh Primitive.hh Sphere.hh Cube.hh
+	Prop.hh Primitive.hh Sphere.hh Cube.hh \
+	Light.hh PointLight.hh

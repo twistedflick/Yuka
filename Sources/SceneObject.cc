@@ -70,6 +70,10 @@ SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties prope
 	{
 		obj = new Cube(kind);
 	}
+	else if(kind == "PointLight")
+	{
+		obj = new PointLight(kind);
+	}
 	if(obj)
 	{
 		obj->apply(properties);
