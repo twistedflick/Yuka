@@ -20,7 +20,7 @@
 #include "p_Yuka.hh"
 
 /* Protected constructor for Primitive objects */
-Primitive::Primitive(std::string kind):
+Primitive::Primitive(const std::string kind):
 	Prop(kind)
 {
 }

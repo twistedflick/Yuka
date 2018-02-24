@@ -20,7 +20,7 @@
 #include "p_Yuka.hh"
 
 /* Protected constructor for Prop objects */
-Prop::Prop(std::string kind):
+Prop::Prop(const std::string kind):
 	SceneObject(kind)
 {
 }

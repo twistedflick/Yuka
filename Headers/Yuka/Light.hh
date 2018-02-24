@@ -24,7 +24,7 @@ namespace Yuka
 	class YUKA_EXPORT_ Light: public SceneObject
 	{
 	protected:
-		Light(std::string kind);
+		Light(const std::string kind);
 		
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};

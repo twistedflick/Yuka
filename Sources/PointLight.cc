@@ -20,12 +20,12 @@
 #include "p_Yuka.hh"
 
 /* Protected constructor for PointLight objects */
-
-PointLight::PointLight(std::string kind):
+PointLight::PointLight(const std::string kind):
 	Light(kind)
 {
 }
 
+/* Dump our object properties to an ostream at the specified indent level */
 std::ostream &
 PointLight::dump(std::ostream &stream, int depth) const
 {

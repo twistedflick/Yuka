@@ -28,7 +28,7 @@ namespace Yuka
 	class Prop: public SceneObject
 	{
 	protected:
-		Prop(std::string kind);
+		Prop(const std::string kind);
 		
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};

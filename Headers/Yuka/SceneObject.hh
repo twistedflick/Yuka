@@ -31,7 +31,7 @@ namespace Yuka
 	public:
 		typedef std::unordered_map<std::string, std::string> Properties;
 	
-		static SceneObject *sceneObjectWithKind(std::string kind, Properties properties);
+		static SceneObject *sceneObjectWithKind(const std::string kind, Properties properties);
 		
 		virtual void add(SceneObject *child);
 		virtual bool apply(Properties properties);
@@ -51,7 +51,7 @@ namespace Yuka
 	
 		Transform *transform;
 	
-		SceneObject(std::string kind);
+		SceneObject(const std::string kind);
 		virtual ~SceneObject();
 
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;

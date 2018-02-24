@@ -20,12 +20,12 @@
 #include "p_Yuka.hh"
 
 /* Protected constructor for Light objects */
-
-Light::Light(std::string kind):
+Light::Light(const std::string kind):
 	SceneObject(kind)
 {
 }
 
+/* Dump our object properties to an ostream at the specified indent level */
 std::ostream &
 Light::dump(std::ostream &stream, int depth) const
 {

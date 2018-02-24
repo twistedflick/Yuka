@@ -26,7 +26,7 @@ namespace Yuka
 	{
 		friend class SceneObject;
 	protected:
-		Cube(std::string kind);
+		Cube(const std::string kind);
 		
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};

@@ -41,7 +41,7 @@ Scene::Scene():
 }
 
 /* Protected constructor for Scene objects */
-Scene::Scene(std::string kind):
+Scene::Scene(const std::string kind):
 	SceneObject(kind)
 {
 }

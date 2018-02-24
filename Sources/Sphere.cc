@@ -20,7 +20,7 @@
 #include "p_Yuka.hh"
 
 /* Protected constructor for Sphere objects */
-Sphere::Sphere(std::string name):
+Sphere::Sphere(const std::string name):
 	Primitive(name)
 {
 }

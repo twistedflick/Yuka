@@ -20,7 +20,7 @@
 #include "p_Yuka.hh"
 
 /* Protected constructor for Cube objects */
-Cube::Cube(std::string kind):
+Cube::Cube(const std::string kind):
 	Primitive(kind)
 {
 }

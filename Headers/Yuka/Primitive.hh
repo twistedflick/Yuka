@@ -23,12 +23,14 @@ namespace Yuka
 {
 
 	/* Primitives are the group of Prop classes which represent
-	 * primitive 3D objects: sphere, cuboid, plane, etc.
+	 * primitive 3D objects: sphere, cuboid, plane, etc. which do
+	 * not require a model to be loaded in order to be represented
+	 * fully.
 	 */
 	class YUKA_EXPORT_ Primitive: public Prop
 	{
 	protected:
-		Primitive(std::string kind);
+		Primitive(const std::string kind);
 		
 		virtual std::ostream &dump(std::ostream &stream, int depth) const;
 	};

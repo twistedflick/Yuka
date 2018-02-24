@@ -55,7 +55,7 @@ Yuka::operator<<(std::ostream& os, const SceneObject *me)
 
 /* Public factory method for new SceneObjects */
 SceneObject *
-SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties properties)
+SceneObject::sceneObjectWithKind(const std::string kind, SceneObject::Properties properties)
 {
 	SceneObject *obj = NULL;
 	
@@ -82,7 +82,7 @@ SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties prope
 }
 
 /* Protected constructor for SceneObjects */
-SceneObject::SceneObject(std::string kind):
+SceneObject::SceneObject(const std::string kind):
 	Object(),
 	kind(kind),
 	container(NULL),
