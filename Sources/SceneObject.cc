@@ -19,40 +19,6 @@
 
 #include "p_Yuka.hh"
 
-/* Allow a const SceneObject pointer to be serialised to a std::ostream
- * using the conventional stream << sceneobj notation.
- */
-std::ostream&
-Yuka::operator<<(std::ostream& os, const SceneObject *me)
-{
-	static thread_local int depth;
-	
-	SceneObject::List::Iterator i;
-	SceneObject *object;
-	std::string indent(depth, '\t');
-	int c;
-	
-	os << indent << me->kind << " ";
-	if(me->id.length())
-	{
-		os << '"' << me->id << '"';
-	}
-	os << "\n" << indent << "{\n";
-	me->dump(os, depth + 1);
-	i = NULL;
-	depth++;
-	c = 0;
-	while(me->children && me->children->next(&i, &object))
-	{
-		os << "\n";
-		os << object;
-		c++;
-	}
-	depth--;
-	os << indent << "};\n";
-	return os;
-}
-
 /* Public factory method for new SceneObjects */
 SceneObject *
 SceneObject::sceneObjectWithKind(const std::string kind, SceneObject::Properties properties)
@@ -84,10 +50,10 @@ SceneObject::sceneObjectWithKind(const std::string kind, SceneObject::Properties
 /* Protected constructor for SceneObjects */
 SceneObject::SceneObject(const std::string kind):
 	Object(),
-	kind(kind),
-	container(NULL),
-	children(NULL),
-	transform(NULL)
+	m_kind(kind),
+	m_container(NULL),
+	m_children(NULL),
+	m_transform(NULL)
 {
 /*	std::clog << "** SceneObject[0x" << std::hex << std::setw(8) << instanceId() << ":" << tag() << "]<" << kind << ">\n"; */
 }
@@ -95,13 +61,13 @@ SceneObject::SceneObject(const std::string kind):
 /* Public destructor for SceneObjects */
 SceneObject::~SceneObject()
 {
-	if(children)
+	if(m_children)
 	{
-		children->release();
+		m_children->release();
 	}
-	if(transform)
+	if(m_transform)
 	{
-		transform->release();
+		m_transform->release();
 	}
 /*
 	if(id.length())
@@ -115,6 +81,26 @@ SceneObject::~SceneObject()
 */
 }
 
+std::string
+SceneObject::kind(void) const
+{
+	if(m_kind.length())
+	{
+		return m_kind;
+	}
+	return "SceneObject";
+}
+
+std::string
+SceneObject::name(void) const
+{
+	if(m_id.length())
+	{
+		return m_id;
+	}
+	return Object::name();
+}
+
 /* Add a scene object to the scene graph as a child of this one. This won't
  * necessarily always make sense from any sort of rendering or physics
  * perspective, but it's easier to treat all objects as equivalent and having
@@ -125,20 +111,19 @@ SceneObject::~SceneObject()
 void
 SceneObject::add(SceneObject *child)
 {
-	if(!children)
+	if(!m_children)
 	{
-		children = new SceneObject::List();
+		m_children = new SceneObject::List();
 	}
-	child->retain();
-	children->add(child);
-	child->container = this;
+	m_children->add(child);
+	child->m_container = this;
 }
 
 /* Return a pointer to our parent (containing) SceneObject */
 SceneObject *
 SceneObject::parent(void)
 {
-	return container;
+	return m_container;
 }
 
 /* Apply a SceneObject::Properties map to this object, warning about any
@@ -172,50 +157,86 @@ SceneObject::set(const std::string key, const std::string value)
 {
 	if(key == "@id")
 	{
-		id = value;
+		m_id = value;
 		return true;
 	}
 	if(key == "x")
 	{
-		if(!transform)
+		if(!m_transform)
 		{
-			transform = new Transform();
+			m_transform = new Transform();
 		}
-		return transform->setX(value);
+		return m_transform->setX(value);
 	}
 	if(key == "y")
 	{
-		if(!transform)
+		if(!m_transform)
 		{
-			transform = new Transform();
+			m_transform = new Transform();
 		}
-		return transform->setY(value);
+		return m_transform->setY(value);
 	}
 	if(key == "z")
 	{
-		if(!transform)
+		if(!m_transform)
 		{
-			transform = new Transform();
+			m_transform = new Transform();
 		}
-		return transform->setZ(value);
+		return m_transform->setZ(value);
 	}
-	std::cerr << "Warning: Unsupported property " << kind << "['" << key << "']\n";
+	std::cerr << "Warning: Unsupported property " << kind() << "['" << key << "']\n";
 	return false;
 }
 
-/* Dump our object properties to an ostream at the specified indent level */
+/* Print our properties to a std::ostream */
 std::ostream &
-SceneObject::dump(std::ostream &stream, int depth) const
+SceneObject::printProperties(std::ostream &stream) const
 {
-	std::string indent(depth, '\t');
+	std::string indent = printIndent();
+	
+	Object::printProperties(stream);
 	
 	stream << indent << "/* SceneObject properties */\n";
 	
-	if(transform)
+	return stream;
+}
+
+/* Print our children to a std::ostream */
+std::ostream &
+SceneObject::printChildren(std::ostream &stream) const
+{
+	std::string indent = printIndent();
+	
+	SceneObject::List::Iterator i;
+	SceneObject *child;
+	
+	printBehaviours(stream);
+	
+	i = NULL;
+	child = NULL;
+	if(m_children)
 	{
-		stream << indent << "double x = " << transform->x() <<";\n";
-		stream << indent << "double y = " << transform->y() <<";\n";
-		stream << indent << "double z = " << transform->z() <<";\n";
+		stream << "\n" << indent << "/* " << kind() << " members */\n\n";
+	}
+	while(m_children && m_children->next(&i, &child))
+	{
+		stream << indent << child;
+		stream << "\n";
+	}
+	
+	return stream;
+}
+
+/* Print our behaviours to a std::ostream */
+std::ostream &
+SceneObject::printBehaviours(std::ostream &stream) const
+{
+	std::string indent = printIndent();
+	
+	stream << "\n" << indent << "/* Behaviours */\n\n";
+	if(m_transform)
+	{
+		stream << indent << "@transform = " << m_transform << ";\n";
 	}
 	return stream;
 }

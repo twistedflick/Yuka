@@ -36,25 +36,32 @@ namespace Yuka
 		virtual void add(SceneObject *child);
 		virtual bool apply(Properties properties);
 		virtual bool set(const std::string key, const std::string value);
-	
+		
 		virtual SceneObject *parent(void);
 		
-		friend YUKA_EXPORT_ std::ostream& operator<<(std::ostream &os, const SceneObject *me);
+		/* Return the kind of object that this is */
+		virtual std::string kind(void) const;
+
+		/* Return the name of this object, if any */
+		virtual std::string name(void) const;
+		
 	protected:
 	
 		class List;
 
-		std::string kind;
-		std::string id;
-		SceneObject *container;
-		List *children;
+		std::string m_kind;
+		std::string m_id;
+		SceneObject *m_container;
+		List *m_children;
 	
-		Transform *transform;
+		Transform *m_transform;
 	
 		SceneObject(const std::string kind);
 		virtual ~SceneObject();
 
-		virtual std::ostream &dump(std::ostream &stream, int depth) const;
+		virtual std::ostream &printProperties(std::ostream &stream) const;
+		virtual std::ostream &printChildren(std::ostream &stream) const;
+		virtual std::ostream &printBehaviours(std::ostream &stream) const;
 	};
 
 };

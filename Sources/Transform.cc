@@ -22,19 +22,19 @@
 /* Public constructors for Transform objects */
 
 Transform::Transform():
-	Object(),
+	Behaviour(),
 	m_position(0, 0, 0)
 {
 }
 
 Transform::Transform(const Point pos):
-	Object(),
+	Behaviour(),
 	m_position(pos)
 {
 }
 
 Transform::Transform(const double px, const double py, const double pz):
-	Object(),
+	Behaviour(),
 	m_position(Point(px, py, pz))
 {
 }
@@ -97,4 +97,24 @@ bool
 Transform::setZ(const std::string nz)
 {
 	return m_position.setZ(nz);
+}
+
+/* Return the name of this class, for introspection */
+std::string
+Transform::kind(void) const
+{
+	return "Transform";
+}
+
+/* Print our properties to a std::ostream */
+std::ostream &
+Transform::printProperties(std::ostream &stream) const
+{
+	std::string indent = printIndent();
+	
+	Behaviour::printProperties(stream);
+	
+	stream << indent << ".position = " << m_position << ";\n";
+	
+	return stream;
 }

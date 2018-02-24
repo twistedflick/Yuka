@@ -19,24 +19,7 @@
 
 #include "p_Yuka.hh"
 
-/* Allow a const Object pointer to be serialised to a std::ostream
- * using the conventional stream << obj notation.
- */
-std::ostream&
-Yuka::operator<<(std::ostream& os, const Object *me)
-{
-	os << "Object[" << me->instanceId() << ":" << me->tag() << ";";
-
-	return os;
-}
-
-std::ostream&
-Yuka::operator<<(std::ostream& os, const Object &me)
-{
-	os << "Object[" << me.instanceId() << ":" << me.tag() << ";";
-
-	return os;
-}
+static thread_local unsigned int indent_level;
 
 /* Protected constructor for new Object instances */
 Object::Object():
@@ -100,6 +83,65 @@ Object::instanceId(void) const
 	return (unsigned long) static_cast<const void *>(this);
 }
 
+/* Return the kind of object that this is */
+std::string
+Object::kind(void) const
+{
+	return "Object";
+}
+
+/* Return the internal representation of the kind of object that this is */
+std::string
+Object::internalKind(void) const
+{
+	return "Object";
+}
+
+/* Return the name of this object, if any */
+std::string
+Object::name(void) const
+{
+	char inststr[24];
+	
+	snprintf(inststr, sizeof(inststr), "auto_%08lx", instanceId());
+	return inststr;
+}
+
+/* Return display name of this object */
+std::string
+Object::displayName(void) const
+{
+	std::string xname = kind();
+	
+	xname.append(" ");
+	xname.append(name());
+
+	return xname;
+}
+
+/* Return the 'live' internal name of this object */
+std::string
+Object::internalName(void) const
+{
+	char inststr[24];
+	int xtag;
+	std::string xname = internalKind();
+
+	xname.append(" ");
+	xname.append(name());
+	xtag = tag();
+	if(xtag)
+	{
+		snprintf(inststr, sizeof(inststr), "[%d]", xtag);
+		xname.append(inststr);
+	}
+	snprintf(inststr, sizeof(inststr), "{%08lx}", instanceId());
+	xname.append(inststr);
+	
+	return xname;
+}
+
+
 /* Get and set an Object's tag */
 int
 Object::tag(void) const
@@ -111,4 +153,93 @@ void
 Object::setTag(int tag)
 {
 	m_tag = tag;
+}
+
+/* Dump an object to std::clog */
+void
+Object::dump(void) const
+{
+	print(std::clog);
+}
+
+/* Output a representation of this object to the provided stream */
+std::ostream &
+Object::print(std::ostream &stream) const
+{
+	std::string indent = printIndent();
+	
+	stream << displayName() << " = {\n";
+	printPush();
+	printProperties(stream);
+	printChildren(stream);
+	printPop();
+	stream << indent << "}";
+	return stream;
+}
+
+/* Output a representation of this object's properties to the provided stream */
+std::ostream &
+Object::printProperties(std::ostream &stream) const
+{
+	std::string indent = printIndent();
+	int t = tag();
+	
+	if(t)
+	{
+		stream << indent << ".tag = " << tag() << ";\n";
+	}
+	
+	return stream;
+}
+
+/* Output a representation of this object's children to the provided stream */
+std::ostream &
+Object::printChildren(std::ostream &stream) const
+{
+	return stream;
+}
+
+/* Return a string representing the current indentation level */
+std::string
+Object::printIndent(void) const
+{
+	return std::string(printDepth(), '\t');
+}
+
+/* Return the current print depth */
+unsigned int
+Object::printDepth(void) const
+{
+	return indent_level;
+}
+
+/* Push the indent level (increment it) */
+void
+Object::printPush(void) const
+{
+	indent_level++;
+}
+
+/* Pop the indent level (decrement it) */
+void
+Object::printPop(void) const
+{
+	indent_level--;
+}
+
+/* Allow a const Object pointer to be serialised to a std::ostream
+ * using the conventional stream << obj notation.
+ */
+std::ostream&
+Yuka::operator<<(std::ostream& os, const Object *me)
+{
+	me->print(os);
+	return os;
+}
+
+std::ostream&
+Yuka::operator<<(std::ostream& os, const Object &me)
+{
+	me.print(os);
+	return os;
 }

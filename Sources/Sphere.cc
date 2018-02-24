@@ -25,15 +25,15 @@ Sphere::Sphere(const std::string name):
 {
 }
 
-/* Dump our object properties to an ostream at the specified indent level */
+/* Print our properties to a std::ostream */
 std::ostream &
-Sphere::dump(std::ostream &stream, int depth) const
+Sphere::printProperties(std::ostream &stream) const
 {
-	std::string indent(depth, '\t');
-
-	Primitive::dump(stream, depth);
+	std::string indent = printIndent();
+	
+	SceneObject::printProperties(stream);
 	
 	stream << indent << "/* Sphere properties */\n";
-
+	
 	return stream;
 }

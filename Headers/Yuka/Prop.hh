@@ -30,7 +30,7 @@ namespace Yuka
 	protected:
 		Prop(const std::string kind);
 		
-		virtual std::ostream &dump(std::ostream &stream, int depth) const;
+		virtual std::ostream &printProperties(std::ostream &stream) const;
 	};
 
 };

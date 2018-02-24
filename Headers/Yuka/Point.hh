@@ -38,6 +38,8 @@ namespace Yuka
 		void setZ(const double nz);
 		bool setZ(const std::string nz);
 		
+		friend std::ostream &operator<<(std::ostream &stream, const Point &point);
+		friend std::ostream &operator<<(std::ostream &stream, const Point *point);
 	};
 	
 };

@@ -46,7 +46,9 @@ SceneObject::List::add(SceneObject *object)
 	List::Entry *e;
 	
 	e = new List::Entry();
+	e->next = NULL;
 	e->prev = last;
+	object->retain();
 	e->obj = object;
 	if(first)
 	{

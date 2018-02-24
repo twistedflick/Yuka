@@ -62,6 +62,7 @@
 
 /* Behaviours */
 
+# include "Behaviour.hh"
 # include "Transform.hh"
 
 /* I/O */

@@ -25,15 +25,15 @@ Light::Light(const std::string kind):
 {
 }
 
-/* Dump our object properties to an ostream at the specified indent level */
+/* Print our properties to a std::ostream */
 std::ostream &
-Light::dump(std::ostream &stream, int depth) const
+Light::printProperties(std::ostream &stream) const
 {
-	std::string indent(depth, '\t');
-
-	SceneObject::dump(stream, depth);
+	std::string indent = printIndent();
+	
+	SceneObject::printProperties(stream);
 	
 	stream << indent << "/* Light properties */\n";
-
+	
 	return stream;
 }

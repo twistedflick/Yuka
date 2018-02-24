@@ -25,15 +25,15 @@ Prop::Prop(const std::string kind):
 {
 }
 
-/* Dump our object properties to an ostream at the specified indent level */
+/* Print our properties to a std::ostream */
 std::ostream &
-Prop::dump(std::ostream &stream, int depth) const
+Prop::printProperties(std::ostream &stream) const
 {
-	std::string indent(depth, '\t');
-
-	SceneObject::dump(stream, depth);
+	std::string indent = printIndent();
+	
+	SceneObject::printProperties(stream);
 	
 	stream << indent << "/* Prop properties */\n";
-
+	
 	return stream;
 }

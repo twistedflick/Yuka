@@ -13,24 +13,39 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_POINTLIGHT_HH_
-# define YUKA_POINTLIGHT_HH_           1
+#ifndef YUKA_BEHAVIOUR_HH_
+# define YUKA_BEHAVIOUR_HH_            1
 
-# include "Light.hh"
-# include "SceneObject.hh"
-# include "decl.h"
+#include "Object.hh"
+#include "decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ PointLight: public Light
+	/* Behaviours are objects which alter how SceneObjects interact with
+	 * their environment (be that visually, physically, or in terms of
+	 * interactivity and state).
+	 *
+	 * Yuka::Transform is a key example of a behaviour.
+	 */
+
+	class YUKA_EXPORT_ Behaviour: public Object
 	{
-		friend class SceneObject;
-	protected:
-		PointLight(const std::string kind);
+	public:
+		virtual bool enabled(void) const;
+		virtual void enable(void);
+		virtual void disable(void);
+		virtual void setEnabled(const bool value);
 		
+		virtual std::string kind(void) const;
+	protected:
+		Behaviour();
+		
+		virtual std::ostream &print(std::ostream &stream) const;
 		virtual std::ostream &printProperties(std::ostream &stream) const;
+	private:
+		bool m_enabled;
 	};
 
 };
 
-#endif /*!YUKA_POINTLIGHT_HH_*/
+#endif /*!YUKA_BEHAVIOUR_HH_*/

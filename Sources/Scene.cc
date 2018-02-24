@@ -65,14 +65,15 @@ Scene::load(const char *pathname)
 	return ret;
 }
 
-/* Dump our object properties to an ostream at the specified indent level */
+/* Print our properties to a std::ostream */
 std::ostream &
-Scene::dump(std::ostream &stream, int depth) const
+Scene::printProperties(std::ostream &stream) const
 {
-	std::string indent(depth, '\t');
+	std::string indent = printIndent();
 	
-	SceneObject::dump(stream, depth);
+	SceneObject::printProperties(stream);
+	
 	stream << indent << "/* Scene properties */\n";
-
+	
 	return stream;
 }

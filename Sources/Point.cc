@@ -93,3 +93,19 @@ Point::setZ(const std::string nz)
 	z = d;
 	return 0;
 }
+
+std::ostream &
+Yuka::operator<<(std::ostream &stream, const Point &point)
+{
+	stream << "Point(" << point.x << ", " << point.y << ", " << point.z << ")";
+	
+	return stream;
+}
+
+std::ostream &
+Yuka::operator<<(std::ostream &stream, const Point *point)
+{
+	stream << "Point(" << point->x << ", " << point->y << ", " << point->z << ")";
+	
+	return stream;
+}

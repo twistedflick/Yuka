@@ -25,15 +25,15 @@ Primitive::Primitive(const std::string kind):
 {
 }
 
-/* Dump our object properties to an ostream at the specified indent level */
+/* Print our properties to a std::ostream */
 std::ostream &
-Primitive::dump(std::ostream &stream, int depth) const
+Primitive::printProperties(std::ostream &stream) const
 {
-	std::string indent(depth, '\t');
-
-	Prop::dump(stream, depth);
+	std::string indent = printIndent();
+	
+	SceneObject::printProperties(stream);
 	
 	stream << indent << "/* Primitive properties */\n";
-
+	
 	return stream;
 }

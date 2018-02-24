@@ -28,7 +28,7 @@ namespace Yuka
 	protected:
 		Sphere(const std::string kind);
 		
-		virtual std::ostream &dump(std::ostream &stream, int depth) const;
+		virtual std::ostream &printProperties(std::ostream &stream) const;
 	};
 
 };

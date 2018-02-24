@@ -16,12 +16,12 @@
 #ifndef YUKA_TRANSFORM_HH_
 # define YUKA_TRANSFORM_HH_            1
 
-#include "Object.hh"
+#include "Behaviour.hh"
 #include "decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ Transform: public Object
+	class YUKA_EXPORT_ Transform: public Behaviour
 	{
 	public:
 		Transform();
@@ -41,6 +41,9 @@ namespace Yuka
 		virtual void setZ(double nx);
 		virtual bool setZ(const std::string nx);
 		
+		virtual std::string kind(void) const;
+	protected:
+		virtual std::ostream &printProperties(std::ostream &stream) const;
 	private:
 		Point m_position;
 	};

@@ -44,20 +44,46 @@ namespace Yuka
 		 */
 		virtual unsigned long instanceId(void) const;
 		
+		/* Return the kind of object that this is */
+		virtual std::string kind(void) const;
+
+		/* Return the (verbose) internal kind of object that this is */
+		virtual std::string internalKind(void) const;
+		
+		/* Return the name of this object, if any */
+		virtual std::string name(void) const;
+		
+		/* Return consise qualified display name of this object */
+		virtual std::string displayName(void) const;
+		
+		/* Return the 'live' internal name of this object */
+		virtual std::string internalName(void) const;
+		
 		/* Return an arbitrary integer tag which can be associated with the
 		 * object.
 		 */
 		virtual int tag(void) const;
 		/* Set the arbitrary integer tag for an object */
 		virtual void setTag(int newTag);
+		
+		/* Dump an object to std::clog using print() */
+		virtual void dump(void) const;
 	protected:
 		Object();
 		Object(const Object &source);
 		Object(const Object *source);
 		virtual ~Object();
 		
-		friend YUKA_EXPORT_ std::ostream& operator<<(std::ostream &os, const Object *me);
-		friend YUKA_EXPORT_ std::ostream& operator<<(std::ostream &os, const Object &me);
+		virtual std::ostream &print(std::ostream &stream) const;
+		virtual std::ostream &printProperties(std::ostream &stream) const;
+		virtual std::ostream &printChildren(std::ostream &stream) const;
+		virtual unsigned int printDepth(void) const;
+		std::string printIndent(void) const;
+		void printPush(void) const;
+		void printPop(void) const;
+		
+		friend YUKA_EXPORT_ std::ostream &operator<<(std::ostream &stream, const Object *me);
+		friend YUKA_EXPORT_ std::ostream &operator<<(std::ostream &stream, const Object &me);
 	private:
 		unsigned long m_refcount;
 		int m_tag;

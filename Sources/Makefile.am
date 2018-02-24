@@ -25,7 +25,7 @@ libYuka_la_SOURCES = p_Yuka.hh \
 	Primitive.cc Sphere.cc Cube.cc \
 	Light.cc PointLight.cc \
 	SceneParser.cc XMLSceneParser.cc \
-	Transform.cc
+	Behaviour.cc Transform.cc
 
 libYuka_la_LDFLAGS = -avoid-version -no-undefined
 
