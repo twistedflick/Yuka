@@ -20,6 +20,7 @@
 #include "p_Yuka.hh"
 
 static thread_local unsigned int indent_level;
+static thread_local bool debug_enable;
 
 /* Protected constructor for new Object instances */
 Object::Object():
@@ -248,13 +249,34 @@ Object::dump(void) const
 	print(std::clog);
 }
 
+/* Enable debugging on this thread */
+void
+Object::debug(void)
+{
+	debug_enable = true;
+}
+
+/* Is debugging enabled on this thread? */
+bool
+Object::debugging(void) const
+{
+	return debug_enable;
+}
+
 /* Output a representation of this object to the provided stream */
 std::ostream &
 Object::print(std::ostream &stream) const
 {
 	std::string indent = printIndent();
 	
-	stream << displayName() << " = {\n";
+	if(debugging())
+	{
+		stream << internalName() << " = {\n";
+	}
+	else
+	{
+		stream << displayName() << " = {\n";
+	}
 	printPush();
 	printProperties(stream);
 	printChildren(stream);
@@ -270,7 +292,7 @@ Object::printProperties(std::ostream &stream) const
 	std::string indent = printIndent();
 	int t = tag();
 	
-	if(t)
+	if(t || debugging())
 	{
 		stream << indent << ".tag = " << t << ";\n";
 	}

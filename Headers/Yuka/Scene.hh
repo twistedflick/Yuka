@@ -29,7 +29,13 @@ namespace Yuka
 		
 		Scene();
 	
-		virtual int load(const char *pathname);
+		/* Constructor a parser for the supplied path and attempt to load
+		 * this scene into it.
+		 */
+		virtual bool load(const char *pathname);
+		
+		/* Add a child to the root of this scene */
+		virtual void add(SceneObject *child);
 	protected:
 		Scene(std::string kind);
 		

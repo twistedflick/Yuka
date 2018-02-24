@@ -26,18 +26,40 @@
 
 namespace Yuka
 {
+	class Scene;
+
 	class YUKA_EXPORT_ SceneObject: public Object
 	{
+		friend class Scene;
 	public:
 		typedef std::unordered_map<std::string, std::string> Properties;
 	
 		static SceneObject *sceneObjectWithKind(const std::string kind, Properties properties);
 		
+		/* Append child to our list of children */
 		virtual void add(SceneObject *child);
+		
+		/* Add a behaviour to this object */
+		virtual void add(Behaviour *behaviour);
+		
+		/* Remove a behaviour from this object */
+		virtual void remove(Behaviour *behaviour);
+		
+		/* Apply an unordered map of (string => string) properties to this
+		 * object
+		 */
 		virtual bool apply(Properties properties);
+		
+		/* Set a single named property to the specified string value,
+		 * converting to native types as required.
+		 */
 		virtual bool set(const std::string key, const std::string value);
 		
-		virtual SceneObject *parent(void);
+		/* Return our immediate parent in the scene graph */
+		virtual SceneObject *parent(void) const;
+		
+		/* Return the scene this object is attached to, if any */
+		virtual Scene *scene(void) const;
 		
 		/* Return the kind of object that this is */
 		virtual std::string kind(void) const;
@@ -53,6 +75,7 @@ namespace Yuka
 		std::string m_id;
 		SceneObject *m_container;
 		List *m_children;
+		YUKA_WEAKPTR_ Scene *m_scene;
 	
 		Transform *m_transform;
 	

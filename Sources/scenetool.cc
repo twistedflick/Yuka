@@ -42,9 +42,8 @@ main(int argc, char **argv)
 		std::cerr << argv[0] << ": failed to load scene '" << argv[1] << "'.\n";
 		return 1;
 	}
-	/* We don't DO anything with the loaded scene, so we can just
-	 * return success after cleaning up.
-	 */
+	/* Print the scene graph, then release it and return */
+	Yuka::Object::debug();
 	std::cout << scene << "\n";
 	scene->release();
 	return 0;

@@ -27,7 +27,7 @@ namespace Yuka
 	public:
 		static SceneParser *parserFromPath(const char *pathname);
 	
-		virtual int parseIntoScene(Scene *scene) = 0;
+		virtual bool parseIntoScene(Scene *scene) = 0;
 	protected:
 		virtual ~SceneParser();
 	};

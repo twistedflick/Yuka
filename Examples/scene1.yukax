@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Scene xmlns="https://twistedflick.github.io/Yuka/" xmlns:xlink="http://www.w3.org/1999/xlink/">
+<Scene xmlns="https://twistedflick.github.io/Yuka/" xmlns:xlink="http://www.w3.org/1999/xlink/" xml:id="scene1">
 	<Sphere x="0" y="0" z="2.5" xml:id="ball" scale="0.1" />
 	<Group x="20" z="2.5" xml:id="litbox">
 		<Cube />

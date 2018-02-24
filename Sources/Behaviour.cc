@@ -22,7 +22,8 @@
 /* Protected constructor for Behaviour objects */
 Behaviour::Behaviour():
 	Object(),
-	m_enabled(true)
+	m_enabled(true),
+	m_sceneobj(NULL)
 {
 }
 
@@ -69,6 +70,38 @@ Behaviour::disable(void)
 	m_enabled = false;
 }
 
+SceneObject *
+Behaviour::sceneObject(void) const
+{
+	return m_sceneobj;
+}
+
+/* Invoked by a SceneObject when a Behaviour is attached to it */
+void
+Behaviour::attachTo(SceneObject *obj)
+{
+	if(obj == m_sceneobj)
+	{
+		return;
+	}
+	if(m_sceneobj)
+	{
+		detachFrom(m_sceneobj);
+	}
+	m_sceneobj = obj;
+}
+
+/* Invoked by a SceneObject when a Behaviour is removed from it */
+void
+Behaviour::detachFrom(SceneObject *obj)
+{
+	if(obj != m_sceneobj)
+	{
+		return;
+	}
+	m_sceneobj = NULL;
+}
+
 bool
 Behaviour::set(const std::string key, const std::string value)
 {
@@ -102,5 +135,16 @@ Behaviour::printProperties(std::ostream &stream) const
 	
 	Object::printProperties(stream);
 	stream << indent << ".enabled = " << (enabled() ? "true" : "false") << ";\n";
+	if(debugging())
+	{
+		if(m_sceneobj)
+		{
+			stream << indent << ".sceneObject = " << m_sceneobj->internalName() << ";\n";
+		}
+		else
+		{
+			stream << indent << ".sceneObject = nil;\n";
+		}
+	}
 	return stream;
 }

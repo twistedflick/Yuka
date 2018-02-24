@@ -83,6 +83,10 @@ namespace Yuka
 		static bool parseBool(const std::string str, bool *out);
 		static bool parseInt(const std::string str, int *out);
 		static bool parseUInt(const std::string str, unsigned int *out);
+		
+	public:
+		/* Enable debugging output for objects on this thread */
+		static void debug(void);
 	protected:
 		Object();
 		Object(const Object &source);
@@ -96,6 +100,8 @@ namespace Yuka
 		std::string printIndent(void) const;
 		void printPush(void) const;
 		void printPop(void) const;
+		
+		bool debugging(void) const;
 		
 		friend YUKA_EXPORT_ std::ostream &operator<<(std::ostream &stream, const Object *me);
 		friend YUKA_EXPORT_ std::ostream &operator<<(std::ostream &stream, const Object &me);

@@ -57,6 +57,7 @@ SceneObject::SceneObject(const std::string kind):
 	m_kind(kind),
 	m_container(NULL),
 	m_children(NULL),
+	m_scene(NULL),
 	m_transform(NULL)
 {
 /*	std::clog << "** SceneObject[0x" << std::hex << std::setw(8) << instanceId() << ":" << tag() << "]<" << kind << ">\n"; */
@@ -121,13 +122,84 @@ SceneObject::add(SceneObject *child)
 	}
 	m_children->add(child);
 	child->m_container = this;
+	child->m_scene = this->m_scene;
 }
+
+/* Add and remove behaviours. Note that doing so retains the behaviour, and
+ * will also remove it from any other SceneObject that it is currently
+ * attached to.
+ */
+void
+SceneObject::add(Behaviour *behaviour)
+{
+	SceneObject *oldp;
+	Transform *t;
+	
+	behaviour->retain();
+	t = dynamic_cast<Transform *>(behaviour);
+	if(!t)
+	{
+		/* Currently we only support adding a Transform behaviour */
+		std::clog << "Attempt to add unsupported behaviour " << behaviour->internalName() << " to " << internalName() << "\n";
+		behaviour->release();
+		return;
+	}
+	oldp = behaviour->sceneObject();
+	if(oldp && oldp == this)
+	{
+		/* This behaviour is already attached to this scene object */
+		behaviour->release();
+		return;
+	}
+	if(oldp)
+	{
+		/* Remove the behaviour from the scene object it was previously
+		 * attached to
+		 */
+		oldp->remove(behaviour);
+	}
+	/* Tell the behaviour that we're adding it to this scene object */
+	behaviour->attachTo(this);
+	if(t)
+	{
+		/* If it was a Transform, we can set m_transform to it */
+		m_transform = t;
+	}
+	else
+	{
+		/* For now, just release it, as we don't have a list of behaviours */
+
+		/* Note that this code is not ever executed due to the hard preflight
+		 * check driven by the dynamic_cast<>() result.
+		 */
+		behaviour->release();
+	}
+}
+
+void
+SceneObject::remove(Behaviour *behaviour)
+{
+	if(behaviour == m_transform)
+	{
+		behaviour->detachFrom(this);
+		m_transform = NULL;
+	}
+}
+
+/* Remove a behaviour from our object, releasing it */
 
 /* Return a pointer to our parent (containing) SceneObject */
 SceneObject *
-SceneObject::parent(void)
+SceneObject::parent(void) const
 {
 	return m_container;
+}
+
+/* Return a pointer to the scene we're a part of, if any */
+Scene *
+SceneObject::scene(void) const
+{
+	return m_scene;
 }
 
 /* Apply a SceneObject::Properties map to this object, warning about any
@@ -144,7 +216,7 @@ SceneObject::apply(SceneObject::Properties properties)
 	result = true;
 	for(i = properties.begin(); i != properties.end(); ++i)
 	{
-		if(set(i->first, i->second))
+		if(!set(i->first, i->second))
 		{
 			result = false;
 		}
@@ -170,7 +242,9 @@ SceneObject::set(const std::string key, const std::string value)
 	{
 		if(!m_transform)
 		{
-			m_transform = new Transform();
+			Transform *t = new Transform();
+			add(t);
+			t->release();
 		}
 		return m_transform->set(key, value);
 	}
@@ -187,6 +261,17 @@ SceneObject::printProperties(std::ostream &stream) const
 	
 	stream << indent << "/* SceneObject properties */\n";
 	
+	if(debugging())
+	{
+		if(m_scene)
+		{
+			stream << indent << ".scene = " << m_scene->internalName() << ";\n";
+		}
+		else
+		{
+			stream << indent << ".scene = nil;\n";
+		}
+	}
 	return stream;
 }
 

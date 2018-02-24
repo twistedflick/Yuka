@@ -29,7 +29,7 @@ namespace Yuka
 	
 		virtual ~XMLSceneParser();
 	
-		virtual int parseIntoScene(Scene *scene);
+		virtual bool parseIntoScene(Scene *scene);
 	protected:
 		xmlTextReaderPtr reader;
 		SceneObject *parent;
@@ -37,7 +37,7 @@ namespace Yuka
 	
 		XMLSceneParser(xmlTextReaderPtr reader);
 	
-		int processNode();
+		bool processNode();
 	};
 };
 

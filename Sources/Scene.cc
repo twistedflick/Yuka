@@ -26,7 +26,7 @@ Scene::sceneFromPath(const char *pathname)
 	Scene *obj;
 	
 	obj = new Scene();
-	if(obj->load(pathname))
+	if(!obj->load(pathname))
 	{
 		obj->release();
 		return NULL;
@@ -49,20 +49,28 @@ Scene::Scene(const std::string kind):
 /* Convenience method to load the contents of a file into an existing
  * scene.
  */
-int
+bool
 Scene::load(const char *pathname)
 {
 	SceneParser *parser;
-	int ret;
+	bool ret;
 	
 	parser = SceneParser::parserFromPath(pathname);
 	if(!parser)
 	{
-		return -1;
+		return false;
 	}
 	ret = parser->parseIntoScene(this);
 	parser->release();
 	return ret;
+}
+
+/* Add a SceneObject to the root of this scene */
+void
+Scene::add(SceneObject *child)
+{
+	SceneObject::add(child);
+	child->m_scene = this;
 }
 
 /* Print our properties to a std::ostream */

@@ -57,7 +57,7 @@ XMLSceneParser::~XMLSceneParser()
 	xmlFreeTextReader(reader);
 }
 
-int
+bool
 XMLSceneParser::parseIntoScene(Scene *scene)
 {
 	int ret;
@@ -71,9 +71,10 @@ XMLSceneParser::parseIntoScene(Scene *scene)
 	 */
 	while(ret == 1)
 	{
-		if((ret = processNode()))
+		if(!processNode())
 		{
-			/* processNode() returns non-zero on error */
+			/* processNode() returns false on error */
+			ret = -1;
 			break;
 		}
 		ret = xmlTextReaderRead(reader);
@@ -86,12 +87,13 @@ XMLSceneParser::parseIntoScene(Scene *scene)
 		 * processed successfully; as it's non-zero here, we
 		 * know an error occurred.
 		 */
-		return -1;
+		std::clog << "An error occurred while parsing the XML document into the scene.\n";
+		return false;
 	}
-	return 0;
+	return true;
 }
 
-int
+bool
 XMLSceneParser::processNode()
 {
 	const char *name, *lname, *ns;
@@ -117,7 +119,7 @@ XMLSceneParser::processNode()
 			if(!ns)
 			{
 				std::cerr << "Scene description contains XML elements without a namespace at <" << name << ">\n";
-				return -1;
+				return false;
 			}
 			if(!strcmp(ns, NS_YUKA))
 			{
@@ -159,21 +161,23 @@ XMLSceneParser::processNode()
 			{
 				if(objname == "Scene")
 				{
-					/* Skip the root, because this->parent is already set */
+					/* Don't try to create a new scene object, because
+					 * this->parent is already set
+					*/
 					root = false;
-					return 0;
+					return parent->apply(attributes);
 				}
 				else
 				{
 					std::cerr << "Expected a root <Scene /> element in namespace <" NS_YUKA ">, found <" << name << " /> in namespace <" << ns << ">\n";
-					return -1;
+					return false;
 				}
 			}
 			obj = SceneObject::sceneObjectWithKind(objname, attributes);
 			if(!obj)
 			{
 				std::cerr << "Unable to create a new scene object for <" << name << ">\n";
-				return -1;
+				return false;
 			}
 			parent->add(obj);
 			if(isempty)
@@ -202,5 +206,5 @@ XMLSceneParser::processNode()
 			std::clog << "Ignoring node " << type << ", name = '" << ((const char *) name) << "'\n";
 */
 	}
-	return 0;
+	return true;
 }

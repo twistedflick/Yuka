@@ -21,6 +21,7 @@
 
 #undef YUKA_EXPORT_
 #undef YUKA_PRIVATE_
+#undef YUKA_WEAKPTR_
 #ifdef __GNUC__
 # define YUKA_EXPORT_ __attribute__((visibility ("default")))
 # define YUKA_PRIVATE_ __attribute__((visibility ("hidden")))
@@ -28,3 +29,4 @@
 # define YUKA_EXPORT_
 # define YUKA_PRIVATE_
 #endif
+#define YUKA_WEAKPTR_
