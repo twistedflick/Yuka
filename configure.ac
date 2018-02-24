@@ -23,12 +23,32 @@ AM_INIT_AUTOMAKE([foreign subdir-objects])
 AM_MAINTAINER_MODE
 AC_CONFIG_HEADER([config.h])
 
+# AC_PROG_C and AC_PROG_CXX violate automake's normal rules for historical
+# reasons and will modify CFLAGS and CXXFLAGS if the compiler is determined
+# to be GCC (or compatible). Because user flags (CXXFLAGS) always come after
+# our own flags (AM_CXXFLAGS), this has the effect of potentially reversing
+# flags that we supply even when the user didn't ask us to.
+#
+# To counteract this, we save copies of CFLAGS and CXXFLAGS early and
+# restore them after performing basic compiler tests. We only do this in
+# the case of GCC, in the event hat AC_PROG_CXX() needs to update CXXFLAGS
+# for more critical reasons (which it ought not to, but we should be
+# conservative and deal only with cases we know about -- the scope can be
+# expanded necessary if needed).
+AS_VAR_SET([original_CFLAGS], ["$CFLAGS"])
+AS_VAR_SET([original_CXXFLAGS], ["$CXXFLAGS"])
+
 #############################################################################
 ## Check for basic system utilities and build tools (e.g., compilers)      ##
 #############################################################################
 
 AC_PROG_LN_S
 AC_PROG_CXX([clang++ g++ c++])
+
+if test x"$GXX" = x"yes" ; then
+	AS_VAR_SET([CFLAGS], ["$original_CFLAGS"])
+	AS_VAR_SET([CXXFLAGS], ["$original_CXXFLAGS"])
+fi
 
 LT_INIT
 
