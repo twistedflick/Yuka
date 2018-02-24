@@ -33,8 +33,9 @@ namespace Yuka
 	
 		static SceneObject *sceneObjectWithKind(std::string kind, Properties properties);
 		
-		virtual int add(SceneObject *child);
-		virtual int apply(Properties properties);
+		virtual void add(SceneObject *child);
+		virtual bool apply(Properties properties);
+		virtual bool set(const std::string key, const std::string value);
 	
 		virtual SceneObject *parent(void);
 		

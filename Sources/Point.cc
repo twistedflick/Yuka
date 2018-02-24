@@ -24,3 +24,72 @@ Point::Point(const double px, const double py, const double pz):
 	x(px), y(py), z(pz)
 {
 }
+
+void
+Point::setX(const double nx)
+{
+	x = nx;
+}
+
+bool
+Point::setX(const std::string nx)
+{
+	char *endp;
+	double d;
+	
+	endp = NULL;
+	d = ::strtod(nx.c_str(), &endp);
+	if(endp && *endp)
+	{
+		std::cerr << "Error: Cannot convert '" << nx << "' to a Point::x co-ordinate\n";
+		return -1;
+	}
+	x = d;
+	return 0;
+}
+
+void
+Point::setY(const double ny)
+{
+	y = ny;
+}
+
+bool
+Point::setY(const std::string ny)
+{
+	char *endp;
+	double d;
+	
+	endp = NULL;
+	d = ::strtod(ny.c_str(), &endp);
+	if(endp && *endp)
+	{
+		std::cerr << "Error: Cannot convert '" << ny << "' to a Point::y co-ordinate\n";
+		return -1;
+	}
+	y = d;
+	return 0;
+}
+
+void
+Point::setZ(const double nz)
+{
+	z = nz;
+}
+
+bool
+Point::setZ(const std::string nz)
+{
+	char *endp;
+	double d;
+	
+	endp = NULL;
+	d = ::strtod(nz.c_str(), &endp);
+	if(endp && *endp)
+	{
+		std::cerr << "Error: Cannot convert '" << nz << "' to a Point::z co-ordinate\n";
+		return -1;
+	}
+	z = d;
+	return 0;
+}

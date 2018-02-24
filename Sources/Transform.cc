@@ -51,14 +51,50 @@ Transform::x(void) const
 	return m_position.x;
 }
 
+void
+Transform::setX(const double nx)
+{
+	m_position.x = nx;
+}
+
+bool
+Transform::setX(const std::string nx)
+{
+	return m_position.setX(nx);
+}
+
 double
 Transform::y(void) const
 {
 	return m_position.y;
 }
 
+void
+Transform::setY(const double ny)
+{
+	m_position.y = ny;
+}
+
+bool
+Transform::setY(const std::string ny)
+{
+	return m_position.setY(ny);
+}
+
 double
 Transform::z(void) const
 {
 	return m_position.z;
+}
+
+void
+Transform::setZ(const double nz)
+{
+	m_position.z = nz;
+}
+
+bool
+Transform::setZ(const std::string nz)
+{
+	return m_position.setZ(nz);
 }

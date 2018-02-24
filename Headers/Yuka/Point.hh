@@ -16,7 +16,9 @@
 #ifndef YUKA_POINT_HH_
 # define YUKA_POINT_HH_                1
 
-#include "decl.h"
+# include <string>
+
+# include "decl.h"
 
 namespace Yuka
 {
@@ -28,6 +30,14 @@ namespace Yuka
 		double z;
 		
 		Point(const double nx, const double ny, const double nz);
+		
+		void setX(const double nx);
+		bool setX(const std::string nx);
+		void setY(const double ny);
+		bool setY(const std::string ny);
+		void setZ(const double nz);
+		bool setZ(const std::string nz);
+		
 	};
 	
 };

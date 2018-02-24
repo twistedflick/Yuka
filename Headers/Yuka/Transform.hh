@@ -30,8 +30,17 @@ namespace Yuka
 		
 		virtual Point position(void) const;
 		virtual double x(void) const;
+		virtual void setX(double nx);
+		virtual bool setX(const std::string nx);
+
 		virtual double y(void) const;
+		virtual void setY(double nx);
+		virtual bool setY(const std::string nx);
+
 		virtual double z(void) const;
+		virtual void setZ(double nx);
+		virtual bool setZ(const std::string nx);
+		
 	private:
 		Point m_position;
 	};

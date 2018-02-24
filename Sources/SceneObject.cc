@@ -72,12 +72,7 @@ SceneObject::sceneObjectWithKind(std::string kind, SceneObject::Properties prope
 	}
 	if(obj)
 	{
-		if(obj->apply(properties) < 0)
-		{
-			/* There was a hard error applying the properties */
-			obj->release();
-			return NULL;
-		}
+		obj->apply(properties);
 	}
 	return obj;
 }
@@ -123,7 +118,7 @@ SceneObject::~SceneObject()
  * prevent hypothetical instances of programmer error which are unlikely to
  * actually be damaging (even if irritating).
  */
-int
+void
 SceneObject::add(SceneObject *child)
 {
 	if(!children)
@@ -133,7 +128,6 @@ SceneObject::add(SceneObject *child)
 	child->retain();
 	children->add(child);
 	child->container = this;
-	return 0;
 }
 
 /* Return a pointer to our parent (containing) SceneObject */
@@ -144,27 +138,65 @@ SceneObject::parent(void)
 }
 
 /* Apply a SceneObject::Properties map to this object, warning about any
- * properties we don't understand. Descendents should override this method
- * to catch properties it knows about before invoking this implementation.
+ * properties we don't understand. Descendents should override
+ * SceneObject::set() to catch properties it knows about before invoking this
+ * implementation.
  */
-int
+bool
 SceneObject::apply(SceneObject::Properties properties)
 {
 	SceneObject::Properties::iterator i;
-	int e;
+	bool result;
 	
-	e = 0;
+	result = true;
 	for(i = properties.begin(); i != properties.end(); ++i)
 	{
-		if(i->first == "@id")
+		if(set(i->first, i->second))
 		{
-			id = i->second;
-			continue;
+			result = false;
 		}
-		std::cerr << "Warning: Unsupported property '" << i->first << "' in definition of <" << kind << ">\n";
-		e = 1;
 	}
-	return e;
+	return result;
+}
+
+/* Attempt to set a property on this SceneObject, warning about any properties
+ * that aren't understood.  Descendents should override this method
+ * to catch properties it knows about before invoking this implementation.
+ */
+bool
+SceneObject::set(const std::string key, const std::string value)
+{
+	if(key == "@id")
+	{
+		id = value;
+		return true;
+	}
+	if(key == "x")
+	{
+		if(!transform)
+		{
+			transform = new Transform();
+		}
+		return transform->setX(value);
+	}
+	if(key == "y")
+	{
+		if(!transform)
+		{
+			transform = new Transform();
+		}
+		return transform->setY(value);
+	}
+	if(key == "z")
+	{
+		if(!transform)
+		{
+			transform = new Transform();
+		}
+		return transform->setZ(value);
+	}
+	std::cerr << "Warning: Unsupported property " << kind << "['" << key << "']\n";
+	return false;
 }
 
 /* Dump our object properties to an ostream at the specified indent level */
