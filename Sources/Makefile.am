@@ -21,6 +21,7 @@ libYuka_la_SOURCES = p_Yuka.hh \
 	Object.cc \
 	SceneObject.cc SceneObjectList.cc \
 	Scene.cc \
+	Group.cc \
 	Prop.cc \
 	Primitive.cc Sphere.cc Cube.cc \
 	Light.cc PointLight.cc \

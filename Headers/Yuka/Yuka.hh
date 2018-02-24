@@ -53,6 +53,7 @@
 # include "SceneObject.hh"
 
 # include "Scene.hh"
+# include "Group.hh"
 
 /* Props */
 

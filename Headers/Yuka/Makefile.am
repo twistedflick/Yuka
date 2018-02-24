@@ -20,5 +20,6 @@ pkginclude_HEADERS = decl.h \
 	Scene.hh \
 	SceneParser.hh \
 	Prop.hh \
+	Group.hh \
 	Light.hh \
 	Behaviour.hh

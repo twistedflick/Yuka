@@ -40,6 +40,10 @@ SceneObject::sceneObjectWithKind(const std::string kind, SceneObject::Properties
 	{
 		obj = new PointLight(kind);
 	}
+	else if(kind == "Group")
+	{
+		obj = new Group(kind);
+	}
 	if(obj)
 	{
 		obj->apply(properties);
