@@ -44,6 +44,19 @@ Behaviour::setEnabled(bool value)
 	m_enabled = value;
 }
 
+bool
+Behaviour::setEnabled(std::string value)
+{
+	bool b;
+	
+	if(!parseBool(value, &b))
+	{
+		return false;
+	}
+	m_enabled = b;
+	return true;
+}
+
 void
 Behaviour::enable(void)
 {
@@ -54,6 +67,16 @@ void
 Behaviour::disable(void)
 {
 	m_enabled = false;
+}
+
+bool
+Behaviour::set(const std::string key, const std::string value)
+{
+	if(key == "enabled")
+	{
+		return setEnabled(value);
+	}
+	return Object::set(key, value);
 }
 
 /* Output a representation of this object to the provided stream */
@@ -77,6 +100,7 @@ Behaviour::printProperties(std::ostream &stream) const
 {
 	std::string indent = printIndent();
 	
+	Object::printProperties(stream);
 	stream << indent << ".enabled = " << (enabled() ? "true" : "false") << ";\n";
 	return stream;
 }

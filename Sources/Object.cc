@@ -94,10 +94,10 @@ Object::kind(void) const
 std::string
 Object::internalKind(void) const
 {
-	return "Object";
+	return kind();
 }
 
-/* Return the name of this object, if any */
+/* Return the name of this object, providing one if none has been set */
 std::string
 Object::name(void) const
 {
@@ -107,7 +107,7 @@ Object::name(void) const
 	return inststr;
 }
 
-/* Return display name of this object */
+/* Return display name of this object in the form "<type> <name>" */
 std::string
 Object::displayName(void) const
 {
@@ -155,6 +155,87 @@ Object::setTag(int tag)
 	m_tag = tag;
 }
 
+bool
+Object::setTag(const std::string str)
+{
+	return parseInt(str, &m_tag);
+}
+
+bool
+Object::set(const std::string key, const std::string value)
+{
+	if(key == "tag")
+	{
+		return setTag(value);
+	}
+	std::cerr << "Warning: Unsupported property " << kind() << "['" << key << "']\n";
+	return false;
+}
+
+/* String to native type conversions */
+bool
+Object::parseInt(const std::string str, int *out)
+{
+	char *endp;
+	int d;
+	
+	endp = NULL;
+	d = (int) ::strtol(str.c_str(), &endp, 0);
+	if(endp && *endp)
+	{
+		std::cerr << "Error: Cannot convert '" << str << "' to an integer value\n";
+		return false;
+	}
+	*out = d;
+	return true;
+}
+
+bool
+Object::parseBool(const std::string str, bool *out)
+{
+	std::string lstr;
+	char *endp;
+	int d;
+	
+	lstr = str;
+	std::transform(lstr.begin(), lstr.end(), lstr.begin(), [](unsigned char c){ return std::tolower(c); });
+	if(lstr == "t" || lstr == "true" || lstr == "yes" || lstr == "y" || lstr == "on")
+	{
+		*out = true;
+		return true;
+	}
+	if(lstr == "f" || lstr == "false" || lstr == "no" || lstr == "no" || lstr == "on")
+	{
+		*out = false;
+		return true;
+	}
+	endp = NULL;
+	d = (int) ::strtol(str.c_str(), &endp, 0);
+	if(endp && *endp)
+	{
+		std::cerr << "Error: Cannot convert '" << str << "' to boolean value\n";
+		return false;
+	}
+	*out = d ? true : false;
+	return true;
+}
+bool
+Object::parseDouble(const std::string str, double *out)
+{
+	char *endp;
+	double d;
+	
+	endp = NULL;
+	d = ::strtod(str.c_str(), &endp);
+	if(endp && *endp)
+	{
+		std::cerr << "Error: Cannot convert '" << str << "' to a double-precision floating point value\n";
+		return false;
+	}
+	*out = d;
+	return true;
+}
+
 /* Dump an object to std::clog */
 void
 Object::dump(void) const
@@ -186,7 +267,7 @@ Object::printProperties(std::ostream &stream) const
 	
 	if(t)
 	{
-		stream << indent << ".tag = " << tag() << ";\n";
+		stream << indent << ".tag = " << t << ";\n";
 	}
 	
 	return stream;

@@ -47,10 +47,10 @@ Vector::setX(const std::string nx)
 	if(endp && *endp)
 	{
 		std::cerr << "Error: Cannot convert '" << nx << "' to a Vector::x co-ordinate\n";
-		return -1;
+		return false;
 	}
 	x = d;
-	return 0;
+	return true;
 }
 
 void
@@ -70,10 +70,10 @@ Vector::setY(const std::string ny)
 	if(endp && *endp)
 	{
 		std::cerr << "Error: Cannot convert '" << ny << "' to a Vector::y co-ordinate\n";
-		return -1;
+		return false;
 	}
 	y = d;
-	return 0;
+	return true;
 }
 
 void
@@ -93,10 +93,10 @@ Vector::setZ(const std::string nz)
 	if(endp && *endp)
 	{
 		std::cerr << "Error: Cannot convert '" << nz << "' to a Vector::z co-ordinate\n";
-		return -1;
+		return false;
 	}
 	z = d;
-	return 0;
+	return true;
 }
 
 std::string

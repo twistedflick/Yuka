@@ -212,6 +212,141 @@ Transform::setScale(const double factor)
 	m_scale = Scale(factor);
 }
 
+bool
+Transform::setScale(const std::string factor)
+{
+	double fac;
+	
+	if(!Object::parseDouble(factor, &fac))
+	{
+		return false;
+	}
+	m_scale = Scale(fac);
+	return true;
+}
+
+double
+Transform::scaleX(void) const
+{
+	return m_scale.x;
+}
+
+void
+Transform::setScaleX(const double nx)
+{
+	m_scale.x = nx;
+}
+
+bool
+Transform::setScaleX(const std::string factor)
+{
+	double nx;
+	
+	if(!Object::parseDouble(factor, &nx))
+	{
+		return false;
+	}
+	m_scale.x = nx;
+	return true;
+}
+
+double
+Transform::scaleY(void) const
+{
+	return m_scale.y;
+}
+
+void
+Transform::setScaleY(const double ny)
+{
+	m_scale.y = ny;
+}
+
+bool
+Transform::setScaleY(const std::string factor)
+{
+	double ny;
+	
+	if(!Object::parseDouble(factor, &ny))
+	{
+		return false;
+	}
+	m_scale.y = ny;
+	return true;
+}
+
+double
+Transform::scaleZ(void) const
+{
+	return m_scale.z;
+}
+
+void
+Transform::setScaleZ(const double nz)
+{
+	m_scale.z = nz;
+}
+
+bool
+Transform::setScaleZ(const std::string factor)
+{
+	double nz;
+	
+	if(!Object::parseDouble(factor, &nz))
+	{
+		return false;
+	}
+	m_scale.z = nz;
+	return true;
+}
+
+/* Set a named property from a string value */
+bool
+Transform::set(const std::string key, const std::string value)
+{
+	if(key == "x")
+	{
+		return setX(value);
+	}
+	if(key == "y")
+	{
+		return setY(value);
+	}
+	if(key == "z")
+	{
+		return setZ(value);
+	}
+	if(key == "rx")
+	{
+		return setRotX(value);
+	}
+	if(key == "ry")
+	{
+		return setRotY(value);
+	}
+	if(key == "rz")
+	{
+		return setRotZ(value);
+	}
+	if(key == "sx")
+	{
+		return setScaleX(value);
+	}
+	if(key == "sy")
+	{
+		return setScaleY(value);
+	}
+	if(key == "sz")
+	{
+		return setScaleZ(value);
+	}
+	if(key == "scale")
+	{
+		return setScale(value);
+	}
+	return Behaviour::set(key, value);
+}
+
 /* Return the name of this class, for introspection */
 std::string
 Transform::kind(void) const

@@ -65,9 +65,24 @@ namespace Yuka
 		virtual int tag(void) const;
 		/* Set the arbitrary integer tag for an object */
 		virtual void setTag(int newTag);
+		virtual bool setTag(const std::string tag);
+		
+		/* Set a named property to a supplied value, emitting a warning
+		 * and returning false upon error.
+		 */
+		virtual bool set(const std::string key, const std::string value);
 		
 		/* Dump an object to std::clog using print() */
 		virtual void dump(void) const;
+	public:
+		/* Utility methods for converting values supplied via set() into
+		 * native types; these methods return false upon error and log
+		 * a message to std::cerr.
+		 */
+		static bool parseDouble(const std::string str, double *out);
+		static bool parseBool(const std::string str, bool *out);
+		static bool parseInt(const std::string str, int *out);
+		static bool parseUInt(const std::string str, unsigned int *out);
 	protected:
 		Object();
 		Object(const Object &source);

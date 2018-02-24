@@ -35,8 +35,11 @@ namespace Yuka
 		virtual void enable(void);
 		virtual void disable(void);
 		virtual void setEnabled(const bool value);
+		virtual bool setEnabled(const std::string value);
 		
 		virtual std::string kind(void) const;
+		
+		virtual bool set(const std::string key, const std::string value);
 	protected:
 		Behaviour();
 		

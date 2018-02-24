@@ -160,32 +160,17 @@ SceneObject::set(const std::string key, const std::string value)
 		m_id = value;
 		return true;
 	}
-	if(key == "x")
+	if(key == "x" || key == "y" || key == "z" ||
+		key == "rx" || key == "ry" || key == "rz" ||
+		key == "scale" || key == "sx" || key == "sy" || key == "sz")
 	{
 		if(!m_transform)
 		{
 			m_transform = new Transform();
 		}
-		return m_transform->setX(value);
+		return m_transform->set(key, value);
 	}
-	if(key == "y")
-	{
-		if(!m_transform)
-		{
-			m_transform = new Transform();
-		}
-		return m_transform->setY(value);
-	}
-	if(key == "z")
-	{
-		if(!m_transform)
-		{
-			m_transform = new Transform();
-		}
-		return m_transform->setZ(value);
-	}
-	std::cerr << "Warning: Unsupported property " << kind() << "['" << key << "']\n";
-	return false;
+	return Object::set(key, value);
 }
 
 /* Print our properties to a std::ostream */
@@ -220,8 +205,7 @@ SceneObject::printChildren(std::ostream &stream) const
 	}
 	while(m_children && m_children->next(&i, &child))
 	{
-		stream << indent << child;
-		stream << "\n";
+		stream << indent << child << ";\n";
 	}
 	
 	return stream;

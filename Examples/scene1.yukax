@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Scene xmlns="https://twistedflick.github.io/Yuka/" xmlns:xlink="http://www.w3.org/1999/xlink/">
-	<Sphere x="0" y="0" z="2.5" xml:id="ball" />
+	<Sphere x="0" y="0" z="2.5" xml:id="ball" scale="0.1" />
 	<Cube xml:id="box" x="20" z="2.5" />
 	<PointLight x="10" y="10" z="10" />
 </Scene>

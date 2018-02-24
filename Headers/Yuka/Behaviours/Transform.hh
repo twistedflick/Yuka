@@ -64,7 +64,21 @@ namespace Yuka
 		virtual Scale scale(void) const;
 		virtual void setScale(const Scale factor);
 		virtual void setScale(const double factor);
+		virtual bool setScale(const std::string factor);
 		
+		virtual double scaleX(void) const;
+		virtual void setScaleX(const double nx) ;
+		virtual bool setScaleX(const std::string factor);
+
+		virtual double scaleY(void) const;
+		virtual void setScaleY(const double nx) ;
+		virtual bool setScaleY(const std::string factor);
+		
+		virtual double scaleZ(void) const;
+		virtual void setScaleZ(const double nx) ;
+		virtual bool setScaleZ(const std::string factor);
+		
+		virtual bool set(const std::string key, const std::string value);
 		virtual std::string kind(void) const;
 	protected:
 		virtual std::ostream &printProperties(std::ostream &stream) const;
