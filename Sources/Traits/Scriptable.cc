@@ -22,9 +22,15 @@
 bool
 Scriptable::set(const std::string key, const std::string value)
 {
-	const Identifiable *id = dynamic_cast<Identifiable *>(this);
+	Identifiable *id = dynamic_cast<Identifiable *>(this);
 	
-	(void) value;
+	if(id)
+	{
+		if(key == "tag")
+		{
+			return id->setTag(value);
+		}
+	}
 	
 	std::cerr << "Warning: Unsupported property: ";
 	if(id)

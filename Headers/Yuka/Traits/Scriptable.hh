@@ -36,7 +36,7 @@ namespace Yuka
 			 * and returning false upon error.
 			 */
 			virtual bool set(const std::string key, const std::string value);
-		protected:
+		public:
 			/* Utility methods for converting values supplied via set() into
 			 * native types; these methods return false upon error and log
 			 * a message to std::cerr.

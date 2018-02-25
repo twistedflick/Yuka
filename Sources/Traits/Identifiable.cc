@@ -19,6 +19,24 @@
 
 #include "p_YukaTraits.hh"
 
+/* Protected constructors for Identifiable objects */
+Identifiable::Identifiable():
+	m_tag(0)
+{
+}
+
+/* Protected constructors for Identifiable objects */
+Identifiable::Identifiable(const Identifiable *src):
+	m_tag(src->tag())
+{
+}
+
+/* Protected constructors for Identifiable objects */
+Identifiable::Identifiable(const Identifiable &src):
+	m_tag(src.tag())
+{
+}
+
 /* Return an object's instance identifier */
 unsigned long
 Identifiable::instanceId(void) const
@@ -81,4 +99,23 @@ Identifiable::internalName(void) const
 	xname.append(name());
 	xname.append(instanceString());
 	return xname;
+}
+
+/* Get and set an Object's tag */
+int
+Identifiable::tag(void) const
+{
+	return m_tag;
+}
+
+void
+Identifiable::setTag(int tag)
+{
+	m_tag = tag;
+}
+
+bool
+Identifiable::setTag(const std::string str)
+{
+	return Scriptable::parseInt(str, &m_tag);
 }

@@ -29,7 +29,14 @@
 namespace Yuka
 {
 	/* Yuka::Object is a reference-counted base class which is used to
-	 * implement every other type of object.
+	 * implement most other types of object.
+	 * 
+	 * All Yuka::Object instances have the Debuggable, Scriptable and
+	 * Identifable traits, which means that you can:
+	 * - Inspect them to determine their type and properties
+	 * - Set properties at runtime via Scriptable::set()
+	 * - Set and retrieve an arbitrary numeric tag on each instance
+	 * - Dump an object to a stream via <<
 	 */
 	class YUKA_EXPORT_ Object:
 		public Traits::Debuggable,
@@ -41,20 +48,9 @@ namespace Yuka
 		virtual int retain(void);
 		/* Decrement the reference count (will free the object when it reaches 0) */
 		virtual int release(void);
-		
-		/* Return an arbitrary integer tag which can be associated with the
-		 * object.
-		 */
-		virtual int tag(void) const;
-		/* Set the arbitrary integer tag for an object */
-		virtual void setTag(int newTag);
-		virtual bool setTag(const std::string tag);
 	protected:
 		/* Debuggable trait */
 		virtual std::ostream &printProperties(std::ostream &stream) const;
-	public:
-		/* Scriptable trait */
-		virtual bool set(const std::string key, const std::string value);
 	public:
 		/* Identifiable trait */
 		virtual std::string kind(void) const;
@@ -65,7 +61,6 @@ namespace Yuka
 		virtual ~Object();
 	private:
 		unsigned long m_refcount;
-		int m_tag;
 	};
 
 };

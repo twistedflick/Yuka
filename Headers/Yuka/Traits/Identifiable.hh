@@ -55,7 +55,20 @@ namespace Yuka
 		
 			/* Return the 'live' internal name of this object */
 			virtual std::string internalName(void) const;
+			
+			/* Return an arbitrary integer tag which can be associated with the
+			 * object.
+			 */
+			virtual int tag(void) const;
+			/* Set the arbitrary integer tag for an object */
+			virtual void setTag(int newTag);
+			virtual bool setTag(const std::string tag);
 		protected:
+			Identifiable();
+			Identifiable(const Identifiable &src);
+			Identifiable(const Identifiable *src);
+		private:
+			int m_tag;
 		};
 	}
 };

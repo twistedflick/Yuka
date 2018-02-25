@@ -65,7 +65,7 @@ std::ostream &
 Debuggable::printBehaviours(std::ostream &stream) const
 {
 	const Flexible *me;
-	Behaviour *p;
+	const Behaviour *p;
 	std::string indent = printIndent();
 	
 	if((me = dynamic_cast<const Flexible *>(this)))
@@ -84,6 +84,19 @@ Debuggable::printBehaviours(std::ostream &stream) const
 std::ostream &
 Debuggable::printProperties(std::ostream &stream) const
 {
+	bool d = debugging();
+	const Identifiable *id = dynamic_cast<const Identifiable *>(this);
+	std::string indent = printIndent();
+	
+	if(id)
+	{
+		int t = id->tag();
+		
+		if(d || t)
+		{
+			stream << indent << ".tag = " << t << ";\n";
+		}
+	}
 	return stream;
 }
 
