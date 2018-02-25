@@ -95,6 +95,7 @@ Headers/Yuka/Lights/Makefile
 Sources/Makefile
 Sources/Traits/Makefile
 Sources/Behaviours/Makefile
+Sources/Props/Makefile
 Examples/Makefile
 ])
 

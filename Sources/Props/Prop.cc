@@ -17,7 +17,7 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaProps.hh"
 
 /* Protected constructor for Prop objects */
 Prop::Prop(const std::string kind):

@@ -17,23 +17,23 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaProps.hh"
 
-/* Protected constructor for Primitive objects */
-Primitive::Primitive(const std::string kind):
-	Prop(kind)
+/* Protected constructor for Sphere objects */
+Sphere::Sphere(const std::string name):
+	Primitive(name)
 {
 }
 
 /* Print our properties to a std::ostream */
 std::ostream &
-Primitive::printProperties(std::ostream &stream) const
+Sphere::printProperties(std::ostream &stream) const
 {
 	std::string indent = printIndent();
 	
 	SceneObject::printProperties(stream);
 	
-	stream << indent << "/* Primitive properties */\n";
+	stream << indent << "/* Sphere properties */\n";
 	
 	return stream;
 }
