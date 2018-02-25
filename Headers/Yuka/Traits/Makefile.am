@@ -12,15 +12,8 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-SUBDIRS = Traits Intrinsics Props Lights Behaviours
+incdir = ${pkgincludedir}/Traits
 
-pkginclude_HEADERS = decl.h \
-	Trait.hh \
-	Object.hh \
-	SceneObject.hh \
-	Scene.hh \
-	SceneParser.hh \
-	Prop.hh \
-	Group.hh \
-	Light.hh \
-	Behaviour.hh
+inc_HEADERS = Debuggable.hh Scriptable.hh Identifiable.hh \
+	Flexible.hh Spatial.hh
+

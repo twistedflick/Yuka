@@ -18,12 +18,14 @@
 
 # include <string>
 
+# include "../Traits/Debuggable.hh"
 # include "../decl.h"
 
 namespace Yuka
 {
 	/* Yuka::Vector represents some sort of three-dimensional value */
-	struct YUKA_EXPORT_ Vector
+	struct YUKA_EXPORT_ Vector:
+		public Traits::Debuggable
 	{
 		double x;
 		double y;
@@ -40,9 +42,9 @@ namespace Yuka
 		bool setZ(const std::string nz);
 		
 		virtual std::string kind(void) const;
-		
-		friend std::ostream &operator<<(std::ostream &stream, const Vector &vec);
-		friend std::ostream &operator<<(std::ostream &stream, const Vector *vec);
+	protected:
+		/* Printable trait */
+		virtual std::ostream &print(std::ostream &stream) const;
 	};
 	
 };

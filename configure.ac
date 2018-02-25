@@ -87,6 +87,7 @@ Makefile
 PrivateHeaders/Makefile
 Headers/Makefile
 Headers/Yuka/Makefile
+Headers/Yuka/Traits/Makefile
 Headers/Yuka/Intrinsics/Makefile
 Headers/Yuka/Props/Makefile
 Headers/Yuka/Behaviours/Makefile

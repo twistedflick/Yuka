@@ -21,6 +21,7 @@
 #include <unordered_map>
 
 #include "Object.hh"
+#include "Traits/Flexible.hh"
 #include "Behaviours/Transform.hh"
 #include "decl.h"
 
@@ -28,7 +29,9 @@ namespace Yuka
 {
 	class Scene;
 
-	class YUKA_EXPORT_ SceneObject: public Object
+	class YUKA_EXPORT_ SceneObject:
+		public Object,
+		public Traits::Flexible
 	{
 		friend class Scene;
 	public:
@@ -43,12 +46,6 @@ namespace Yuka
 		/* Remove a child from our list of children */
 		virtual void remove(SceneObject *child);
 		
-		/* Add a behaviour to this object */
-		virtual void add(Behaviour *behaviour);
-		
-		/* Remove a behaviour from this object */
-		virtual void remove(Behaviour *behaviour);
-		
 		/* Apply an unordered map of (string => string) properties to this
 		 * object
 		 */
@@ -57,20 +54,28 @@ namespace Yuka
 		/* Set a single named property to the specified string value,
 		 * converting to native types as required.
 		 */
-		virtual bool set(const std::string key, const std::string value);
 		
 		/* Return our immediate parent in the scene graph */
 		virtual SceneObject *parent(void) const;
 		
 		/* Return the scene this object is attached to, if any */
 		virtual Scene *scene(void) const;
-		
-		/* Return the kind of object that this is */
+	public:
+		/* Flexible trait */
+		virtual void add(Behaviour *behaviour);
+		virtual void remove(Behaviour *behaviour);
+	public:
+		/* Identifiable trait (via Object) */
 		virtual std::string kind(void) const;
-
-		/* Return the name of this object, if any */
 		virtual std::string name(void) const;
-		
+	public:
+		/* Scriptable trait (via Object) */
+		virtual bool set(const std::string key, const std::string value);
+	protected:
+		/* Printable trait (via Object) */
+		virtual std::ostream &printProperties(std::ostream &stream) const;
+		virtual std::ostream &printChildren(std::ostream &stream) const;
+		virtual std::ostream &printBehaviours(std::ostream &stream) const;
 	protected:
 	
 		std::string m_kind;
@@ -91,10 +96,6 @@ namespace Yuka
 		/* Invoked by a parent SceneObject when we're added or removed from a scene */
 		virtual void attachToScene(Scene *newscene);
 		virtual void detachFromScene(Scene *oldscene);
-
-		virtual std::ostream &printProperties(std::ostream &stream) const;
-		virtual std::ostream &printChildren(std::ostream &stream) const;
-		virtual std::ostream &printBehaviours(std::ostream &stream) const;
 	};
 
 };

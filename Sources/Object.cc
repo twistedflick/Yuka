@@ -19,9 +19,6 @@
 
 #include "p_Yuka.hh"
 
-static thread_local unsigned int indent_level;
-static thread_local bool debug_enable;
-
 /* Protected constructor for new Object instances */
 Object::Object():
 	m_refcount(1),
@@ -77,72 +74,6 @@ Object::release(void)
 	return m_refcount;
 }
 
-/* Get an object's instance identifier */
-unsigned long
-Object::instanceId(void) const
-{
-	return (unsigned long) static_cast<const void *>(this);
-}
-
-/* Return the kind of object that this is */
-std::string
-Object::kind(void) const
-{
-	return "Object";
-}
-
-/* Return the internal representation of the kind of object that this is */
-std::string
-Object::internalKind(void) const
-{
-	return kind();
-}
-
-/* Return the name of this object, providing one if none has been set */
-std::string
-Object::name(void) const
-{
-	char inststr[24];
-	
-	snprintf(inststr, sizeof(inststr), "auto_%08lx", instanceId());
-	return inststr;
-}
-
-/* Return display name of this object in the form "<type> <name>" */
-std::string
-Object::displayName(void) const
-{
-	std::string xname = kind();
-	
-	xname.append(" ");
-	xname.append(name());
-
-	return xname;
-}
-
-/* Return the 'live' internal name of this object */
-std::string
-Object::internalName(void) const
-{
-	char inststr[24];
-	int xtag;
-	std::string xname = internalKind();
-
-	xname.append(" ");
-	xname.append(name());
-	xtag = tag();
-	if(xtag)
-	{
-		snprintf(inststr, sizeof(inststr), "[%d]", xtag);
-		xname.append(inststr);
-	}
-	snprintf(inststr, sizeof(inststr), "{%08lx}", instanceId());
-	xname.append(inststr);
-	
-	return xname;
-}
-
-
 /* Get and set an Object's tag */
 int
 Object::tag(void) const
@@ -169,121 +100,19 @@ Object::set(const std::string key, const std::string value)
 	{
 		return setTag(value);
 	}
-	std::cerr << "Warning: Unsupported property " << kind() << "['" << key << "']\n";
-	return false;
+	return Scriptable::set(key, value);
 }
 
-/* String to native type conversions */
-bool
-Object::parseInt(const std::string str, int *out)
+/** Identifiable trait **/
+
+/* Return the kind of object that this is */
+std::string
+Object::kind(void) const
 {
-	char *endp;
-	int d;
-	
-	endp = NULL;
-	d = (int) strtol(str.c_str(), &endp, 0);
-	if(endp && *endp)
-	{
-		std::cerr << "Error: Cannot convert '" << str << "' to an integer value\n";
-		return false;
-	}
-	*out = d;
-	return true;
+	return "Object";
 }
 
-bool
-Object::parseBool(const std::string str, bool *out)
-{
-	const char *cstr;
-	char *endp;
-	int d;
-	
-	cstr = str.c_str();
-	if(!strcasecmp(cstr, "t") ||
-		!strcasecmp(cstr, "true") ||
-		!strcasecmp(cstr, "yes") ||
-		!strcasecmp(cstr, "on"))
-	{
-		*out = true;
-		return true;
-	}
-	if(!strcasecmp(cstr, "f") ||
-		!strcasecmp(cstr, "false") ||
-		!strcasecmp(cstr, "no") ||
-		!strcasecmp(cstr, "off"))
-	{
-		*out = false;
-		return true;
-	}
-	endp = NULL;
-	d = (int) strtol(cstr, &endp, 0);
-	if(endp && *endp)
-	{
-		std::cerr << "Error: Cannot convert '" << str << "' to boolean value\n";
-		return false;
-	}
-	*out = d ? true : false;
-	return true;
-}
-bool
-Object::parseDouble(const std::string str, double *out)
-{
-	char *endp;
-	double d;
-	
-	endp = NULL;
-	d = strtod(str.c_str(), &endp);
-	if(endp && *endp)
-	{
-		std::cerr << "Error: Cannot convert '" << str << "' to a double-precision floating point value\n";
-		return false;
-	}
-	*out = d;
-	return true;
-}
-
-/* Dump an object to std::clog */
-void
-Object::dump(void) const
-{
-	print(std::clog);
-}
-
-/* Enable debugging on this thread */
-void
-Object::debug(void)
-{
-	debug_enable = true;
-}
-
-/* Is debugging enabled on this thread? */
-bool
-Object::debugging(void) const
-{
-	return debug_enable;
-}
-
-/* Output a representation of this object to the provided stream */
-std::ostream &
-Object::print(std::ostream &stream) const
-{
-	std::string indent = printIndent();
-	
-	if(debugging())
-	{
-		stream << internalName() << " = {\n";
-	}
-	else
-	{
-		stream << displayName() << " = {\n";
-	}
-	printPush();
-	printProperties(stream);
-	printChildren(stream);
-	printPop();
-	stream << indent << "}";
-	return stream;
-}
+/** Debuggable trait **/
 
 /* Output a representation of this object's properties to the provided stream */
 std::ostream &
@@ -303,56 +132,4 @@ Object::printProperties(std::ostream &stream) const
 	}
 	
 	return stream;
-}
-
-/* Output a representation of this object's children to the provided stream */
-std::ostream &
-Object::printChildren(std::ostream &stream) const
-{
-	return stream;
-}
-
-/* Return a string representing the current indentation level */
-std::string
-Object::printIndent(void) const
-{
-	return std::string(printDepth(), '\t');
-}
-
-/* Return the current print depth */
-unsigned int
-Object::printDepth(void) const
-{
-	return indent_level;
-}
-
-/* Push the indent level (increment it) */
-void
-Object::printPush(void) const
-{
-	indent_level++;
-}
-
-/* Pop the indent level (decrement it) */
-void
-Object::printPop(void) const
-{
-	indent_level--;
-}
-
-/* Allow a const Object pointer to be serialised to a std::ostream
- * using the conventional stream << obj notation.
- */
-std::ostream&
-Yuka::operator<<(std::ostream& os, const Object *me)
-{
-	me->print(os);
-	return os;
-}
-
-std::ostream&
-Yuka::operator<<(std::ostream& os, const Object &me)
-{
-	me.print(os);
-	return os;
 }

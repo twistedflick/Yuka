@@ -105,18 +105,11 @@ Vector::kind(void) const
 	return "Vector";
 }
 
+/* Override Printable::print() */
 std::ostream &
-Yuka::operator<<(std::ostream &stream, const Vector &vec)
+Vector::print(std::ostream &stream) const
 {
-	stream << vec.kind() << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
-	
-	return stream;
-}
-
-std::ostream &
-Yuka::operator<<(std::ostream &stream, const Vector *vec)
-{
-	stream << vec->kind() << "(" << vec->x << ", " << vec->y << ", " << vec->z << ")";
+	stream << kind() << "(" << x << ", " << y << ", " << z << ")";
 	
 	return stream;
 }

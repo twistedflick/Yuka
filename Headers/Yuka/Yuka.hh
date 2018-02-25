@@ -37,9 +37,14 @@
  * reorganisation.
  */
 
-/* Ultimate ancestor for all other classes */
+/* Traits */
 
-# include "Object.hh"
+# include "Trait.hh"
+# include "Traits/Debuggable.hh"
+# include "Traits/Scriptable.hh"
+# include "Traits/Identifiable.hh"
+# include "Traits/Flexible.hh"
+# include "Traits/Spatial.hh"
 
 /* Intrinsics */
 
@@ -47,6 +52,10 @@
 # include "Intrinsics/Point.hh"
 # include "Intrinsics/Orientation.hh"
 # include "Intrinsics/Size.hh"
+
+/* Ultimate ancestor for all other classes */
+
+# include "Object.hh"
 
 /* Scene-graph objects */
 
