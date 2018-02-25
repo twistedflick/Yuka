@@ -30,6 +30,8 @@
 # include "Yuka/Traits/Scriptable.hh"
 # include "Yuka/Traits/Spatial.hh"
 
+# include "Yuka/Behaviour.hh"
+
 using namespace Yuka;
 using namespace Yuka::Traits;
 

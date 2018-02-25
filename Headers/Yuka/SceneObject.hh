@@ -44,6 +44,13 @@ namespace Yuka
 	
 		static SceneObject *sceneObjectWithKind(const std::string kind, Properties properties);
 		
+		/* Ensure the compiler doesn't think we're trying to inadvertently
+		 * hide the behavioural add() and remove() methods from
+		 * Traits::Flexible.
+		 */
+		using Traits::Flexible::add;
+		using Traits::Flexible::remove;
+		
 		/* Append child to our list of children */
 		virtual void add(SceneObject *child);
 		
@@ -55,19 +62,11 @@ namespace Yuka
 		 */
 		virtual bool apply(Properties properties);
 		
-		/* Set a single named property to the specified string value,
-		 * converting to native types as required.
-		 */
-		
 		/* Return our immediate parent in the scene graph */
 		virtual SceneObject *parent(void) const;
 		
 		/* Return the scene this object is attached to, if any */
 		virtual Scene *scene(void) const;
-	public:
-		/* Flexible trait */
-		virtual void add(Behaviour *behaviour);
-		virtual void remove(Behaviour *behaviour);
 	public:
 		/* Identifiable trait (via Object) */
 		virtual std::string kind(void) const;
@@ -79,7 +78,6 @@ namespace Yuka
 		/* Printable trait (via Object) */
 		virtual std::ostream &printProperties(std::ostream &stream) const;
 		virtual std::ostream &printChildren(std::ostream &stream) const;
-		virtual std::ostream &printBehaviours(std::ostream &stream) const;
 	protected:
 	
 		std::string m_kind;

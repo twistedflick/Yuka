@@ -53,11 +53,32 @@ Debuggable::print(std::ostream &stream) const
 	}
 	printPush();
 	printProperties(stream);
+	printBehaviours(stream);
 	printChildren(stream);
 	printPop();
 	stream << indent << "}";
 	return stream;
 }
+
+/* Print our behaviours to a std::ostream */
+std::ostream &
+Debuggable::printBehaviours(std::ostream &stream) const
+{
+	const Flexible *me;
+	Behaviour *p;
+	std::string indent = printIndent();
+	
+	if((me = dynamic_cast<const Flexible *>(this)))
+	{
+		stream << "\n" << indent << "/* Behaviours */\n\n";
+		for(p = me->m_behaviours.first; p; p = p->m_next)
+		{
+			stream << indent << "@[] = " << p << ";\n";
+		}
+	}
+	return stream;
+}
+
 
 /* Output a representation of this object's properties to the provided stream */
 std::ostream &

@@ -45,6 +45,7 @@ namespace Yuka
 			virtual std::ostream &print(std::ostream &stream) const;
 			virtual std::ostream &printProperties(std::ostream &stream) const;
 			virtual std::ostream &printChildren(std::ostream &stream) const;
+			virtual std::ostream &printBehaviours(std::ostream &stream) const;
 
 			/* Utilities for use while printing objects */
 			virtual unsigned int printDepth(void) const;

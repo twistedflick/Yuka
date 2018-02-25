@@ -54,13 +54,13 @@ SceneObject::sceneObjectWithKind(const std::string kind, SceneObject::Properties
 /* Protected constructor for SceneObjects */
 SceneObject::SceneObject(const std::string kind):
 	Object(),
+	Traits::Flexible(),
 	m_kind(kind),
 	m_parent(NULL),
 	m_children(NULL),
 	m_scene(NULL),
 	m_transform(NULL)
 {
-/*	std::clog << "** SceneObject[0x" << std::hex << std::setw(8) << instanceId() << ":" << tag() << "]<" << kind << ">\n"; */
 }
 
 /* Public destructor for SceneObjects */
@@ -74,36 +74,6 @@ SceneObject::~SceneObject()
 	{
 		m_transform->release();
 	}
-/*
-	if(id.length())
-	{
-		std::clog << "~~ SceneObject[" << id << "=0x" << std::hex << std::setw(8) << instanceId() << ":" << tag() << "]<" << kind << ">\n";
-	}
-	else
-	{
-		std::clog << "~~ SceneObject[0x" << std::hex << std::setw(8) << instanceId() << ":" << tag() << "]<" << kind << ">\n";
-	}
-*/
-}
-
-std::string
-SceneObject::kind(void) const
-{
-	if(m_kind.length())
-	{
-		return m_kind;
-	}
-	return "SceneObject";
-}
-
-std::string
-SceneObject::name(void) const
-{
-	if(m_id.length())
-	{
-		return m_id;
-	}
-	return Object::name();
 }
 
 /* Add a scene object to the scene graph as a child of this one. This won't
@@ -220,70 +190,6 @@ SceneObject::detachFromScene(Scene *oldscene)
 	}
 }
 
-
-/* Add and remove behaviours. Note that doing so retains the behaviour, and
- * will also remove it from any other SceneObject that it is currently
- * attached to.
- */
-void
-SceneObject::add(Behaviour *behaviour)
-{
-	SceneObject *oldp;
-	Behaviours::Transform *t;
-	
-	behaviour->retain();
-	t = dynamic_cast<Behaviours::Transform *>(behaviour);
-	if(!t)
-	{
-		/* Currently we only support adding a Transform behaviour */
-		std::clog << "Attempt to add unsupported behaviour " << behaviour->internalName() << " to " << internalName() << "\n";
-		behaviour->release();
-		return;
-	}
-	oldp = behaviour->sceneObject();
-	if(oldp && oldp == this)
-	{
-		/* This behaviour is already attached to this scene object */
-		behaviour->release();
-		return;
-	}
-	if(oldp)
-	{
-		/* Remove the behaviour from the scene object it was previously
-		 * attached to
-		 */
-		oldp->remove(behaviour);
-	}
-	/* Tell the behaviour that we're adding it to this scene object */
-	behaviour->attachTo(this);
-	if(t)
-	{
-		/* If it was a Transform, we can set m_transform to it */
-		m_transform = t;
-	}
-	else
-	{
-		/* For now, just release it, as we don't have a list of behaviours */
-
-		/* Note that this code is not ever executed due to the hard preflight
-		 * check driven by the dynamic_cast<>() result.
-		 */
-		behaviour->release();
-	}
-}
-
-void
-SceneObject::remove(Behaviour *behaviour)
-{
-	if(behaviour == m_transform)
-	{
-		behaviour->detachFrom(this);
-		m_transform = NULL;
-	}
-}
-
-/* Remove a behaviour from our object, releasing it */
-
 /* Return a pointer to our parent (containing) SceneObject */
 SceneObject *
 SceneObject::parent(void) const
@@ -297,6 +203,8 @@ SceneObject::scene(void) const
 {
 	return m_scene;
 }
+
+/** Scriptable trait **/
 
 /* Apply a SceneObject::Properties map to this object, warning about any
  * properties we don't understand. Descendents should override
@@ -336,16 +244,42 @@ SceneObject::set(const std::string key, const std::string value)
 		key == "rx" || key == "ry" || key == "rz" ||
 		key == "scale" || key == "sx" || key == "sy" || key == "sz")
 	{
+		/* Use m_transform to keep track of a Behaviours::Transform() object
+		 * which we will attach to this instance.
+		 */
 		if(!m_transform)
 		{
-			Behaviours::Transform *t = new Behaviours::Transform();
-			add(t);
-			t->release();
+			m_transform = new Behaviours::Transform();
+			add(m_transform);
 		}
 		return m_transform->set(key, value);
 	}
 	return Object::set(key, value);
 }
+
+/** Identifiable trait **/
+
+std::string
+SceneObject::kind(void) const
+{
+	if(m_kind.length())
+	{
+		return m_kind;
+	}
+	return "SceneObject";
+}
+
+std::string
+SceneObject::name(void) const
+{
+	if(m_id.length())
+	{
+		return m_id;
+	}
+	return Object::name();
+}
+
+/** Debuggable trait **/
 
 /* Print our properties to a std::ostream */
 std::ostream &
@@ -387,9 +321,7 @@ SceneObject::printChildren(std::ostream &stream) const
 	
 	SceneObject::List::Iterator i;
 	SceneObject *child;
-	
-	printBehaviours(stream);
-	
+
 	i = NULL;
 	child = NULL;
 	if(m_children)
@@ -401,19 +333,5 @@ SceneObject::printChildren(std::ostream &stream) const
 		stream << indent << child << ";\n";
 	}
 	
-	return stream;
-}
-
-/* Print our behaviours to a std::ostream */
-std::ostream &
-SceneObject::printBehaviours(std::ostream &stream) const
-{
-	std::string indent = printIndent();
-	
-	stream << "\n" << indent << "/* Behaviours */\n\n";
-	if(m_transform)
-	{
-		stream << indent << "@transform = " << m_transform << ";\n";
-	}
 	return stream;
 }

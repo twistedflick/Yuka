@@ -22,7 +22,10 @@
 /* Protected constructor for Behaviour objects */
 Behaviour::Behaviour():
 	Object(),
+	m_prev(NULL),
+	m_next(NULL),
 	m_enabled(true),
+	m_owner(NULL),
 	m_sceneobj(NULL)
 {
 }
@@ -70,40 +73,52 @@ Behaviour::disable(void)
 	m_enabled = false;
 }
 
+Traits::Flexible *
+Behaviour::owner(void) const
+{
+	return m_owner;
+}
+
 SceneObject *
 Behaviour::sceneObject(void) const
 {
 	return m_sceneobj;
 }
 
-/* Invoked by a SceneObject when a Behaviour is attached to it */
+/* Invoked by a flexible object when a Behaviour is attached to it */
 void
-Behaviour::attachTo(SceneObject *obj)
+Behaviour::attachTo(Traits::Flexible *obj)
 {
-	if(obj == m_sceneobj)
+	if(obj == m_owner)
 	{
 		return;
 	}
-	if(m_sceneobj)
+	if(m_owner)
 	{
 		/* Don't invoke detachFrom() directly, let SceneObject
 		 * invoke it as part of SceneObject::remove()
 		 */
-		m_sceneobj->remove(this);
+		m_owner->remove(this);
+		m_owner = NULL;
+		m_sceneobj = NULL;
 	}
-	m_sceneobj = obj;
+	m_owner = obj;
+	m_sceneobj = dynamic_cast<SceneObject *>(obj);
 }
 
 /* Invoked by a SceneObject when a Behaviour is removed from it */
 void
-Behaviour::detachFrom(SceneObject *obj)
+Behaviour::detachFrom(Traits::Flexible *obj)
 {
-	if(obj != m_sceneobj)
+	if(obj != m_owner)
 	{
 		return;
 	}
+	m_owner = NULL;
 	m_sceneobj = NULL;
 }
+
+/** Scriptable trait **/
 
 bool
 Behaviour::set(const std::string key, const std::string value)
@@ -114,6 +129,8 @@ Behaviour::set(const std::string key, const std::string value)
 	}
 	return Object::set(key, value);
 }
+
+/** Debuggable trait **/
 
 /* Output a representation of this object to the provided stream */
 std::ostream &

@@ -25,7 +25,8 @@ namespace Yuka
 
 	namespace Traits
 	{
-	
+		class Debuggable;
+		
 		/* Classes with the Flexible trait can have behaviours attached
 		 * to them.
 		 *
@@ -37,13 +38,22 @@ namespace Yuka
 		class YUKA_EXPORT_ Flexible: public Trait
 		{
 			friend class Yuka::Behaviour;
+			friend class Debuggable;
 		public:
 			/* Add a behaviour to this object */
-			virtual void add(Behaviour *behaviour) = 0;
+			virtual void add(Behaviour *behaviour);
 		
 			/* Remove a behaviour from this object */
-			virtual void remove(Behaviour *behaviour) = 0;
+			virtual void remove(Behaviour *behaviour);
 		protected:
+			Flexible();
+			virtual ~Flexible();
+		protected:
+			struct
+			{
+				Behaviour *first;
+				Behaviour *last;
+			} m_behaviours;
 		};
 	}
 };
