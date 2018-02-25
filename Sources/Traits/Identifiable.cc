@@ -17,9 +17,7 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
-
-using namespace Traits;
+#include "p_YukaTraits.hh"
 
 /* Return an object's instance identifier */
 unsigned long

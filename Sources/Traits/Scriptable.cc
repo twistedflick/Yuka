@@ -17,9 +17,7 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
-
-using namespace Yuka::Traits;
+#include "p_YukaTraits.hh"
 
 bool
 Scriptable::set(const std::string key, const std::string value)

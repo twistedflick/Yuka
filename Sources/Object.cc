@@ -93,6 +93,8 @@ Object::setTag(const std::string str)
 	return parseInt(str, &m_tag);
 }
 
+/** Scriptable trait **/
+
 bool
 Object::set(const std::string key, const std::string value)
 {

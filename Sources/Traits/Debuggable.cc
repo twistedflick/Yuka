@@ -17,9 +17,7 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
-
-using namespace Yuka::Traits;
+#include "p_YukaTraits.hh"
 
 static thread_local unsigned int indent_level;
 static thread_local bool debug_enable;

@@ -17,5 +17,5 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaTraits.hh"
 
