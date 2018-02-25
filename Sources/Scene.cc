@@ -70,7 +70,10 @@ void
 Scene::add(SceneObject *child)
 {
 	SceneObject::add(child);
-	child->m_scene = this;
+	if(child)
+	{
+		child->attachToScene(this);
+	}
 }
 
 /* Print our properties to a std::ostream */

@@ -55,7 +55,7 @@ SceneObject::sceneObjectWithKind(const std::string kind, SceneObject::Properties
 SceneObject::SceneObject(const std::string kind):
 	Object(),
 	m_kind(kind),
-	m_container(NULL),
+	m_parent(NULL),
 	m_children(NULL),
 	m_scene(NULL),
 	m_transform(NULL)
@@ -116,14 +116,110 @@ SceneObject::name(void) const
 void
 SceneObject::add(SceneObject *child)
 {
+	/* TODO: check if child is a parent of this */
+	if(!child)
+	{
+		return;
+	}
 	if(!m_children)
 	{
 		m_children = new SceneObject::List();
 	}
-	m_children->add(child);
-	child->m_container = this;
-	child->m_scene = this->m_scene;
+	m_children->push(child);
+	child->attachToParent(this);
+	if(scene())
+	{
+		child->attachToScene(scene());
+	}
 }
+
+void
+SceneObject::remove(SceneObject *child)
+{
+	if(!child || !m_children || !m_children->has(child))
+	{
+		return;
+	}
+	if(m_scene)
+	{
+		child->detachFromScene(m_scene);
+	}
+	child->detachFromParent(this);
+	m_children->remove(child);
+}
+
+/* Invoked by a parent SceneObject when we're added or removed from it */
+void
+SceneObject::attachToParent(SceneObject *newparent)
+{
+	if(newparent == m_parent)
+	{
+		return;
+	}
+	if(m_parent)
+	{
+		/* Don't invoke detachFromParent() directly, let SceneObject
+		 * invoke it as part of SceneObject::remove()
+		 */
+		m_parent->remove(this);
+	}
+	m_parent = newparent;
+}
+
+void
+SceneObject::detachFromParent(SceneObject *oldparent)
+{
+	if(m_parent != oldparent)
+	{
+		return;
+	}
+	m_parent = NULL;
+}
+
+/* Invoked by a parent SceneObject when we're added or removed from a scene */
+void
+SceneObject::attachToScene(Scene *newscene)
+{
+	SceneObject::List::Iterator i;
+	SceneObject *child;
+	
+	if(newscene == m_scene)
+	{
+		return;
+	}
+	if(m_scene)
+	{
+		detachFromScene(m_scene);
+	}
+	m_scene = newscene;
+	i = NULL;
+	child = NULL;
+	while(m_children && m_children->next(&i, &child))
+	{
+		child->attachToScene(newscene);
+	}
+	
+}
+
+void
+SceneObject::detachFromScene(Scene *oldscene)
+{
+	SceneObject::List::Iterator i;
+	SceneObject *child;
+
+	if(m_scene != oldscene)
+	{
+		return;
+	}
+	m_scene = NULL;
+	i = NULL;
+	child = NULL;
+	while(m_children && m_children->next(&i, &child))
+	{
+		child->detachFromScene(oldscene);
+	}
+}
+
 
 /* Add and remove behaviours. Note that doing so retains the behaviour, and
  * will also remove it from any other SceneObject that it is currently
@@ -192,7 +288,7 @@ SceneObject::remove(Behaviour *behaviour)
 SceneObject *
 SceneObject::parent(void) const
 {
-	return m_container;
+	return m_parent;
 }
 
 /* Return a pointer to the scene we're a part of, if any */
@@ -263,6 +359,14 @@ SceneObject::printProperties(std::ostream &stream) const
 	
 	if(debugging())
 	{
+		if(m_parent)
+		{
+			stream << indent << ".parent = " << m_parent->internalName() << ";\n";
+		}
+		else
+		{
+			stream << indent << ".parent = nil;\n";
+		}
 		if(m_scene)
 		{
 			stream << indent << ".scene = " << m_scene->internalName() << ";\n";

@@ -291,8 +291,13 @@ Object::printProperties(std::ostream &stream) const
 {
 	std::string indent = printIndent();
 	int t = tag();
+	bool d = debugging();
 	
-	if(t || debugging())
+	if(d)
+	{
+		stream << indent << ".refcount = " << m_refcount << ";\n";
+	}
+	if(d || t)
 	{
 		stream << indent << ".tag = " << t << ";\n";
 	}

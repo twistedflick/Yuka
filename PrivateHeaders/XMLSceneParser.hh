@@ -18,6 +18,7 @@
 
 # include <libxml/xmlreader.h>
 # include "Yuka/SceneParser.hh"
+# include "SceneObjectList.hh"
 # include "Yuka/decl.h"
 
 namespace Yuka
@@ -34,6 +35,7 @@ namespace Yuka
 		xmlTextReaderPtr reader;
 		SceneObject *parent;
 		bool root;
+		SceneObject::List *stack;
 	
 		XMLSceneParser(xmlTextReaderPtr reader);
 	

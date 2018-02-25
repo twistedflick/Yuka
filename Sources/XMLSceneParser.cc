@@ -66,6 +66,7 @@ XMLSceneParser::parseIntoScene(Scene *scene)
 	parent = scene;
 	root = true;
 	ret = xmlTextReaderRead(reader);
+	stack = new SceneObject::List();
 	/* xmlTextReaderRead() returns 1 for 'more remaining', 0 for 'complete',
 	 * any other value for an error
 	 */
@@ -81,6 +82,7 @@ XMLSceneParser::parseIntoScene(Scene *scene)
 	}
 	scene->release();
 	parent = NULL;
+	delete stack;
 	if(ret)
 	{
 		/* At this point, ret should be zero if the file was
@@ -98,7 +100,7 @@ XMLSceneParser::processNode()
 {
 	const char *name, *lname, *ns;
 	int type;
-	SceneObject *obj, *oldp;
+	SceneObject *obj;
 	bool isempty;
 	
 	type = xmlTextReaderNodeType(reader);
@@ -179,26 +181,56 @@ XMLSceneParser::processNode()
 				std::cerr << "Unable to create a new scene object for <" << name << ">\n";
 				return false;
 			}
-			parent->add(obj);
 			if(isempty)
 			{
+				/* If it's an empty element, we can add it directly to the
+				 * parent.
+				 */
+				parent->add(obj);
+				/* Now that obj has been added, we can release it */
 				obj->release();
+				return true;
 			}
-			else
-			{
-				parent = obj;
-			}
+			/* It's not an empty element: we need to keep track of two things
+			 * until we reach the end, allowing for recursion.
+			 *
+			 * 1 - The object we've just created. This is a new instance
+			 *     with refcount = 1
+			 * 2 - Our current parent, to which the new object will be added
+			 *     as a child when we reach the end of the element (see
+			 *     XML_READER_TYPE_END_ELEMENT below)
+			 */
+			/* Push our current parent onto our parentage stack, which will
+			 * retain it on our behalf. Note that the parent is ALREADY
+			 * retained by us, either because it's a brand new object, or
+			 * because it's a scene we're parsing into.
+			 */
+			stack->push(parent);
+			/* Now set our 'current parent' to point to the new object, so
+			 * that its children will be correctly added to it.
+			 */
+			parent = obj;
 			break;
 		}
 		case XML_READER_TYPE_END_ELEMENT:
-			oldp = parent;
-			parent = parent->parent();
-			if(xmlTextReaderDepth(reader))
+			/* Obtain the object that we pushed, above */
+			obj = parent;
+			/* Pop the old parent off the stack.
+			 * Note that stack->pop() TRANSFERS its retained ownership to us;
+			 * this means that we are now retaining parent twice - once from
+			 * when it was created (if it's a new scene object) or supplied
+			 * as the scene, and once when it was pushed onto the parentage
+			 * stack.
+			 * Therefore, we should release it now to restore balance.
+			 */
+			parent = stack->pop();
+			if(parent)
 			{
-				/* Only release objects we've created - the root Scene instance
-				 * doesn't belong to us
-				 */
-				oldp->release();
+				/* Transfer ownership of the object from us to the parent */
+				parent->add(obj);
+				obj->release();
+				/* Release our outstanding reference to the parent */
+				parent->release();
 			}
 			break;
 /*

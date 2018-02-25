@@ -31,7 +31,10 @@ namespace Yuka
 		List();
 		virtual ~List();
 	
-		int add(SceneObject *object);
+		bool push(SceneObject *object);
+		SceneObject *pop(void);
+		bool remove(const SceneObject *object);
+		bool has(const SceneObject *object) const;
 	protected:
 		struct Entry
 		{

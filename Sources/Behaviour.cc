@@ -86,7 +86,10 @@ Behaviour::attachTo(SceneObject *obj)
 	}
 	if(m_sceneobj)
 	{
-		detachFrom(m_sceneobj);
+		/* Don't invoke detachFrom() directly, let SceneObject
+		 * invoke it as part of SceneObject::remove()
+		 */
+		m_sceneobj->remove(this);
 	}
 	m_sceneobj = obj;
 }
@@ -118,7 +121,14 @@ Behaviour::print(std::ostream &stream) const
 {
 	std::string indent = printIndent();
 	
-	stream << kind() << "() {\n";
+	if(debugging())
+	{
+		stream << internalKind() << "() {\n";
+	}
+	else
+	{
+		stream << kind() << "() {\n";
+	}
 	printPush();
 	printProperties(stream);
 	printChildren(stream);

@@ -40,8 +40,8 @@ SceneObject::List::~List()
 	}
 }
 
-int
-SceneObject::List::add(SceneObject *object)
+bool
+SceneObject::List::push(SceneObject *object)
 {
 	List::Entry *e;
 	
@@ -59,7 +59,77 @@ SceneObject::List::add(SceneObject *object)
 		first = e;
 	}
 	last = e;
-	return 0;
+	return true;
+}
+
+bool
+SceneObject::List::has(const SceneObject *object) const
+{
+	List::Entry *p;
+	
+	for(p = first; p; p = p->next)
+	{
+		if(p->obj == object)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool
+SceneObject::List::remove(const SceneObject *object)
+{
+	List::Entry *p;
+	
+	for(p = first; p; p = p->next)
+	{
+		if(p->obj == object)
+		{
+			p->obj->release();
+			if(first == p)
+			{
+				first = first->next;
+			}
+			if(last == p)
+			{
+				last = last->prev;
+			}
+			if(p->prev)
+			{
+				p->prev->next = p->next;
+			}
+			if(p->next)
+			{
+				p->next->prev = p->prev;
+			}
+			delete p;
+			return true;
+		}
+	}
+	return false;
+}
+
+SceneObject *
+SceneObject::List::pop(void)
+{
+	List::Entry *e;
+	SceneObject *obj;
+	
+	if(!last)
+	{
+		return NULL;
+	}
+	e = last;
+	last = last->prev;
+	if(!last)
+	{
+		first = NULL;
+	}
+	obj = e->obj;
+	delete(e);
+	/* obj is still retained - it's the caller's responsibility to release it */
+	return obj;
 }
 
 int

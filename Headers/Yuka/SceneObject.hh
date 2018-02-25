@@ -32,12 +32,16 @@ namespace Yuka
 	{
 		friend class Scene;
 	public:
+		class List;
 		typedef std::unordered_map<std::string, std::string> Properties;
 	
 		static SceneObject *sceneObjectWithKind(const std::string kind, Properties properties);
 		
 		/* Append child to our list of children */
 		virtual void add(SceneObject *child);
+		
+		/* Remove a child from our list of children */
+		virtual void remove(SceneObject *child);
 		
 		/* Add a behaviour to this object */
 		virtual void add(Behaviour *behaviour);
@@ -69,11 +73,9 @@ namespace Yuka
 		
 	protected:
 	
-		class List;
-
 		std::string m_kind;
 		std::string m_id;
-		SceneObject *m_container;
+		YUKA_WEAKPTR_ SceneObject *m_parent;
 		List *m_children;
 		YUKA_WEAKPTR_ Scene *m_scene;
 	
@@ -81,6 +83,14 @@ namespace Yuka
 	
 		SceneObject(const std::string kind);
 		virtual ~SceneObject();
+
+		/* Invoked by a parent SceneObject when we're added or removed from it */
+		virtual void attachToParent(SceneObject *newparent);
+		virtual void detachFromParent(SceneObject *oldparent);
+
+		/* Invoked by a parent SceneObject when we're added or removed from a scene */
+		virtual void attachToScene(Scene *newscene);
+		virtual void detachFromScene(Scene *oldscene);
 
 		virtual std::ostream &printProperties(std::ostream &stream) const;
 		virtual std::ostream &printChildren(std::ostream &stream) const;
