@@ -13,26 +13,19 @@
  *  limitations under the License.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#ifndef P_YUKA_INTRINSICS_HH_
+# define P_YUKA_INTRINSICS_HH_         1
 
-#include "p_Yuka.hh"
+# include <iostream>
 
-/* Public constructors for Point objects */
+/* Include each header directly to avoid a single-point-of-dependency upon
+ * <Yuka/Yuka.hh> during development.
+ */
+# include "Yuka/Intrinsics/Vector.hh"
+# include "Yuka/Intrinsics/Point.hh"
+# include "Yuka/Intrinsics/Orientation.hh"
+# include "Yuka/Intrinsics/Size.hh"
 
-Point::Point():
-	Vector()
-{
-}
+using namespace Yuka;
 
-Point::Point(const double px, const double py, const double pz):
-	Vector(px, py, pz)
-{
-}
-
-std::string
-Point::kind(void) const
-{
-	return "Point";
-}
+#endif /*!P_YUKA_INTRINSICS_HH_*/

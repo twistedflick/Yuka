@@ -17,7 +17,7 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaIntrinsics.hh"
 
 /* Public constructors for Vector objects */
 Vector::Vector():
@@ -105,7 +105,7 @@ Vector::kind(void) const
 	return "Vector";
 }
 
-/* Override Printable::print() */
+/* Override Debuggable::print() */
 std::ostream &
 Vector::print(std::ostream &stream) const
 {

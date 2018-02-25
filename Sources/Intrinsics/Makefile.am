@@ -12,31 +12,12 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-SUBDIRS = Intrinsics Traits Behaviours Props .
+AM_CPPFLAGS = @AM_CPPFLAGS@
 
-AM_CPPFLAGS = @AM_CPPFLAGS@ @XML_CPPFLAGS@
+noinst_LTLIBRARIES = libYukaIntrinsics.la
 
-lib_LTLIBRARIES = libYuka.la
-
-libYuka_la_SOURCES = p_Yuka.hh \
-	Object.cc \
-	SceneObject.cc SceneObjectList.cc \
-	Scene.cc \
-	Group.cc \
-	Light.cc PointLight.cc \
-	SceneParser.cc XMLSceneParser.cc
-
-libYuka_la_LDFLAGS = -avoid-version -no-undefined
-
-libYuka_la_LIBADD = Traits/libYukaTraits.la \
-	Behaviours/libYukaBehaviours.la \
-	Props/libYukaProps.la \
-	Intrinsics/libYukaIntrinsics.la \
-	@XML_LIBS@
-
-
-noinst_PROGRAMS = scenetool
-
-scenetool_SOURCES = scenetool.cc 
-
-scenetool_LDADD = libYuka.la
+libYukaIntrinsics_la_SOURCES = p_YukaIntrinsics.hh \
+	Vector.cc \
+	Point.cc \
+	Size.cc \
+	Orientation.cc

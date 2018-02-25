@@ -17,22 +17,27 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaIntrinsics.hh"
 
-/* Public constructors for Orientation objects */
+/* Public constructors for Size objects */
 
-Orientation::Orientation():
-	Vector()
+Size::Size():
+	Vector(1, 1, 1)
 {
 }
 
-Orientation::Orientation(const double px, const double py, const double pz):
+Size::Size(const double factor):
+	Vector(factor, factor, factor)
+{
+}
+
+Size::Size(const double px, const double py, const double pz):
 	Vector(px, py, pz)
 {
 }
 
 std::string
-Orientation::kind(void) const
+Size::kind(void) const
 {
-	return "Orientation";
+	return "Size";
 }
