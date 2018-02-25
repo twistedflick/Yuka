@@ -229,10 +229,10 @@ void
 SceneObject::add(Behaviour *behaviour)
 {
 	SceneObject *oldp;
-	Transform *t;
+	Behaviours::Transform *t;
 	
 	behaviour->retain();
-	t = dynamic_cast<Transform *>(behaviour);
+	t = dynamic_cast<Behaviours::Transform *>(behaviour);
 	if(!t)
 	{
 		/* Currently we only support adding a Transform behaviour */
@@ -338,7 +338,7 @@ SceneObject::set(const std::string key, const std::string value)
 	{
 		if(!m_transform)
 		{
-			Transform *t = new Transform();
+			Behaviours::Transform *t = new Behaviours::Transform();
 			add(t);
 			t->release();
 		}

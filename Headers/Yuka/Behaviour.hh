@@ -21,14 +21,14 @@
 
 namespace Yuka
 {
+	class SceneObject;
+	
 	/* Behaviours are objects which alter how SceneObjects interact with
 	 * their environment (be that visually, physically, or in terms of
 	 * interactivity and state).
 	 *
-	 * Yuka::Transform is a key example of a behaviour.
+	 * Yuka::Behaviours::Transform is a key example of a behaviour.
 	 */
-
-	class SceneObject;
 
 	class YUKA_EXPORT_ Behaviour: public Object
 	{

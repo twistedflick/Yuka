@@ -22,13 +22,17 @@
 
 #include "Object.hh"
 #include "Traits/Flexible.hh"
-#include "Behaviours/Transform.hh"
 #include "decl.h"
 
 namespace Yuka
 {
 	class Scene;
-
+	
+	namespace Behaviours
+	{
+		class Transform;
+	};
+	
 	class YUKA_EXPORT_ SceneObject:
 		public Object,
 		public Traits::Flexible
@@ -84,7 +88,7 @@ namespace Yuka
 		List *m_children;
 		YUKA_WEAKPTR_ Scene *m_scene;
 	
-		Transform *m_transform;
+		Behaviours::Transform *m_transform;
 	
 		SceneObject(const std::string kind);
 		virtual ~SceneObject();
