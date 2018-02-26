@@ -38,6 +38,27 @@ Transform::Transform(const double px, const double py, const double pz):
 {
 }
 
+void
+Transform::ownerChangedTo(Traits::Flexible *obj)
+{
+	Behaviour::ownerChangedTo(obj);
+	m_spatial = dynamic_cast<Traits::Spatial *>(obj);
+}
+
+/* If we're attached to a spatial object, apply this transform to it */
+void
+Transform::update(void)
+{
+	Traits::Spatial::Coordinates *state;
+	
+	if(m_spatial && (state = m_spatial->spatialState()))
+	{
+		state->position += m_position;
+		state->rotation += m_rotation;
+		state->scale *= m_scale;
+	}
+}
+
 /* Return the position (translation vector) of this transform  */
 Point
 Transform::position(void) const

@@ -25,7 +25,7 @@ namespace Yuka
 {
 	/* Yuka::Vector represents some sort of three-dimensional value */
 	struct YUKA_EXPORT_ Vector:
-		public Traits::Debuggable
+		public virtual Traits::Debuggable
 	{
 		double x;
 		double y;
@@ -45,6 +45,40 @@ namespace Yuka
 	protected:
 		/* Printable trait */
 		virtual std::ostream &print(std::ostream &stream) const;
+	public:
+		/* Mathematical operators */
+		YUKA_EXPORT_ Vector &operator+=(const Vector &rhs)
+		{
+			x += rhs.x;
+			y += rhs.y;
+			z += rhs.z;
+			return *this;
+		};
+
+		YUKA_EXPORT_ Vector &operator-=(const Vector &rhs)
+		{
+			x -= rhs.x;
+			y -= rhs.y;
+			z -= rhs.z;
+			return *this;
+		}
+		
+		YUKA_EXPORT_ Vector &operator*=(const Vector &rhs)
+		{
+			x *= rhs.x;
+			y *= rhs.y;
+			z *= rhs.z;
+			return *this;
+		}
+
+		YUKA_EXPORT_ Vector &operator/=(const Vector &rhs)
+		{
+			x /= rhs.x;
+			y /= rhs.y;
+			z /= rhs.z;
+			return *this;
+		}
+		
 	};
 	
 };

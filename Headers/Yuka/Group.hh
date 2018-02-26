@@ -17,6 +17,7 @@
 # define YUKA_GROUP_HH_                1
 
 # include "SceneObject.hh"
+# include "Traits/Spatial.hh"
 # include "decl.h"
 
 namespace Yuka
@@ -25,7 +26,9 @@ namespace Yuka
 	 * all of its children.
 	 */
 
-	class Group: public SceneObject
+	class Group:
+		public SceneObject,
+		public virtual Traits::Spatial
 	{
 		friend class SceneObject;
 	public:

@@ -25,8 +25,7 @@ Behaviour::Behaviour():
 	m_prev(NULL),
 	m_next(NULL),
 	m_enabled(true),
-	m_owner(NULL),
-	m_sceneobj(NULL)
+	m_owner(NULL)
 {
 }
 
@@ -58,6 +57,7 @@ Behaviour::setEnabled(std::string value)
 		return false;
 	}
 	m_enabled = b;
+	dirty();
 	return true;
 }
 
@@ -65,12 +65,14 @@ void
 Behaviour::enable(void)
 {
 	m_enabled = true;
+	dirty();
 }
 
 void
 Behaviour::disable(void)
 {
 	m_enabled = false;
+	dirty();
 }
 
 Traits::Flexible *
@@ -79,10 +81,22 @@ Behaviour::owner(void) const
 	return m_owner;
 }
 
-SceneObject *
-Behaviour::sceneObject(void) const
+/* Invoked to indicate that some aspect of this behaviour has changed which
+ * will impact upon how we update the object we're attached to
+ */
+void
+Behaviour::dirty(void)
 {
-	return m_sceneobj;
+	if(m_owner)
+	{
+		m_owner->dirty();
+	}
+}
+
+/* Invoked by a flexible object when it's time to apply our behaviour to it */
+void
+Behaviour::update(void)
+{
 }
 
 /* Invoked by a flexible object when a Behaviour is attached to it */
@@ -100,10 +114,9 @@ Behaviour::attachTo(Traits::Flexible *obj)
 		 */
 		m_owner->remove(this);
 		m_owner = NULL;
-		m_sceneobj = NULL;
 	}
 	m_owner = obj;
-	m_sceneobj = dynamic_cast<SceneObject *>(obj);
+	ownerChangedTo(m_owner);
 }
 
 /* Invoked by a SceneObject when a Behaviour is removed from it */
@@ -114,8 +127,15 @@ Behaviour::detachFrom(Traits::Flexible *obj)
 	{
 		return;
 	}
+	dirty();
 	m_owner = NULL;
-	m_sceneobj = NULL;
+	ownerChangedTo(NULL);
+}
+
+void
+Behaviour::ownerChangedTo(Traits::Flexible *obj)
+{
+	(void) obj;
 }
 
 /** Scriptable trait **/
@@ -162,16 +182,5 @@ Behaviour::printProperties(std::ostream &stream) const
 	
 	Object::printProperties(stream);
 	stream << indent << ".enabled = " << (enabled() ? "true" : "false") << ";\n";
-	if(debugging())
-	{
-		if(m_sceneobj)
-		{
-			stream << indent << ".sceneObject = " << m_sceneobj->internalName() << ";\n";
-		}
-		else
-		{
-			stream << indent << ".sceneObject = nil;\n";
-		}
-	}
 	return stream;
 }

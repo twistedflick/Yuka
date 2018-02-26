@@ -25,11 +25,14 @@ namespace Yuka
 {
 	namespace Traits
 	{
+		const IdentityFlag ScriptableTrait = 0x00000004;
+		
 		/* Classes with the Scriptable trait can be populated and manipulated
 		 * through a simplified interface suitable for integration with scripting
 		 * languages, or for use by parsers constructing scenes.
 		 */
-		class YUKA_EXPORT_ Scriptable: public Trait
+		class YUKA_EXPORT_ Scriptable:
+			public virtual Trait
 		{
 		public:
 			/* Set a named property to a supplied value, emitting a warning

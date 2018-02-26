@@ -62,6 +62,7 @@ Scene::load(const char *pathname)
 	}
 	ret = parser->parseIntoScene(this);
 	parser->release();
+	update();
 	return ret;
 }
 
@@ -74,17 +75,4 @@ Scene::add(SceneObject *child)
 	{
 		child->attachToScene(this);
 	}
-}
-
-/* Print our properties to a std::ostream */
-std::ostream &
-Scene::printProperties(std::ostream &stream) const
-{
-	std::string indent = printIndent();
-	
-	SceneObject::printProperties(stream);
-	
-	stream << indent << "/* Scene properties */\n";
-	
-	return stream;
 }

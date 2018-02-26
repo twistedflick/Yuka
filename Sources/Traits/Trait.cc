@@ -21,7 +21,8 @@
 
 /* Protected constructor for all Trait-based objects */
 
-Trait::Trait()
+Trait::Trait():
+	m_traitFlags(0)
 {
 }
 

@@ -17,22 +17,57 @@
 # define YUKA_TRAITS_SPATIAL_HH_       1
 
 # include "Flexible.hh"
+# include "../Intrinsics/Point.hh"
+# include "../Intrinsics/Size.hh"
+# include "../Intrinsics/Orientation.hh"
 # include "../decl.h"
 
 namespace Yuka
 {
-	class Transform;
+	namespace Behaviours
+	{
+		class Transform;
+	};
 
 	namespace Traits
 	{
+		class Debuggable;
+		
+		const IdentityFlag SpatialTrait = 0x00000010;
+		
 		/* Classes with the Spatial trait have positional co-ordinates, which
 		 * are usually manipulated by the Transform behaviour.
 		 */
-		class YUKA_EXPORT_ Spatial: public Flexible
+		class YUKA_EXPORT_ Spatial:
+			public virtual Flexible
 		{
-			friend class Yuka::Transform;
+			friend class Yuka::Behaviours::Transform;
+			friend class Yuka::Traits::Debuggable;
 		public:
+			struct Coordinates
+			{
+				Point position;
+				Orientation rotation;
+				Size scale;
+				
+				Coordinates():
+					position(),
+					rotation(),
+					scale(1.0)
+				{
+				};
+			};
 		protected:
+			/* Invoked by friendly behaviours to retrieve a pointer to our
+			 * spatial state
+			*/
+			virtual Coordinates *spatialState(void);
+		protected:
+			struct
+			{
+				Coordinates identity;
+				Coordinates current;
+			} m_spatial;
 		};
 	}
 };

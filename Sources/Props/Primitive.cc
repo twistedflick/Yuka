@@ -24,16 +24,3 @@ Primitive::Primitive(const std::string kind):
 	Prop(kind)
 {
 }
-
-/* Print our properties to a std::ostream */
-std::ostream &
-Primitive::printProperties(std::ostream &stream) const
-{
-	std::string indent = printIndent();
-	
-	SceneObject::printProperties(stream);
-	
-	stream << indent << "/* Primitive properties */\n";
-	
-	return stream;
-}

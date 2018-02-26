@@ -19,9 +19,12 @@
 
 #include "p_YukaTraits.hh"
 
+#include "Yuka/SceneObject.hh"
+
 /* Protected constructor for Flexible objects */
 
-Flexible::Flexible()
+Flexible::Flexible():
+	Trait()
 {
 	m_behaviours.first = NULL;
 	m_behaviours.last = NULL;
@@ -87,5 +90,61 @@ void
 Flexible::remove(Behaviour *behaviour)
 {
 	behaviour->detachFrom(this);
+	behaviour->m_prev = NULL;
+	behaviour->m_next = NULL;
 	behaviour->release();
+}
+
+void
+Flexible::dirty(void)
+{
+	m_traitFlags |= FlexibleTrait;
+	dirtyParent();
+}
+
+void
+Flexible::invalidate(void)
+{
+	m_traitFlags |= FlexibleTrait;
+	invalidateDependents();
+}
+
+void
+Flexible::update(void)
+{
+	Behaviour *p, *next;
+	
+	if(!(m_traitFlags & FlexibleTrait))
+	{
+		return;
+	}
+	m_traitFlags = AllTraits & ~FlexibleTrait;
+	
+	for(p = m_behaviours.first; p; p = next)
+	{
+		next = p->m_next;
+		if(p->enabled())
+		{
+			p->update();
+		}
+	}
+	
+	updateDependents();
+	
+	m_traitFlags = NoTraits;
+}
+
+void
+Flexible::dirtyParent(void)
+{
+}
+
+void
+Flexible::invalidateDependents(void)
+{
+}
+
+void
+Flexible::updateDependents(void)
+{
 }

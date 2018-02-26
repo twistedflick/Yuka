@@ -13,8 +13,8 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_SPHERE_HH_
-# define YUKA_SPHERE_HH_               1
+#ifndef YUKA_PROPS_SPHERE_HH_
+# define YUKA_PROPS_SPHERE_HH_         1
 
 # include "Primitive.hh"
 # include "../decl.h"
@@ -22,15 +22,14 @@
 namespace Yuka
 {
 
-	class YUKA_EXPORT_ Sphere: public Primitive
+	class YUKA_EXPORT_ Sphere:
+		public Primitive
 	{
 		friend class SceneObject;
 	protected:
 		Sphere(const std::string kind);
-		
-		virtual std::ostream &printProperties(std::ostream &stream) const;
 	};
 
 };
 
-#endif /*!YUKA_SPHERE_HH_*/
+#endif /*!YUKA_PROPS_SPHERE_HH_*/

@@ -22,6 +22,7 @@
 # include "Yuka/Behaviour.hh"
 # include "Yuka/Behaviours/Transform.hh"
 
+# include "Yuka/Traits/Spatial.hh"
 # include "Yuka/SceneObject.hh"
 
 using namespace Yuka;

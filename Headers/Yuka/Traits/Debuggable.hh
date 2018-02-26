@@ -25,6 +25,8 @@ namespace Yuka
 {
 	namespace Traits
 	{
+		
+		const IdentityFlag DebuggableTrait = 0x00000001;
 
 		/* The Debuggable trait provides methods for serialising an object
 		 * for logging output.
@@ -33,7 +35,8 @@ namespace Yuka
 		 * sent to a std::ostream.
 		 */
 	
-		class YUKA_EXPORT_ Debuggable: public Trait
+		class YUKA_EXPORT_ Debuggable:
+			public virtual Trait
 		{
 		public:
 			virtual void dump(void) const;
@@ -43,6 +46,7 @@ namespace Yuka
 		protected:
 			/* Override these methods to provide more detailed output */
 			virtual std::ostream &print(std::ostream &stream) const;
+			virtual std::ostream &printTraits(std::ostream &stream) const;
 			virtual std::ostream &printProperties(std::ostream &stream) const;
 			virtual std::ostream &printChildren(std::ostream &stream) const;
 			virtual std::ostream &printBehaviours(std::ostream &stream) const;

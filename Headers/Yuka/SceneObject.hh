@@ -35,7 +35,7 @@ namespace Yuka
 	
 	class YUKA_EXPORT_ SceneObject:
 		public Object,
-		public Traits::Flexible
+		public virtual Traits::Flexible
 	{
 		friend class Scene;
 	public:
@@ -67,6 +67,11 @@ namespace Yuka
 		
 		/* Return the scene this object is attached to, if any */
 		virtual Scene *scene(void) const;
+	protected:
+		/* Flexible trait */
+		virtual void dirtyParent(void);
+		virtual void updateDependents(void);
+		virtual void invalidateDependents(void);
 	public:
 		/* Identifiable trait (via Object) */
 		virtual std::string kind(void) const;

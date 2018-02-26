@@ -25,10 +25,13 @@ namespace Yuka
 	
 	namespace Traits
 	{
+		const IdentityFlag IdentifiableTrait = 0x00000002;
+		
 		/* Classes with the Identifiable trait provide properties allowing them
 		 * to be inspected at run-time.
 		 */
-		class YUKA_EXPORT_ Identifiable: public Trait
+		class YUKA_EXPORT_ Identifiable:
+			public virtual Trait
 		{
 		public:
 			/* Return a numeric instance identifier for this object, guaranteed

@@ -24,16 +24,3 @@ Cube::Cube(const std::string kind):
 	Primitive(kind)
 {
 }
-
-/* Print our properties to a std::ostream */
-std::ostream &
-Cube::printProperties(std::ostream &stream) const
-{
-	std::string indent = printIndent();
-	
-	SceneObject::printProperties(stream);
-	
-	stream << indent << "/* Cube properties */\n";
-	
-	return stream;
-}

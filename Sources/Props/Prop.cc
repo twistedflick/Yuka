@@ -24,16 +24,3 @@ Prop::Prop(const std::string kind):
 	SceneObject(kind)
 {
 }
-
-/* Print our properties to a std::ostream */
-std::ostream &
-Prop::printProperties(std::ostream &stream) const
-{
-	std::string indent = printIndent();
-	
-	SceneObject::printProperties(stream);
-	
-	stream << indent << "/* Prop properties */\n";
-	
-	return stream;
-}

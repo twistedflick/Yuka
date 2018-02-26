@@ -26,6 +26,8 @@ namespace Yuka
 	namespace Traits
 	{
 		class Debuggable;
+
+		const IdentityFlag FlexibleTrait = 0x00000008;
 		
 		/* Classes with the Flexible trait can have behaviours attached
 		 * to them.
@@ -35,7 +37,8 @@ namespace Yuka
 		 * interacts with the Moveable trait, which is a subclass of
 		 * Controllable.
 		 */
-		class YUKA_EXPORT_ Flexible: public Trait
+		class YUKA_EXPORT_ Flexible:
+			public virtual Trait
 		{
 			friend class Yuka::Behaviour;
 			friend class Debuggable;
@@ -45,6 +48,11 @@ namespace Yuka
 		
 			/* Remove a behaviour from this object */
 			virtual void remove(Behaviour *behaviour);
+			
+			/* Mark this object, and any descendants, as being invalidated
+			 * and needing to be updated by their behaviours
+			 */
+			virtual void invalidate(void);
 		protected:
 			Flexible();
 			virtual ~Flexible();
@@ -54,8 +62,22 @@ namespace Yuka
 				Behaviour *first;
 				Behaviour *last;
 			} m_behaviours;
+
+			/* Invoked by a behaviour to indicate that the behaviour chain
+			 * is dirty.
+			 */
+			virtual void dirty(void);
+			
+			/* Update our state using our list of behaviours */
+			virtual void update(void);
+			/* Mark our parent/owner as dirty */
+			virtual void dirtyParent(void);
+			/* Mark any dependent objects as invalidated */
+			virtual void invalidateDependents(void);
+			/* Ask any dependent objects to update */
+			virtual void updateDependents(void);
 		};
-	}
+	};
 };
 
 #endif /*!YUKA_TRAITS_FLEXIBLE_HH_*/

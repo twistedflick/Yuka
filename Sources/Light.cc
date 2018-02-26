@@ -24,16 +24,3 @@ Light::Light(const std::string kind):
 	SceneObject(kind)
 {
 }
-
-/* Print our properties to a std::ostream */
-std::ostream &
-Light::printProperties(std::ostream &stream) const
-{
-	std::string indent = printIndent();
-	
-	SceneObject::printProperties(stream);
-	
-	stream << indent << "/* Light properties */\n";
-	
-	return stream;
-}

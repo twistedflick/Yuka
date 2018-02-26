@@ -24,17 +24,3 @@ PointLight::PointLight(const std::string kind):
 	Light(kind)
 {
 }
-
-/* Dump our object properties to an ostream at the specified indent level */
-/* Print our properties to a std::ostream */
-std::ostream &
-PointLight::printProperties(std::ostream &stream) const
-{
-	std::string indent = printIndent();
-	
-	SceneObject::printProperties(stream);
-	
-	stream << indent << "/* PointLight properties */\n";
-	
-	return stream;
-}

@@ -39,9 +39,9 @@ namespace Yuka
 	 * - Dump an object to a stream via <<
 	 */
 	class YUKA_EXPORT_ Object:
-		public Traits::Debuggable,
-		public Traits::Scriptable,
-		public Traits::Identifiable
+		public virtual Traits::Debuggable,
+		public virtual Traits::Scriptable,
+		public virtual Traits::Identifiable
 	{
 	public:
 		/* Increment the reference count */

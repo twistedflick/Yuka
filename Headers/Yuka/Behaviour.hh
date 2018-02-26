@@ -50,23 +50,26 @@ namespace Yuka
 
 		/* Return the flexible object we're attached to */
 		virtual Traits::Flexible *owner(void) const;
-		
-		/* Return the SceneObject this behaviour is attached to, if any */
-		virtual SceneObject *sceneObject() const;
 	protected:
 		Behaviour();
+		/* Mark this behaviour as dirty, and so invalidating our owning object.
+		 */
+		virtual void dirty(void);
 	protected:
-		/* Proteced interface with Traits::Flexible */
+		/* Protected interface with Traits::Flexible */
 		Behaviour *m_prev;
 		Behaviour *m_next;
 		/* Invoked by a flexible object when a Behaviour is added to it */
 		virtual void attachTo(Traits::Flexible *obj);
 		/* Invoked by a flexible object when a Behaviour is removed from it */
 		virtual void detachFrom(Traits::Flexible *obj);
+		/* Invoked by a flexible object when a Behaviour must update it */
+		virtual void update(void);
+		/* Invoked when the owning object is changed */
+		virtual void ownerChangedTo(Traits::Flexible *obj);
 	private:
 		bool m_enabled;
 		YUKA_WEAKPTR_ Traits::Flexible *m_owner;
-		YUKA_WEAKPTR_ SceneObject *m_sceneobj;
 	public:
 		/* Identifiable trait */
 		virtual std::string kind(void) const;
@@ -76,6 +79,8 @@ namespace Yuka
 	public:
 		/* Debuggable trait */
 		virtual std::ostream &print(std::ostream &stream) const;
+	protected:
+		/* Debuggable trait */
 		virtual std::ostream &printProperties(std::ostream &stream) const;
 		
 	};

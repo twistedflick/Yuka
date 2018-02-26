@@ -17,6 +17,7 @@
 # define YUKA_PROP_HH_                 1
 
 # include "SceneObject.hh"
+# include "Traits/Spatial.hh"
 # include "decl.h"
 
 namespace Yuka
@@ -25,12 +26,12 @@ namespace Yuka
 	 * which may have physics properties.
 	 */
 
-	class Prop: public SceneObject
+	class Prop:
+		public SceneObject,
+		public Traits::Spatial
 	{
 	protected:
 		Prop(const std::string kind);
-		
-		virtual std::ostream &printProperties(std::ostream &stream) const;
 	};
 
 };

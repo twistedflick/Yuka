@@ -53,6 +53,7 @@ Debuggable::print(std::ostream &stream) const
 	}
 	printPush();
 	printProperties(stream);
+	printTraits(stream);
 	printBehaviours(stream);
 	printChildren(stream);
 	printPop();
@@ -70,10 +71,13 @@ Debuggable::printBehaviours(std::ostream &stream) const
 	
 	if((me = dynamic_cast<const Flexible *>(this)))
 	{
-		stream << "\n" << indent << "/* Behaviours */\n\n";
-		for(p = me->m_behaviours.first; p; p = p->m_next)
+		if(me->m_behaviours.first)
 		{
-			stream << indent << "@[] = " << p << ";\n";
+			stream << "\n" << indent << "/* Behaviours */\n\n";
+			for(p = me->m_behaviours.first; p; p = p->m_next)
+			{
+				stream << indent << "@[] = " << p << ";\n";
+			}
 		}
 	}
 	return stream;
@@ -84,19 +88,72 @@ Debuggable::printBehaviours(std::ostream &stream) const
 std::ostream &
 Debuggable::printProperties(std::ostream &stream) const
 {
-	bool d = debugging();
+	return stream;
+}
+
+/* Output a representation of this object's traits to the provided stream */
+std::ostream &
+Debuggable::printTraits(std::ostream &stream) const
+{
 	const Identifiable *id = dynamic_cast<const Identifiable *>(this);
+	const Spatial *spatial = dynamic_cast<const Spatial *>(this);
 	std::string indent = printIndent();
+	bool d = debugging();
+	char hexbuf[24];
+
+	stream << "\n" << indent << "/* Traits */\n\n";
+	stream << indent << ".state = {\n";
+	printPush();
+	indent = printIndent();
+
+	/* Trait (base) state */
+	if(d)
+	{
+		snprintf(hexbuf, sizeof(hexbuf) - 1, "%08x", m_traitFlags);
+		stream << indent << ".traitFlags = 0x" << hexbuf << ";\n";
+	}
 	
+	/* Identifiable trait state */
 	if(id)
 	{
 		int t = id->tag();
-		
+
+		stream << indent << ".identifiable = {\n";
+		printPush();
+		indent = printIndent();
+
+		stream << indent << ".instanceId = " << id->instanceString() << ";\n";
 		if(d || t)
 		{
 			stream << indent << ".tag = " << t << ";\n";
 		}
+		stream << indent << ".name = \"" << id->name() << "\";\n";
+		stream << indent << ".kind = " << id->kind() << ";\n";
+		
+		printPop();
+		indent = printIndent();
+		stream << indent << "};\n";
 	}
+	
+	/* Spatial trait state */
+	if(spatial)
+	{
+		stream << indent << ".spatial = {\n";
+		printPush();
+		indent = printIndent();
+		stream << indent << ".position = " << spatial->m_spatial.current.position << ";\n";
+		stream << indent << ".rotation = " << spatial->m_spatial.current.rotation << ";\n";
+		stream << indent << ".scale = " << spatial->m_spatial.current.scale << ";\n";
+		printPop();
+		indent = printIndent();
+		stream << indent << "};\n";
+	}
+
+	printPop();
+	indent = printIndent();
+	
+	stream << indent << "};\n";
+
 	return stream;
 }
 

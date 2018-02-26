@@ -13,8 +13,8 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_PRIMITIVE_HH_
-# define YUKA_PRIMITIVE_HH_           1
+#ifndef YUKA_PROPS_PRIMITIVE_HH_
+# define YUKA_PROPS_PRIMITIVE_HH_      1
 
 # include "../Prop.hh"
 # include "../decl.h"
@@ -27,14 +27,13 @@ namespace Yuka
 	 * not require a model to be loaded in order to be represented
 	 * fully.
 	 */
-	class YUKA_EXPORT_ Primitive: public Prop
+	class YUKA_EXPORT_ Primitive:
+		public Prop
 	{
 	protected:
 		Primitive(const std::string kind);
-		
-		virtual std::ostream &printProperties(std::ostream &stream) const;
 	};
 
 };
 
-#endif /*!YUKA_PRIMITIVE_HH_*/
+#endif /*!YUKA_PROPS_PRIMITIVE_HH_*/

@@ -22,7 +22,8 @@
 namespace Yuka
 {
 
-	class YUKA_EXPORT_ Scene: public SceneObject
+	class YUKA_EXPORT_ Scene:
+		public SceneObject
 	{
 	public:
 		static Scene *sceneFromPath(const char *pathname);
@@ -33,13 +34,11 @@ namespace Yuka
 		 * this scene into it.
 		 */
 		virtual bool load(const char *pathname);
-		
-		/* Add a child to the root of this scene */
-		virtual void add(SceneObject *child);
 	protected:
 		Scene(std::string kind);
-		
-		virtual std::ostream &printProperties(std::ostream &stream) const;
+	public:
+		/* SceneObject overrides */
+		virtual void add(SceneObject *child);
 	};
 
 };

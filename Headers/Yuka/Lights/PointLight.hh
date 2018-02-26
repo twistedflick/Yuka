@@ -18,17 +18,18 @@
 
 # include "../Light.hh"
 # include "../SceneObject.hh"
+# include "../Traits/Spatial.hh"
 # include "../decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ PointLight: public Light
+	class YUKA_EXPORT_ PointLight:
+		public Light,
+		public virtual Traits::Spatial
 	{
 		friend class SceneObject;
 	protected:
 		PointLight(const std::string kind);
-		
-		virtual std::ostream &printProperties(std::ostream &stream) const;
 	};
 
 };

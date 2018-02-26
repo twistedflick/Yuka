@@ -24,16 +24,3 @@ Sphere::Sphere(const std::string name):
 	Primitive(name)
 {
 }
-
-/* Print our properties to a std::ostream */
-std::ostream &
-Sphere::printProperties(std::ostream &stream) const
-{
-	std::string indent = printIndent();
-	
-	SceneObject::printProperties(stream);
-	
-	stream << indent << "/* Sphere properties */\n";
-	
-	return stream;
-}

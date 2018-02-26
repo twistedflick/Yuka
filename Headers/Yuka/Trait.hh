@@ -21,15 +21,29 @@
 namespace Yuka
 {
 	/* Traits are base classes which can be inherited-from to provide
-	 * certain kinds of behaviours. For example, SceneObjects which can
-	 * be moved around will have the Moveable trait.
+	 * certain kinds of capabilities. For example, objects which can
+	 * be moved around will have the Moveable trait. Objects that can
+	 * have Behaviours attached will have the Flexible trait.
 	 */
+	
+	/* This is a bitfield type that will be used by individual traits to
+	 * control how they interact with behaviours.
+	 */
+	namespace Traits
+	{
+		typedef unsigned IdentityFlag;
+		
+		const IdentityFlag AllTraits = (IdentityFlag) -1;
+		const IdentityFlag NoTraits = 0;
+	};
 
 	class YUKA_EXPORT_ Trait
 	{
 	protected:
 		Trait();
 		~Trait();
+	protected:
+		Traits::IdentityFlag m_traitFlags;
 	};
 
 };

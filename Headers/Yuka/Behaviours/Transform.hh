@@ -24,6 +24,11 @@
 
 namespace Yuka
 {
+	namespace Traits
+	{
+		class Spatial;
+	};
+	
 	namespace Behaviours
 	{
 		class YUKA_EXPORT_ Transform:
@@ -80,15 +85,24 @@ namespace Yuka
 			virtual double scaleZ(void) const;
 			virtual void setScaleZ(const double nx) ;
 			virtual bool setScaleZ(const std::string factor);
-		
-			virtual bool set(const std::string key, const std::string value);
-			virtual std::string kind(void) const;
-		protected:
-			virtual std::ostream &printProperties(std::ostream &stream) const;
 		private:
+			YUKA_WEAKPTR_ Traits::Spatial *m_spatial;
 			Point m_position;
 			Orientation m_rotation;
 			Size m_scale;
+		protected:
+			/* Behaviour overrides */
+			virtual void update(void);
+			virtual void ownerChangedTo(Traits::Flexible *obj);
+		public:
+			/* Identifiable trait */
+			virtual std::string kind(void) const;
+		public:
+			/* Scriptable trait */
+			virtual bool set(const std::string key, const std::string value);
+		protected:
+			/* Debuggable trait */
+			virtual std::ostream &printProperties(std::ostream &stream) const;
 		};
 	};
 };

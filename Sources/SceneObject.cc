@@ -53,8 +53,8 @@ SceneObject::sceneObjectWithKind(const std::string kind, SceneObject::Properties
 
 /* Protected constructor for SceneObjects */
 SceneObject::SceneObject(const std::string kind):
-	Object(),
 	Traits::Flexible(),
+	Object(),
 	m_kind(kind),
 	m_parent(NULL),
 	m_children(NULL),
@@ -95,12 +95,15 @@ SceneObject::add(SceneObject *child)
 	{
 		m_children = new SceneObject::List();
 	}
+	dirty();
+	child->invalidate();
 	m_children->push(child);
 	child->attachToParent(this);
 	if(scene())
 	{
 		child->attachToScene(scene());
 	}
+	update();
 }
 
 void
@@ -110,12 +113,14 @@ SceneObject::remove(SceneObject *child)
 	{
 		return;
 	}
+	dirty();
 	if(m_scene)
 	{
 		child->detachFromScene(m_scene);
 	}
 	child->detachFromParent(this);
 	m_children->remove(child);
+	update();
 }
 
 /* Invoked by a parent SceneObject when we're added or removed from it */
@@ -133,6 +138,7 @@ SceneObject::attachToParent(SceneObject *newparent)
 		 */
 		m_parent->remove(this);
 	}
+	invalidate();
 	m_parent = newparent;
 }
 
@@ -144,6 +150,7 @@ SceneObject::detachFromParent(SceneObject *oldparent)
 		return;
 	}
 	m_parent = NULL;
+	invalidate();
 }
 
 /* Invoked by a parent SceneObject when we're added or removed from a scene */
@@ -159,6 +166,7 @@ SceneObject::attachToScene(Scene *newscene)
 	}
 	if(m_scene)
 	{
+		dirty();
 		detachFromScene(m_scene);
 	}
 	m_scene = newscene;
@@ -168,7 +176,6 @@ SceneObject::attachToScene(Scene *newscene)
 	{
 		child->attachToScene(newscene);
 	}
-	
 }
 
 void
@@ -181,6 +188,7 @@ SceneObject::detachFromScene(Scene *oldscene)
 	{
 		return;
 	}
+	invalidate();
 	m_scene = NULL;
 	i = NULL;
 	child = NULL;
@@ -204,6 +212,50 @@ SceneObject::scene(void) const
 	return m_scene;
 }
 
+/** Flexible trait **/
+
+void
+SceneObject::dirtyParent(void)
+{
+	if(m_parent)
+	{
+		Flexible::dirtyParent();
+		m_parent->dirty();
+	}
+}
+
+void
+SceneObject::invalidateDependents(void)
+{
+	SceneObject::List::Iterator i;
+	SceneObject *child;
+	std::string indent = printIndent();
+	
+	Flexible::invalidateDependents();
+	i = NULL;
+	child = NULL;
+	while(m_children && m_children->next(&i, &child))
+	{
+		child->invalidate();
+	}
+}
+
+void
+SceneObject::updateDependents(void)
+{
+	SceneObject::List::Iterator i;
+	SceneObject *child;
+	std::string indent = printIndent();
+	
+	Flexible::updateDependents();
+	i = NULL;
+	child = NULL;
+	while(m_children && m_children->next(&i, &child))
+	{
+		child->update();
+	}
+}
+
 /** Scriptable trait **/
 
 /* Apply a SceneObject::Properties map to this object, warning about any
@@ -225,6 +277,7 @@ SceneObject::apply(SceneObject::Properties properties)
 			result = false;
 		}
 	}
+	update();
 	return result;
 }
 
@@ -289,8 +342,6 @@ SceneObject::printProperties(std::ostream &stream) const
 	
 	Object::printProperties(stream);
 	
-	stream << indent << "/* SceneObject properties */\n";
-	
 	if(debugging())
 	{
 		if(m_parent)
@@ -318,9 +369,10 @@ std::ostream &
 SceneObject::printChildren(std::ostream &stream) const
 {
 	std::string indent = printIndent();
-	
 	SceneObject::List::Iterator i;
 	SceneObject *child;
+
+	Object::printChildren(stream);
 
 	i = NULL;
 	child = NULL;

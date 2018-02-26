@@ -21,12 +21,11 @@
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ Light: public SceneObject
+	class YUKA_EXPORT_ Light:
+		public SceneObject
 	{
 	protected:
 		Light(const std::string kind);
-		
-		virtual std::ostream &printProperties(std::ostream &stream) const;
 	};
 
 };
