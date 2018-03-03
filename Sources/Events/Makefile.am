@@ -12,8 +12,9 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-incdir = ${pkgincludedir}/Traits
+AM_CPPFLAGS = @AM_CPPFLAGS@
 
-inc_HEADERS = Debuggable.hh Scriptable.hh Identifiable.hh \
-	Flexible.hh Spatial.hh Solid.hh Observable.hh Listening.hh
+noinst_LTLIBRARIES = libYukaEvents.la
 
+libYukaEvents_la_SOURCES = p_YukaEvents.hh \
+	Event.cc Scene.cc

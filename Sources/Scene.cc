@@ -73,6 +73,13 @@ Scene::add(SceneObject *child)
 	SceneObject::add(child);
 	if(child)
 	{
+		Events::SceneObjectAddedToScene ev(this, this, child), ev2(this, this, child);
 		child->attachToScene(this);
+		/* Emit an event ourselves (because we are the scene), then
+		 * ask the child to emit an event
+		 */
+		emit(&ev);
+		ev2.setFlag(Events::CascadeFlag);
+		child->emit(&ev);
 	}
 }

@@ -17,30 +17,5 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaTraits.hh"
 
-SceneParser *
-SceneParser::parserFromPath(const char *pathname)
-{
-	return XMLSceneParser::parserFromPath(pathname);
-}
-
-void
-SceneParser::didFinishLoading(Scene *scene)
-{
-	Events::SceneLoaded ev(this, scene);
-	
-	scene->emit(&ev);
-}
-
-SceneParser::~SceneParser()
-{
-}
-
-/** Identifiable trait **/
-
-std::string
-SceneParser::kind(void) const
-{
-	return "SceneParser";
-}

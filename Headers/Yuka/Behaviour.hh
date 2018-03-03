@@ -17,6 +17,7 @@
 # define YUKA_BEHAVIOUR_HH_            1
 
 #include "Object.hh"
+#include "Traits/Listening.hh"
 #include "decl.h"
 
 namespace Yuka
@@ -37,7 +38,8 @@ namespace Yuka
 	 */
 
 	class YUKA_EXPORT_ Behaviour:
-		public Object
+		public Object,
+		virtual public Traits::Listening
 	{
 		friend class Traits::Flexible;
 		friend class Traits::Debuggable;
@@ -50,6 +52,8 @@ namespace Yuka
 
 		/* Return the flexible object we're attached to */
 		virtual Traits::Flexible *owner(void) const;
+		/* Return the next behaviour in the chain we're in */
+		virtual Behaviour *next(void) const;
 	protected:
 		Behaviour();
 		/* Mark this behaviour as dirty, and so invalidating our owning object.

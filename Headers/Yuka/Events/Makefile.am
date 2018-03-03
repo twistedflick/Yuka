@@ -12,8 +12,6 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-incdir = ${pkgincludedir}/Traits
+incdir = ${pkgincludedir}/Events
 
-inc_HEADERS = Debuggable.hh Scriptable.hh Identifiable.hh \
-	Flexible.hh Spatial.hh Solid.hh Observable.hh Listening.hh
-
+inc_HEADERS = Event.hh Scene.hh

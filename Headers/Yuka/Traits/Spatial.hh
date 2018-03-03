@@ -16,7 +16,7 @@
 #ifndef YUKA_TRAITS_SPATIAL_HH_
 # define YUKA_TRAITS_SPATIAL_HH_       1
 
-# include "Flexible.hh"
+# include "../Trait.hh"
 # include "../Intrinsics/Point.hh"
 # include "../Intrinsics/Size.hh"
 # include "../Intrinsics/Orientation.hh"
@@ -39,7 +39,7 @@ namespace Yuka
 		 * are usually manipulated by the Transform behaviour.
 		 */
 		class YUKA_EXPORT_ Spatial:
-			public virtual Flexible
+			public virtual Trait
 		{
 			friend class Yuka::Behaviours::Transform;
 			friend class Yuka::Traits::Debuggable;

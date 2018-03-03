@@ -13,34 +13,28 @@
  *  limitations under the License.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#ifndef YUKA_TRAITS_SOLID_HH_
+# define YUKA_TRAITS_SOLID_HH_         1
 
-#include "p_Yuka.hh"
+# include "../Trait.hh"
+# include "../decl.h"
 
-SceneParser *
-SceneParser::parserFromPath(const char *pathname)
+namespace Yuka
 {
-	return XMLSceneParser::parserFromPath(pathname);
-}
+	namespace Traits
+	{
+		class Debuggable;
+		
+		const IdentityFlag SolidTrait = 0x00000020;
+		
+		/* Solid objects are those that have meshes */
+		class YUKA_EXPORT_ Solid:
+			public virtual Trait
+		{
+			friend class Yuka::Traits::Debuggable;
+		protected:
+		};
+	}
+};
 
-void
-SceneParser::didFinishLoading(Scene *scene)
-{
-	Events::SceneLoaded ev(this, scene);
-	
-	scene->emit(&ev);
-}
-
-SceneParser::~SceneParser()
-{
-}
-
-/** Identifiable trait **/
-
-std::string
-SceneParser::kind(void) const
-{
-	return "SceneParser";
-}
+#endif /*!YUKA_TRAITS_SOLID_HH_*/

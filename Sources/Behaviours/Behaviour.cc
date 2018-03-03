@@ -21,6 +21,7 @@
 
 /* Protected constructor for Behaviour objects */
 Behaviour::Behaviour():
+	Traits::Listening(),
 	Object(),
 	m_prev(NULL),
 	m_next(NULL),
@@ -81,6 +82,12 @@ Behaviour::owner(void) const
 	return m_owner;
 }
 
+Behaviour *
+Behaviour::next(void) const
+{
+	return m_next;
+}
+
 /* Invoked to indicate that some aspect of this behaviour has changed which
  * will impact upon how we update the object we're attached to
  */
@@ -112,7 +119,7 @@ Behaviour::attachTo(Traits::Flexible *obj)
 		/* Don't invoke detachFrom() directly, let SceneObject
 		 * invoke it as part of SceneObject::remove()
 		 */
-		m_owner->remove(this);
+		m_owner->removeBehaviour(this);
 		m_owner = NULL;
 	}
 	m_owner = obj;

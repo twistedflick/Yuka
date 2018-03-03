@@ -12,7 +12,7 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-SUBDIRS = Intrinsics Traits Behaviours Props .
+SUBDIRS = Intrinsics Traits Behaviours Props Events .
 
 AM_CPPFLAGS = @AM_CPPFLAGS@ @XML_CPPFLAGS@
 
@@ -32,6 +32,7 @@ libYuka_la_LIBADD = Traits/libYukaTraits.la \
 	Behaviours/libYukaBehaviours.la \
 	Props/libYukaProps.la \
 	Intrinsics/libYukaIntrinsics.la \
+	Events/libYukaEvents.la \
 	@XML_LIBS@
 
 

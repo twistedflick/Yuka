@@ -22,4 +22,7 @@ libYukaTraits_la_SOURCES = p_YukaTraits.hh \
 	Identifiable.cc \
 	Scriptable.cc \
 	Flexible.cc \
-	Spatial.cc
+	Spatial.cc \
+	Solid.cc \
+	Observable.cc \
+	Listening.cc

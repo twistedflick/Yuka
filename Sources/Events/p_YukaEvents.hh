@@ -13,34 +13,18 @@
  *  limitations under the License.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#ifndef P_YUKA_EVENTS_HH_
+# define P_YUKA_EVENTS_HH_         1
 
-#include "p_Yuka.hh"
+# include <cstddef>
+# include <iostream>
 
-SceneParser *
-SceneParser::parserFromPath(const char *pathname)
-{
-	return XMLSceneParser::parserFromPath(pathname);
-}
+# include "Yuka/Events.hh"
 
-void
-SceneParser::didFinishLoading(Scene *scene)
-{
-	Events::SceneLoaded ev(this, scene);
-	
-	scene->emit(&ev);
-}
+# include "Yuka/Scene.hh"
+# include "Yuka/SceneObject.hh"
 
-SceneParser::~SceneParser()
-{
-}
+using namespace Yuka;
+using namespace Yuka::Events;
 
-/** Identifiable trait **/
-
-std::string
-SceneParser::kind(void) const
-{
-	return "SceneParser";
-}
+#endif /*!P_YUKA_EVENTS_HH_*/

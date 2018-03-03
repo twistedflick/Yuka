@@ -53,7 +53,7 @@ Flexible::~Flexible()
  * attached to.
  */
 void
-Flexible::add(Behaviour *behaviour)
+Flexible::addBehaviour(Behaviour *behaviour)
 {
 	Flexible *oldp;
 
@@ -68,7 +68,7 @@ Flexible::add(Behaviour *behaviour)
 		/* Remove the behaviour from the scene object it was previously
 		 * attached to
 		 */
-		oldp->remove(behaviour);
+		oldp->removeBehaviour(behaviour);
 	}
 	/* Add the behaviour to our linked list */
 	behaviour->retain();
@@ -87,9 +87,10 @@ Flexible::add(Behaviour *behaviour)
 }
 
 void
-Flexible::remove(Behaviour *behaviour)
+Flexible::removeBehaviour(Behaviour *behaviour)
 {
 	behaviour->detachFrom(this);
+	/* XXX FIXME */
 	behaviour->m_prev = NULL;
 	behaviour->m_next = NULL;
 	behaviour->release();

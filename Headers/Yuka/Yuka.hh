@@ -45,6 +45,9 @@
 # include "Traits/Identifiable.hh"
 # include "Traits/Flexible.hh"
 # include "Traits/Spatial.hh"
+# include "Traits/Solid.hh"
+# include "Traits/Observable.hh"
+# include "Traits/Listening.hh"
 
 /* Intrinsics */
 
@@ -80,6 +83,11 @@
 
 # include "Behaviour.hh"
 # include "Behaviours/Transform.hh"
+# include "Behaviours/Spy.hh"
+
+/* Events */
+
+# include "Events.hh"
 
 /* I/O */
 

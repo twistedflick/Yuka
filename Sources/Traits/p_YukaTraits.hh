@@ -20,6 +20,7 @@
 # include <iomanip>
 # include <cstring>
 # include <string>
+# include <vector>
 # include <unordered_map>
 
 /* Include each trait header directly to avoid dependency hell at build-time */
@@ -29,10 +30,25 @@
 # include "Yuka/Traits/Identifiable.hh"
 # include "Yuka/Traits/Scriptable.hh"
 # include "Yuka/Traits/Spatial.hh"
+# include "Yuka/Traits/Observable.hh"
+# include "Yuka/Traits/Listening.hh"
 
 # include "Yuka/Behaviour.hh"
 
 using namespace Yuka;
 using namespace Yuka::Traits;
+
+
+typedef std::vector<Listening *> ListenerVector;
+typedef std::unordered_map<Yuka::Events::EventKind, ListenerVector> ListenerMap;
+
+struct Yuka::Traits::ObservableData
+{
+	Flexible *flex;
+	ListenerMap map;
+	
+	ObservableData(Observable *owner);
+	ListenerVector *vectorFor(Events::EventKind what, bool shouldCreate = false);
+};
 
 #endif /*!P_YUKA_TRAITS_HH_*/

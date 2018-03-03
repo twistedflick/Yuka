@@ -92,11 +92,13 @@ Headers/Yuka/Intrinsics/Makefile
 Headers/Yuka/Props/Makefile
 Headers/Yuka/Behaviours/Makefile
 Headers/Yuka/Lights/Makefile
+Headers/Yuka/Events/Makefile
 Sources/Makefile
 Sources/Intrinsics/Makefile
 Sources/Traits/Makefile
 Sources/Behaviours/Makefile
 Sources/Props/Makefile
+Sources/Events/Makefile
 Examples/Makefile
 ])
 

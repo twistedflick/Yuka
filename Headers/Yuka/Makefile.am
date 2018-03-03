@@ -12,7 +12,7 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-SUBDIRS = Traits Intrinsics Props Lights Behaviours
+SUBDIRS = Traits Intrinsics Props Lights Behaviours Events
 
 pkginclude_HEADERS = decl.h \
 	Trait.hh \
@@ -23,4 +23,5 @@ pkginclude_HEADERS = decl.h \
 	Prop.hh \
 	Group.hh \
 	Light.hh \
-	Behaviour.hh
+	Behaviour.hh \
+	Events.hh

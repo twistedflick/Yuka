@@ -80,6 +80,10 @@ XMLSceneParser::parseIntoScene(Scene *scene)
 		}
 		ret = xmlTextReaderRead(reader);
 	}
+	if(!ret)
+	{
+		didFinishLoading(scene);
+	}
 	scene->release();
 	parent = NULL;
 	delete stack;

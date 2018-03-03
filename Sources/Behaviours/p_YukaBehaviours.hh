@@ -21,6 +21,7 @@
  */
 # include "Yuka/Behaviour.hh"
 # include "Yuka/Behaviours/Transform.hh"
+# include "Yuka/Behaviours/Spy.hh"
 
 # include "Yuka/Traits/Spatial.hh"
 # include "Yuka/SceneObject.hh"

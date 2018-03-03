@@ -13,34 +13,34 @@
  *  limitations under the License.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#ifndef YUKA_TRAITS_LISTENING_HH_
+# define YUKA_TRAITS_LISTENING_HH_     1
 
-#include "p_Yuka.hh"
+# include "../Trait.hh"
+# include "../decl.h"
 
-SceneParser *
-SceneParser::parserFromPath(const char *pathname)
+namespace Yuka
 {
-	return XMLSceneParser::parserFromPath(pathname);
-}
-
-void
-SceneParser::didFinishLoading(Scene *scene)
-{
-	Events::SceneLoaded ev(this, scene);
+	namespace Events
+	{
+		struct Event;
+	};
 	
-	scene->emit(&ev);
-}
+	namespace Traits
+	{
+		class Observable;
+		
+		const IdentityFlag ListeningTrait = 0x00000080;
+		
+		/* Observable objects are those that receive events */
+		class YUKA_EXPORT_ Listening:
+			public virtual Trait
+		{
+			friend class Yuka::Traits::Observable;
+		protected:
+			virtual bool process(Yuka::Events::Event *event);
+		};
+	}
+};
 
-SceneParser::~SceneParser()
-{
-}
-
-/** Identifiable trait **/
-
-std::string
-SceneParser::kind(void) const
-{
-	return "SceneParser";
-}
+#endif /*!YUKA_TRAITS_LISTENING_HH_*/

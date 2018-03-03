@@ -17,30 +17,13 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaTraits.hh"
 
-SceneParser *
-SceneParser::parserFromPath(const char *pathname)
+bool
+Listening::process(Yuka::Events::Event *ev)
 {
-	return XMLSceneParser::parserFromPath(pathname);
-}
-
-void
-SceneParser::didFinishLoading(Scene *scene)
-{
-	Events::SceneLoaded ev(this, scene);
+	(void) ev;
 	
-	scene->emit(&ev);
-}
-
-SceneParser::~SceneParser()
-{
-}
-
-/** Identifiable trait **/
-
-std::string
-SceneParser::kind(void) const
-{
-	return "SceneParser";
+	/* By default, do nothing */
+	return true;
 }

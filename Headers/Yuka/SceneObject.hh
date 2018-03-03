@@ -22,11 +22,13 @@
 
 #include "Object.hh"
 #include "Traits/Flexible.hh"
+#include "Traits/Observable.hh"
 #include "decl.h"
 
 namespace Yuka
 {
 	class Scene;
+	class SceneParser;
 	
 	namespace Behaviours
 	{
@@ -35,21 +37,16 @@ namespace Yuka
 	
 	class YUKA_EXPORT_ SceneObject:
 		public Object,
-		public virtual Traits::Flexible
+		public virtual Traits::Flexible,
+		public virtual Traits::Observable
 	{
 		friend class Scene;
+		friend class SceneParser;
 	public:
 		class List;
 		typedef std::unordered_map<std::string, std::string> Properties;
 	
 		static SceneObject *sceneObjectWithKind(const std::string kind, Properties properties);
-		
-		/* Ensure the compiler doesn't think we're trying to inadvertently
-		 * hide the behavioural add() and remove() methods from
-		 * Traits::Flexible.
-		 */
-		using Traits::Flexible::add;
-		using Traits::Flexible::remove;
 		
 		/* Append child to our list of children */
 		virtual void add(SceneObject *child);
@@ -72,6 +69,10 @@ namespace Yuka
 		virtual void dirtyParent(void);
 		virtual void updateDependents(void);
 		virtual void invalidateDependents(void);
+		virtual void update(void);
+	protected:
+		/* Observable trait */
+		virtual bool emit(Yuka::Events::Event *ev);
 	public:
 		/* Identifiable trait (via Object) */
 		virtual std::string kind(void) const;

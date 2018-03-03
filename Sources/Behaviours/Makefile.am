@@ -18,5 +18,6 @@ noinst_LTLIBRARIES = libYukaBehaviours.la
 
 libYukaBehaviours_la_SOURCES = p_YukaBehaviours.hh \
 	Behaviour.cc \
-	Transform.cc
+	Transform.cc \
+	Spy.cc
 	

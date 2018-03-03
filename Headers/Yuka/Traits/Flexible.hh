@@ -26,6 +26,7 @@ namespace Yuka
 	namespace Traits
 	{
 		class Debuggable;
+		class Observable;
 
 		const IdentityFlag FlexibleTrait = 0x00000008;
 		
@@ -41,13 +42,14 @@ namespace Yuka
 			public virtual Trait
 		{
 			friend class Yuka::Behaviour;
+			friend class Observable;
 			friend class Debuggable;
 		public:
 			/* Add a behaviour to this object */
-			virtual void add(Behaviour *behaviour);
+			virtual void addBehaviour(Behaviour *behaviour);
 		
 			/* Remove a behaviour from this object */
-			virtual void remove(Behaviour *behaviour);
+			virtual void removeBehaviour(Behaviour *behaviour);
 			
 			/* Mark this object, and any descendants, as being invalidated
 			 * and needing to be updated by their behaviours
