@@ -16,6 +16,7 @@
 #ifndef P_YUKA_PARSERS_HH_
 # define P_YUKA_PARSERS_HH_            1
 
+# include <cstring>
 # include <libxml/xmlreader.h>
 
 # include "Yuka/SceneParser.hh"
