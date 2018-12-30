@@ -93,12 +93,17 @@ Headers/Yuka/Props/Makefile
 Headers/Yuka/Behaviours/Makefile
 Headers/Yuka/Lights/Makefile
 Headers/Yuka/Events/Makefile
+Headers/Yuka/Scene/Makefile
 Sources/Makefile
+Sources/version.cc
+Sources/Parsers/Makefile
 Sources/Intrinsics/Makefile
 Sources/Traits/Makefile
 Sources/Behaviours/Makefile
 Sources/Props/Makefile
 Sources/Events/Makefile
+Sources/Lights/Makefile
+Sources/Scene/Makefile
 Examples/Makefile
 ])
 

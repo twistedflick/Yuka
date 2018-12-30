@@ -21,20 +21,26 @@
 
 /* Protected constructors for Identifiable objects */
 Identifiable::Identifiable():
+	Traits::Trait(),
 	m_tag(0)
 {
+	m_traits |= Traits::IdentifiableTrait;
 }
 
 /* Protected constructors for Identifiable objects */
 Identifiable::Identifiable(const Identifiable *src):
+	Traits::Trait(),
 	m_tag(src->tag())
 {
+	m_traits |= Traits::IdentifiableTrait;
 }
 
 /* Protected constructors for Identifiable objects */
 Identifiable::Identifiable(const Identifiable &src):
+	Traits::Trait(),
 	m_tag(src.tag())
 {
+	m_traits |= Traits::IdentifiableTrait;
 }
 
 /* Return an object's instance identifier */

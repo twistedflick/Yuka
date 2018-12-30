@@ -20,10 +20,10 @@
 #include <string>
 #include <unordered_map>
 
-#include "Object.hh"
-#include "Traits/Flexible.hh"
-#include "Traits/Observable.hh"
-#include "decl.h"
+#include "../Intrinsics/Object.hh"
+#include "../Traits/Flexible.hh"
+#include "../Traits/Observable.hh"
+#include "../decl.h"
 
 namespace Yuka
 {
@@ -47,7 +47,8 @@ namespace Yuka
 		typedef std::unordered_map<std::string, std::string> Properties;
 	
 		static SceneObject *sceneObjectWithKind(const std::string kind, Properties properties);
-		
+	
+	public:
 		/* Append child to our list of children */
 		virtual void add(SceneObject *child);
 		

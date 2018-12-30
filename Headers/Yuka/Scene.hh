@@ -16,31 +16,8 @@
 #ifndef YUKA_SCENE_HH_
 # define YUKA_SCENE_HH_                1
 
-# include "SceneObject.hh"
-# include "decl.h"
-
-namespace Yuka
-{
-
-	class YUKA_EXPORT_ Scene:
-		public SceneObject
-	{
-	public:
-		static Scene *sceneFromPath(const char *pathname);
-		
-		Scene();
-	
-		/* Constructor a parser for the supplied path and attempt to load
-		 * this scene into it.
-		 */
-		virtual bool load(const char *pathname);
-	protected:
-		Scene(std::string kind);
-	public:
-		/* SceneObject overrides */
-		virtual void add(SceneObject *child);
-	};
-
-};
+# include "Scene/Group.hh"
+# include "Scene/Scene.hh"
+# include "Scene/SceneObject.hh"
 
 #endif /*!YUKA_SCENE_HH_*/

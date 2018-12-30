@@ -16,16 +16,19 @@
 #ifndef YUKA_TRAITS_IDENTIFIABLE_HH_
 # define YUKA_TRAITS_IDENTIFIABLE_HH_  1
 
-# include "../Trait.hh"
+# include "Trait.hh"
 # include "../decl.h"
 
 namespace Yuka
 {
-	class Behaviour;
+	namespace Behaviours
+	{
+		class Behaviour;
+	};
 	
 	namespace Traits
 	{
-		const IdentityFlag IdentifiableTrait = 0x00000002;
+		const Identity IdentifiableTrait = 0x00000002;
 		
 		/* Classes with the Identifiable trait provide properties allowing them
 		 * to be inspected at run-time.
@@ -53,7 +56,7 @@ namespace Yuka
 			/* Return the name of this object, if any */
 			virtual std::string name(void) const;
 		
-			/* Return consise qualified display name of this object */
+			/* Return concise qualified display name of this object */
 			virtual std::string displayName(void) const;
 		
 			/* Return the 'live' internal name of this object */

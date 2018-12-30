@@ -13,14 +13,29 @@
  *  limitations under the License.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#ifndef YUKA_PROP_HH_
+# define YUKA_PROP_HH_                 1
 
-#include "p_Yuka.hh"
+# include "../Scene/SceneObject.hh"
+# include "../Traits/Spatial.hh"
+# include "../Traits/Solid.hh"
+# include "../decl.h"
 
-/* Protected constructor for Light objects */
-Light::Light(const std::string kind):
-	SceneObject(kind)
+namespace Yuka
 {
-}
+	/* A prop is any kind of potentially-visible scene object
+	 * which may have physics properties.
+	 */
+
+	class Prop:
+		public SceneObject,
+		public Traits::Spatial,
+		public Traits::Solid
+	{
+	protected:
+		Prop(const std::string kind);
+	};
+
+};
+
+#endif /*!YUKA_PROP_HH_*/

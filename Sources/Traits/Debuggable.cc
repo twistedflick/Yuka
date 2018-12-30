@@ -22,6 +22,13 @@
 static thread_local unsigned int indent_level;
 static thread_local bool debug_enable;
 
+/* Debuggable trait constructor */
+Debuggable::Debuggable():
+	Traits::Trait()
+{
+	m_traits |= Traits::DebuggableTrait;
+}
+
 /* Dump this object to std::clog */
 void
 Debuggable::dump(void) const
@@ -66,7 +73,7 @@ std::ostream &
 Debuggable::printBehaviours(std::ostream &stream) const
 {
 	const Flexible *me;
-	const Behaviour *p;
+	const Behaviours::Behaviour *p;
 	std::string indent = printIndent();
 	
 	if((me = dynamic_cast<const Flexible *>(this)))
@@ -100,8 +107,119 @@ Debuggable::printTraits(std::ostream &stream) const
 	std::string indent = printIndent();
 	bool d = debugging();
 	char hexbuf[24];
-
+	unsigned tval;
+	
 	stream << "\n" << indent << "/* Traits */\n\n";
+	/* The object must have the Debuggable trait otherwise this method
+	 * wouldn't have been invoked
+	 */
+	stream << indent << ".traits = ( Debuggable";
+	if(m_traits & Traits::IdentifiableTrait)
+	{
+		/* 0x0002 */
+		stream << " | Identifiable";
+	}
+	if(m_traits & Traits::ScriptableTrait)
+	{
+		/* 0x0004 */
+		stream << " | Scriptable";
+	}
+	if(m_traits & Traits::FlexibleTrait)
+	{
+		/* 0x0008 */
+		stream << " | Flexible";
+	}
+	if(m_traits & Traits::SpatialTrait)
+	{
+		/* 0x0010 */
+		stream << " | Spatial";
+	}
+	if(m_traits & Traits::SolidTrait)
+	{
+		/* 0x0020 */
+		stream << " | Solid";
+	}
+	if(m_traits & Traits::ObservableTrait)
+	{
+		/* 0x0040 */
+		stream << " | Observable";
+	}
+	if(m_traits & Traits::ListeningTrait)
+	{
+		/* 0x0040 */
+		stream << " | Listening";
+	}
+	tval = m_traits >> 8;
+	if(tval)
+	{
+		snprintf(hexbuf, sizeof(hexbuf) - 1, "%08x", tval);
+		stream << " | " << hexbuf;
+	}
+	stream << " );\n";
+	
+	/* Dump the identity for each trait */
+	if(m_traits & Traits::DebuggableTrait)
+	{
+		/* 0x0002 */
+		stream << indent << ".debuggable = { };\n";
+	}
+	if(m_traits & Traits::IdentifiableTrait)
+	{
+		/* 0x0002 */
+		stream << indent << ".identifiable = {\n";
+		printPush();
+		indent = printIndent();
+
+		stream << indent << ".name = \"" << id->name() << "\";\n";
+		stream << indent << ".kind = " << id->kind() << ";\n";
+		
+		printPop();
+		indent = printIndent();
+		stream << indent << "};\n";
+	
+	}
+	if(m_traits & Traits::ScriptableTrait)
+	{
+		/* 0x0004 */
+		stream << indent << ".scriptable = { };\n";
+	}
+	if(m_traits & Traits::FlexibleTrait)
+	{
+		/* 0x0008 */
+		stream << indent << ".flexible = { };\n";
+	}
+	if(m_traits & Traits::SpatialTrait)
+	{
+		/* 0x0010 */
+		stream << indent << ".spatial = {\n";
+		printPush();
+		indent = printIndent();
+		stream << indent << ".position = " << spatial->m_spatial.identity.position << ";\n";
+		stream << indent << ".rotation = " << spatial->m_spatial.identity.rotation << ";\n";
+		stream << indent << ".scale = " << spatial->m_spatial.identity.scale << ";\n";
+		printPop();
+		indent = printIndent();
+		stream << indent << "};\n";
+	}
+	if(m_traits & Traits::SolidTrait)
+	{
+		/* 0x0020 */
+		stream << indent << ".solid = { };\n";
+	}
+	if(m_traits & Traits::ObservableTrait)
+	{
+		/* 0x0040 */
+		stream << indent << ".observable = { };\n";
+	}
+	if(m_traits & Traits::ListeningTrait)
+	{
+		/* 0x0040 */
+		stream << indent << ".listening = { };\n";
+	}
+		
+	/* Dump the traits' current state */
+	stream << "\n";
+	
 	stream << indent << ".state = {\n";
 	printPush();
 	indent = printIndent();
@@ -109,6 +227,7 @@ Debuggable::printTraits(std::ostream &stream) const
 	/* Trait (base) state */
 	if(d)
 	{
+		/* Only dumped when debugging */
 		snprintf(hexbuf, sizeof(hexbuf) - 1, "%08x", m_traitFlags);
 		stream << indent << ".traitFlags = 0x" << hexbuf << ";\n";
 	}
@@ -125,10 +244,9 @@ Debuggable::printTraits(std::ostream &stream) const
 		stream << indent << ".instanceId = " << id->instanceString() << ";\n";
 		if(d || t)
 		{
+			/* Only when debugging or if a tag was explicitly set */
 			stream << indent << ".tag = " << t << ";\n";
 		}
-		stream << indent << ".name = \"" << id->name() << "\";\n";
-		stream << indent << ".kind = " << id->kind() << ";\n";
 		
 		printPop();
 		indent = printIndent();

@@ -19,12 +19,9 @@
 # include <iostream>
 
 /* Include each header directly to avoid a single-point-of-dependency upon
- * <Yuka/Yuka.hh> during development.
+ * <Yuka/Yuka.hh> from every source file during development.
  */
-# include "Yuka/Intrinsics/Vector.hh"
-# include "Yuka/Intrinsics/Point.hh"
-# include "Yuka/Intrinsics/Orientation.hh"
-# include "Yuka/Intrinsics/Size.hh"
+# include "Yuka/Intrinsics.hh"
 
 using namespace Yuka;
 

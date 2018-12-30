@@ -16,8 +16,6 @@
 #ifndef YUKA_HH_
 # define YUKA_HH_                      1
 
-# define NS_YUKA                       "https://twistedflick.github.io/Yuka/"
-
 /* Threading note: unless otherwise noted, it is unsafe to invoke multiple
  * method calls on a single given instance of any of these classes across
  * multiple threads simultaneously, without using some kind of external
@@ -37,53 +35,36 @@
  * reorganisation.
  */
 
+# include <string>
+
+namespace Yuka
+{
+	std::string versionString(void);
+};
+
 /* Traits */
 
-# include "Trait.hh"
-# include "Traits/Debuggable.hh"
-# include "Traits/Scriptable.hh"
-# include "Traits/Identifiable.hh"
-# include "Traits/Flexible.hh"
-# include "Traits/Spatial.hh"
-# include "Traits/Solid.hh"
-# include "Traits/Observable.hh"
-# include "Traits/Listening.hh"
+# include "Traits.hh"
 
 /* Intrinsics */
 
-# include "Intrinsics/Vector.hh"
-# include "Intrinsics/Point.hh"
-# include "Intrinsics/Orientation.hh"
-# include "Intrinsics/Size.hh"
-
-/* Ultimate ancestor for all other classes */
-
-# include "Object.hh"
+# include "Intrinsics.hh"
 
 /* Scene-graph objects */
 
-# include "SceneObject.hh"
-
 # include "Scene.hh"
-# include "Group.hh"
 
 /* Props */
 
-# include "Prop.hh"
-# include "Props/Primitive.hh"
-# include "Props/Sphere.hh"
-# include "Props/Cube.hh"
+# include "Props.hh"
 
 /* Lights */
 
-# include "Light.hh"
-# include "Lights/PointLight.hh"
+# include "Lights.hh"
 
 /* Behaviours */
 
-# include "Behaviour.hh"
-# include "Behaviours/Transform.hh"
-# include "Behaviours/Spy.hh"
+# include "Behaviours.hh"
 
 /* Events */
 

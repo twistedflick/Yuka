@@ -16,40 +16,43 @@
 #ifndef YUKA_TRAITS_FLEXIBLE_HH_
 # define YUKA_TRAITS_FLEXIBLE_HH_      1
 
-# include "../Trait.hh"
+# include "Trait.hh"
 # include "../decl.h"
 
 namespace Yuka
 {
-	class Behaviour;
+	namespace Behaviours
+	{
+		class Behaviour;
+	};
 
 	namespace Traits
 	{
 		class Debuggable;
 		class Observable;
 
-		const IdentityFlag FlexibleTrait = 0x00000008;
+		const Identity FlexibleTrait = 0x00000008;
 		
 		/* Classes with the Flexible trait can have behaviours attached
 		 * to them.
 		 *
 		 * Subclasses of Flexible support specific interactions with
 		 * certain classes of behaviour. For example, the Transform behaviour
-		 * interacts with the Moveable trait, which is a subclass of
+		 * interacts with the Spatial trait, which is a subclass of
 		 * Controllable.
 		 */
 		class YUKA_EXPORT_ Flexible:
 			public virtual Trait
 		{
-			friend class Yuka::Behaviour;
+			friend class Yuka::Behaviours::Behaviour;
 			friend class Observable;
 			friend class Debuggable;
 		public:
 			/* Add a behaviour to this object */
-			virtual void addBehaviour(Behaviour *behaviour);
+			virtual void addBehaviour(Behaviours::Behaviour *behaviour);
 		
 			/* Remove a behaviour from this object */
-			virtual void removeBehaviour(Behaviour *behaviour);
+			virtual void removeBehaviour(Behaviours::Behaviour *behaviour);
 			
 			/* Mark this object, and any descendants, as being invalidated
 			 * and needing to be updated by their behaviours
@@ -61,8 +64,8 @@ namespace Yuka
 		protected:
 			struct
 			{
-				Behaviour *first;
-				Behaviour *last;
+				Behaviours::Behaviour *first;
+				Behaviours::Behaviour *last;
 			} m_behaviours;
 
 			/* Invoked by a behaviour to indicate that the behaviour chain

@@ -17,10 +17,11 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaScene.hh"
 
 /* Public constructor for Group objects */
 Group::Group():
+	Traits::Spatial(),
 	SceneObject("Group")
 {
 }

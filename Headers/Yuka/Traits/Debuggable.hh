@@ -18,7 +18,7 @@
 
 # include <ios>
 
-# include "../Trait.hh"
+# include "Trait.hh"
 # include "../decl.h"
 
 namespace Yuka
@@ -26,7 +26,7 @@ namespace Yuka
 	namespace Traits
 	{
 		
-		const IdentityFlag DebuggableTrait = 0x00000001;
+		const Identity DebuggableTrait = 0x00000001;
 
 		/* The Debuggable trait provides methods for serialising an object
 		 * for logging output.
@@ -61,6 +61,8 @@ namespace Yuka
 		
 			friend YUKA_EXPORT_ std::ostream &operator<<(std::ostream &stream, const Debuggable &obj);
 			friend YUKA_EXPORT_ std::ostream &operator<<(std::ostream &stream, const Debuggable *obj);
+		protected:
+			Debuggable();
 		};
 	};
 };

@@ -19,6 +19,12 @@
 
 #include "p_YukaTraits.hh"
 
+Listening::Listening():
+	Traits::Trait()
+{
+	m_traits |= Traits::ListeningTrait;
+}
+
 bool
 Listening::process(Yuka::Events::Event *ev)
 {

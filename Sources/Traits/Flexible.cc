@@ -19,13 +19,14 @@
 
 #include "p_YukaTraits.hh"
 
-#include "Yuka/SceneObject.hh"
+#include "Yuka/Scene/SceneObject.hh"
 
 /* Protected constructor for Flexible objects */
 
 Flexible::Flexible():
 	Trait()
 {
+	m_traits |= Traits::FlexibleTrait;
 	m_behaviours.first = NULL;
 	m_behaviours.last = NULL;
 }
@@ -34,7 +35,7 @@ Flexible::Flexible():
 
 Flexible::~Flexible()
 {
-	Behaviour *p, *next;
+	Behaviours::Behaviour *p, *next;
 	
 	for(p = m_behaviours.first; p; p = next)
 	{
@@ -53,7 +54,7 @@ Flexible::~Flexible()
  * attached to.
  */
 void
-Flexible::addBehaviour(Behaviour *behaviour)
+Flexible::addBehaviour(Behaviours::Behaviour *behaviour)
 {
 	Flexible *oldp;
 
@@ -87,7 +88,7 @@ Flexible::addBehaviour(Behaviour *behaviour)
 }
 
 void
-Flexible::removeBehaviour(Behaviour *behaviour)
+Flexible::removeBehaviour(Behaviours::Behaviour *behaviour)
 {
 	behaviour->detachFrom(this);
 	/* XXX FIXME */
@@ -113,7 +114,7 @@ Flexible::invalidate(void)
 void
 Flexible::update(void)
 {
-	Behaviour *p, *next;
+	Behaviours::Behaviour *p, *next;
 	
 	if(!(m_traitFlags & FlexibleTrait))
 	{

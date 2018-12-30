@@ -21,8 +21,8 @@
 
 # include "Yuka/Events.hh"
 
-# include "Yuka/Scene.hh"
-# include "Yuka/SceneObject.hh"
+# include "Yuka/Scene/Scene.hh"
+# include "Yuka/Scene/SceneObject.hh"
 
 using namespace Yuka;
 using namespace Yuka::Events;

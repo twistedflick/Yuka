@@ -23,21 +23,13 @@
 # include <vector>
 # include <unordered_map>
 
-/* Include each trait header directly to avoid dependency hell at build-time */
-# include "Yuka/Trait.hh"
-# include "Yuka/Traits/Debuggable.hh"
-# include "Yuka/Traits/Flexible.hh"
-# include "Yuka/Traits/Identifiable.hh"
-# include "Yuka/Traits/Scriptable.hh"
-# include "Yuka/Traits/Spatial.hh"
-# include "Yuka/Traits/Observable.hh"
-# include "Yuka/Traits/Listening.hh"
+# include "Yuka/Traits.hh"
 
-# include "Yuka/Behaviour.hh"
+# include "Yuka/Behaviours/Behaviour.hh"
 
 using namespace Yuka;
 using namespace Yuka::Traits;
-
+using Yuka::Traits::Trait;
 
 typedef std::vector<Listening *> ListenerVector;
 typedef std::unordered_map<Yuka::Events::EventKind, ListenerVector> ListenerMap;

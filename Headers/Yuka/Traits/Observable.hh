@@ -16,7 +16,7 @@
 #ifndef YUKA_TRAITS_OBSERVABLE_HH_
 # define YUKA_TRAITS_OBSERVABLE_HH_    1
 
-# include "../Trait.hh"
+# include "Trait.hh"
 # include "../Events/Event.hh"
 # include "../decl.h"
 
@@ -27,7 +27,7 @@ namespace Yuka
 		class Debuggable;
 		class Listening;
 		
-		const IdentityFlag ObservableTrait = 0x00000040;
+		const Identity ObservableTrait = 0x00000040;
 		
 		/* Observable objects are those that can emit events */
 		class YUKA_EXPORT_ Observable:
@@ -37,12 +37,14 @@ namespace Yuka
 			/* Attach a listener to a specific event */
 			virtual void on(Yuka::Events::EventKind what, Listening *listener);
 		protected:
-			virtual ~Observable();
 			/* Deliver an event to all listeners registered for it */
 			virtual bool emit(Yuka::Events::Event *ev);
 			virtual bool emit(Yuka::Events::Event &ev);
 			/* Deliver an event to a specific listener */
 			virtual bool deliver(Yuka::Events::Event *ev, Listening *listener);
+		protected:
+			Observable();
+			virtual ~Observable();
 		private:
 			struct ObservableData *m_observable = NULL;
 			void initObservable(void);

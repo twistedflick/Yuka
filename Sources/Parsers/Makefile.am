@@ -12,7 +12,11 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-incdir = ${pkgincludedir}/Intrinsics
+AM_CPPFLAGS = @AM_CPPFLAGS@ @XML_CPPFLAGS@
 
-inc_HEADERS = Object.hh Vector.hh Point.hh Orientation.hh Size.hh
+noinst_LTLIBRARIES = libYukaParsers.la
 
+libYukaParsers_la_SOURCES = p_YukaParsers.hh \
+	SceneParser.cc XMLSceneParser.cc
+
+libYukaParsers_la_LIBADD = @XML_LIBS@

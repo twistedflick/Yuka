@@ -13,36 +13,13 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_TRAITS_LISTENING_HH_
-# define YUKA_TRAITS_LISTENING_HH_     1
+#ifndef YUKA_INTRINSICS_HH_
+# define YUKA_INTRINSICS_HH_           1
 
-# include "Trait.hh"
-# include "../decl.h"
+# include "Intrinsics/Vector.hh"
+# include "Intrinsics/Point.hh"
+# include "Intrinsics/Orientation.hh"
+# include "Intrinsics/Size.hh"
+# include "Intrinsics/Object.hh"
 
-namespace Yuka
-{
-	namespace Events
-	{
-		struct Event;
-	};
-	
-	namespace Traits
-	{
-		class Observable;
-		
-		const Identity ListeningTrait = 0x00000080;
-		
-		/* Observable objects are those that receive events */
-		class YUKA_EXPORT_ Listening:
-			public virtual Trait
-		{
-			friend class Yuka::Traits::Observable;
-		protected:
-			virtual bool process(Yuka::Events::Event *event);
-		protected:
-			Listening();
-		};
-	}
-};
-
-#endif /*!YUKA_TRAITS_LISTENING_HH_*/
+#endif /*!YUKA_INTRINSICS_HH_*/

@@ -20,11 +20,11 @@
 #include <string>
 #include <unordered_map>
 
-#include "Traits/Debuggable.hh"
-#include "Traits/Scriptable.hh"
-#include "Traits/Identifiable.hh"
+#include "../Traits/Debuggable.hh"
+#include "../Traits/Scriptable.hh"
+#include "../Traits/Identifiable.hh"
 
-#include "decl.h"
+#include "../decl.h"
 
 namespace Yuka
 {

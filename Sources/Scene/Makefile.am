@@ -12,7 +12,12 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-incdir = ${pkgincludedir}/Intrinsics
+AM_CPPFLAGS = @AM_CPPFLAGS@
 
-inc_HEADERS = Object.hh Vector.hh Point.hh Orientation.hh Size.hh
+noinst_LTLIBRARIES = libYukaScene.la
 
+libYukaScene_la_SOURCES = p_YukaScene.hh \
+	Scene.cc \
+	SceneObject.cc \
+	SceneObjectList.cc \
+	Group.cc

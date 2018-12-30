@@ -14,4 +14,4 @@
 
 incdir = ${pkgincludedir}/Lights
 
-inc_HEADERS = PointLight.hh
+inc_HEADERS = Light.hh PointLight.hh

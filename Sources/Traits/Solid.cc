@@ -19,3 +19,8 @@
 
 #include "p_YukaTraits.hh"
 
+Solid::Solid():
+	Traits::Trait()
+{
+	m_traits |= Traits::SolidTrait;
+}

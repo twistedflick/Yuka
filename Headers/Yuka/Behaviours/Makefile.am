@@ -14,4 +14,4 @@
 
 incdir = ${pkgincludedir}/Behaviours
 
-inc_HEADERS = Transform.hh Spy.hh
+inc_HEADERS = Behaviour.hh Transform.hh Spy.hh

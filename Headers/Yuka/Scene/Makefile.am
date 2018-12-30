@@ -12,7 +12,7 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-incdir = ${pkgincludedir}/Intrinsics
+incdir = ${pkgincludedir}/Scene
 
-inc_HEADERS = Object.hh Vector.hh Point.hh Orientation.hh Size.hh
+inc_HEADERS = Group.hh Scene.hh SceneObject.hh
 

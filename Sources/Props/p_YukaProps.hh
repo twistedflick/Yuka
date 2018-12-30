@@ -19,10 +19,7 @@
 /* Include each prop header directly to avoid a single-point-of-
  * dependency upon <Yuka/Yuka.hh> during development.
  */
-# include "Yuka/Prop.hh"
-# include "Yuka/Props/Primitive.hh"
-# include "Yuka/Props/Sphere.hh"
-# include "Yuka/Props/Cube.hh"
+# include "Yuka/Props.hh"
 
 using namespace Yuka;
 

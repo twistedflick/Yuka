@@ -12,16 +12,14 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-SUBDIRS = Traits Intrinsics Props Lights Behaviours Events
+SUBDIRS = Traits Intrinsics Props Lights Behaviours Events Scene
 
 pkginclude_HEADERS = decl.h \
-	Trait.hh \
-	Object.hh \
-	SceneObject.hh \
+	Intrinsics.hh \
+	Traits.hh \
 	Scene.hh \
 	SceneParser.hh \
-	Prop.hh \
-	Group.hh \
-	Light.hh \
-	Behaviour.hh \
+	Props.hh \
+	Lights.hh \
+	Behaviours.hh \
 	Events.hh

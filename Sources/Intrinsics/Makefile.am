@@ -17,6 +17,7 @@ AM_CPPFLAGS = @AM_CPPFLAGS@
 noinst_LTLIBRARIES = libYukaIntrinsics.la
 
 libYukaIntrinsics_la_SOURCES = p_YukaIntrinsics.hh \
+	Object.cc \
 	Vector.cc \
 	Point.cc \
 	Size.cc \

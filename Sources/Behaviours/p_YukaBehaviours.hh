@@ -16,15 +16,10 @@
 #ifndef P_YUKA_BEHAVIOURS_HH_
 # define P_YUKA_BEHAVIOURS_HH_         1
 
-/* Include each behaviour header directly to avoid a single-point-of-
- * dependency upon <Yuka/Yuka.hh> during development.
- */
-# include "Yuka/Behaviour.hh"
-# include "Yuka/Behaviours/Transform.hh"
-# include "Yuka/Behaviours/Spy.hh"
+# include "Yuka/Behaviours.hh"
 
 # include "Yuka/Traits/Spatial.hh"
-# include "Yuka/SceneObject.hh"
+# include "Yuka/Scene/SceneObject.hh"
 
 using namespace Yuka;
 using namespace Yuka::Behaviours;

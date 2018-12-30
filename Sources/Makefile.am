@@ -12,19 +12,18 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-SUBDIRS = Intrinsics Traits Behaviours Props Events .
+SUBDIRS = Parsers Traits Intrinsics Behaviours Scene Props Lights Events .
 
-AM_CPPFLAGS = @AM_CPPFLAGS@ @XML_CPPFLAGS@
+EXTRA_DIST = version.cc.in
+
+AM_CPPFLAGS = @AM_CPPFLAGS@
+
+## libYuka -- a (shared) library containing the engine
 
 lib_LTLIBRARIES = libYuka.la
 
 libYuka_la_SOURCES = p_Yuka.hh \
-	Object.cc \
-	SceneObject.cc SceneObjectList.cc \
-	Scene.cc \
-	Group.cc \
-	Light.cc PointLight.cc \
-	SceneParser.cc XMLSceneParser.cc
+	version.cc
 
 libYuka_la_LDFLAGS = -avoid-version -no-undefined
 
@@ -32,9 +31,12 @@ libYuka_la_LIBADD = Traits/libYukaTraits.la \
 	Behaviours/libYukaBehaviours.la \
 	Props/libYukaProps.la \
 	Intrinsics/libYukaIntrinsics.la \
+	Parsers/libYukaParsers.la \
 	Events/libYukaEvents.la \
-	@XML_LIBS@
+	Lights/libYukaLights.la \
+	Scene/libYukaScene.la
 
+## scenetool -- a utility for loading a scene and dumping its contents
 
 noinst_PROGRAMS = scenetool
 

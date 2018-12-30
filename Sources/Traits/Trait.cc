@@ -19,9 +19,13 @@
 
 #include "p_YukaTraits.hh"
 
+using namespace Yuka;
+using Yuka::Traits::Trait;
+
 /* Protected constructor for all Trait-based objects */
 
 Trait::Trait():
+	m_traits(0),
 	m_traitFlags(0)
 {
 }
@@ -30,4 +34,17 @@ Trait::Trait():
 
 Trait::~Trait()
 {
+}
+
+/* What traits does this object have? */
+Traits::Identity
+Trait::traits(void) const
+{
+	return m_traits;
+}
+
+bool
+Trait::is(Traits::Identity trait) const
+{
+	return (m_traits & trait);
 }

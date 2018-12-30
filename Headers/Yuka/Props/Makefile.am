@@ -14,6 +14,5 @@
 
 incdir = ${pkgincludedir}/Props
 
-inc_HEADERS = Primitive.hh \
-	Sphere.hh Cube.hh
+inc_HEADERS = Prop.hh Primitive.hh Sphere.hh Cube.hh
 

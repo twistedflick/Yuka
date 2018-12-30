@@ -18,14 +18,14 @@
 
 # include <string>
 
-# include "../Trait.hh"
+# include "Trait.hh"
 # include "../decl.h"
 
 namespace Yuka
 {
 	namespace Traits
 	{
-		const IdentityFlag ScriptableTrait = 0x00000004;
+		const Identity ScriptableTrait = 0x00000004;
 		
 		/* Classes with the Scriptable trait can be populated and manipulated
 		 * through a simplified interface suitable for integration with scripting
@@ -48,6 +48,8 @@ namespace Yuka
 			static bool parseBool(const std::string str, bool *out);
 			static bool parseInt(const std::string str, int *out);
 			static bool parseUInt(const std::string str, unsigned int *out);
+		protected:
+			Scriptable();
 		};
 	};
 };

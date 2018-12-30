@@ -19,6 +19,12 @@
 
 #include "p_YukaTraits.hh"
 
+Spatial::Spatial():
+	Traits::Trait()
+{
+	m_traits |= Traits::SpatialTrait;
+}
+
 /* Obtain a pointer to our spatial state object which can be updated by a
  * a behaviour.
  *

@@ -17,10 +17,12 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaIntrinsics.hh"
 
 /* Protected constructor for new Object instances */
 Object::Object():
+	Traits::Debuggable(),
+	Traits::Scriptable(),
 	Traits::Identifiable(),
 	m_refcount(1)
 {

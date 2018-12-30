@@ -13,31 +13,29 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_SCENEPARSER_HH_
-# define YUKA_SCENEPARSER_HH_          1
+#ifndef YUKA_GROUP_HH_
+# define YUKA_GROUP_HH_                1
 
-#include "Intrinsics/Object.hh"
-#include "Traits/Observable.hh"
-#include "Scene.hh"
-#include "decl.h"
+# include "SceneObject.hh"
+# include "../Traits/Spatial.hh"
+# include "../decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ SceneParser:
-		public Object,
-		virtual public Traits::Observable
+	/* A group is a scene object which allows behaviours to be applied to
+	 * all of its children.
+	 */
+
+	class Group:
+		public SceneObject,
+		public virtual Traits::Spatial
 	{
+		friend class SceneObject;
 	public:
-		static SceneParser *parserFromPath(const char *pathname);
-	public:
-		virtual bool parseIntoScene(Scene *scene) = 0;
+		Group();
 	protected:
-		virtual ~SceneParser();
-		virtual void didFinishLoading(Scene *scene);
-	public:
-		/* Identifiable trait (via Object) */
-		virtual std::string kind(void) const;
+		Group(const std::string kind);
 	};
 };
 
-#endif /*!YUKA_SCENEPARSER_HH_*/
+#endif /*!YUKA_GROUP_HH_*/

@@ -16,7 +16,7 @@
 #ifndef YUKA_PROPS_PRIMITIVE_HH_
 # define YUKA_PROPS_PRIMITIVE_HH_      1
 
-# include "../Prop.hh"
+# include "Prop.hh"
 # include "../decl.h"
 
 namespace Yuka

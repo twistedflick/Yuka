@@ -16,8 +16,8 @@
 #ifndef YUKA_POINTLIGHT_HH_
 # define YUKA_POINTLIGHT_HH_           1
 
-# include "../Light.hh"
-# include "../SceneObject.hh"
+# include "Light.hh"
+# include "../Scene/SceneObject.hh"
 # include "../Traits/Spatial.hh"
 # include "../decl.h"
 

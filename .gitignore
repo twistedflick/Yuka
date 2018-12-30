@@ -6,7 +6,7 @@
 *.so
 *.a
 *.la
-*.in
+/*.in
 *.bak
 *.tar
 *.zip

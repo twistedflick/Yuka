@@ -16,7 +16,7 @@
 #ifndef YUKA_BEHAVIOURS_SPY_HH_
 # define YUKA_BEHAVIOURS_SPY_HH_       1
 
-#include "../Behaviour.hh"
+#include "Behaviour.hh"
 #include "../decl.h"
 
 namespace Yuka
@@ -39,7 +39,7 @@ namespace Yuka
 		 * logged by the Spy.
 		 */
 		class YUKA_EXPORT_ Spy:
-			public Yuka::Behaviour
+			public Behaviour
 		{
 		public:
 			Spy();

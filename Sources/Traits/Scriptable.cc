@@ -19,6 +19,13 @@
 
 #include "p_YukaTraits.hh"
 
+/* Scriptable trait constructor */
+Scriptable::Scriptable():
+	Traits::Trait()
+{
+	m_traits |= Traits::ScriptableTrait;
+}
+
 bool
 Scriptable::set(const std::string key, const std::string value)
 {

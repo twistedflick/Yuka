@@ -16,7 +16,7 @@
 #ifndef YUKA_BEHAVIOURS_TRANSFORM_HH_
 # define YUKA_BEHAVIOURS_TRANSFORM_HH_ 1
 
-#include "../Behaviour.hh"
+#include "Behaviour.hh"
 #include "../Intrinsics/Point.hh"
 #include "../Intrinsics/Orientation.hh"
 #include "../Intrinsics/Size.hh"
@@ -32,7 +32,7 @@ namespace Yuka
 	namespace Behaviours
 	{
 		class YUKA_EXPORT_ Transform:
-			public Yuka::Behaviour
+			public Behaviour
 		{
 		public:
 			Transform();

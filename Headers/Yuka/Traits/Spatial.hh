@@ -16,7 +16,7 @@
 #ifndef YUKA_TRAITS_SPATIAL_HH_
 # define YUKA_TRAITS_SPATIAL_HH_       1
 
-# include "../Trait.hh"
+# include "Trait.hh"
 # include "../Intrinsics/Point.hh"
 # include "../Intrinsics/Size.hh"
 # include "../Intrinsics/Orientation.hh"
@@ -33,7 +33,7 @@ namespace Yuka
 	{
 		class Debuggable;
 		
-		const IdentityFlag SpatialTrait = 0x00000010;
+		const Identity SpatialTrait = 0x00000010;
 		
 		/* Classes with the Spatial trait have positional co-ordinates, which
 		 * are usually manipulated by the Transform behaviour.
@@ -62,12 +62,14 @@ namespace Yuka
 			 * spatial state
 			*/
 			virtual Coordinates *spatialState(void);
-		protected:
+		private:
 			struct
 			{
 				Coordinates identity;
 				Coordinates current;
 			} m_spatial;
+		protected:
+			Spatial();
 		};
 	}
 };

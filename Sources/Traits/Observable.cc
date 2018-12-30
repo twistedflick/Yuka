@@ -19,6 +19,14 @@
 
 #include "p_YukaTraits.hh"
 
+/* Observable trait constructor */
+Observable::Observable():
+	Trait::Trait()
+{
+	m_traits |= Traits::ObservableTrait;
+}
+
+
 /* Protected destructor */
 Observable::~Observable()
 {
@@ -60,7 +68,7 @@ Observable::emit(Yuka::Events::Event *ev)
 	initObservable();
 	if(m_observable->flex)
 	{
-		Behaviour *p, *next;
+		Behaviours::Behaviour *p, *next;
 	
 		/* Our behaviours are always listeners for events we emit */
 		for(p = m_observable->flex->m_behaviours.first; p; p = next)

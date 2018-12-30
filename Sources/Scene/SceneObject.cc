@@ -17,7 +17,12 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaScene.hh"
+
+# include "Yuka/Props/Cube.hh"
+# include "Yuka/Props/Sphere.hh"
+# include "Yuka/Props/Cube.hh"
+# include "Yuka/Lights/PointLight.hh"
 
 /* Public factory method for new SceneObjects */
 SceneObject *
@@ -54,6 +59,7 @@ SceneObject::sceneObjectWithKind(const std::string kind, SceneObject::Properties
 /* Protected constructor for SceneObjects */
 SceneObject::SceneObject(const std::string kind):
 	Traits::Flexible(),
+	Traits::Observable(),
 	Object(),
 	m_kind(kind),
 	m_parent(NULL),

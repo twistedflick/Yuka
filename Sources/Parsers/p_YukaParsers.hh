@@ -13,21 +13,20 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_LIGHT_HH_
-# define YUKA_LIGHT_HH_                1
+#ifndef P_YUKA_PARSERS_HH_
+# define P_YUKA_PARSERS_HH_            1
 
-# include "SceneObject.hh"
-# include "decl.h"
+# include <libxml/xmlreader.h>
 
-namespace Yuka
-{
-	class YUKA_EXPORT_ Light:
-		public SceneObject
-	{
-	protected:
-		Light(const std::string kind);
-	};
+# include "Yuka/SceneParser.hh"
+# include "Yuka/Events.hh"
 
-};
+# include "XMLSceneParser.hh"
 
-#endif /*!YUKA_LIGHT_HH_*/
+using namespace Yuka;
+
+# define NS_YUKA                       "https://twistedflick.github.io/Yuka/"
+# define NS_XML                        "http://www.w3.org/XML/1998/namespace"
+# define NS_XMLNS                      "http://www.w3.org/2000/xmlns/"
+
+#endif /*!P_YUKA_PROPS_HH_*/

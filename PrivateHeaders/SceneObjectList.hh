@@ -16,8 +16,8 @@
 #ifndef YUKA_SCENEOBJECTLIST_HH_
 # define YUKA_SCENEOBJECTLIST_HH_      1
 
-# include "Yuka/Object.hh"
-# include "Yuka/SceneObject.hh"
+# include "Yuka/Intrinsics/Object.hh"
+# include "Yuka/Scene/SceneObject.hh"
 # include "Yuka/decl.h"
 
 namespace Yuka

@@ -21,6 +21,8 @@
 
 /* Protected constructor for Prop objects */
 Prop::Prop(const std::string kind):
-	SceneObject(kind)
+	SceneObject(kind),
+	Traits::Spatial(),
+	Traits::Solid()
 {
 }

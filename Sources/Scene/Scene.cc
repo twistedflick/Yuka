@@ -17,7 +17,7 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaScene.hh"
 
 /* Public factory for creating and populating a Scene object from a file */
 Scene *

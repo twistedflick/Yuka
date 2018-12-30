@@ -13,29 +13,14 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_GROUP_HH_
-# define YUKA_GROUP_HH_                1
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
-# include "SceneObject.hh"
-# include "Traits/Spatial.hh"
-# include "decl.h"
+#include "p_YukaLights.hh"
 
-namespace Yuka
+/* Protected constructor for Light objects */
+Light::Light(const std::string kind):
+	SceneObject(kind)
 {
-	/* A group is a scene object which allows behaviours to be applied to
-	 * all of its children.
-	 */
-
-	class Group:
-		public SceneObject,
-		public virtual Traits::Spatial
-	{
-		friend class SceneObject;
-	public:
-		Group();
-	protected:
-		Group(const std::string kind);
-	};
-};
-
-#endif /*!YUKA_GROUP_HH_*/
+}

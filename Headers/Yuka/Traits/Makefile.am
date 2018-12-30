@@ -14,6 +14,6 @@
 
 incdir = ${pkgincludedir}/Traits
 
-inc_HEADERS = Debuggable.hh Scriptable.hh Identifiable.hh \
+inc_HEADERS = Trait.hh Debuggable.hh Scriptable.hh Identifiable.hh \
 	Flexible.hh Spatial.hh Solid.hh Observable.hh Listening.hh
 

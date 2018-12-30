@@ -13,31 +13,21 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_SCENEPARSER_HH_
-# define YUKA_SCENEPARSER_HH_          1
+#ifndef YUKA_LIGHT_HH_
+# define YUKA_LIGHT_HH_                1
 
-#include "Intrinsics/Object.hh"
-#include "Traits/Observable.hh"
-#include "Scene.hh"
-#include "decl.h"
+# include "../Scene/SceneObject.hh"
+# include "../decl.h"
 
 namespace Yuka
 {
-	class YUKA_EXPORT_ SceneParser:
-		public Object,
-		virtual public Traits::Observable
+	class YUKA_EXPORT_ Light:
+		public SceneObject
 	{
-	public:
-		static SceneParser *parserFromPath(const char *pathname);
-	public:
-		virtual bool parseIntoScene(Scene *scene) = 0;
 	protected:
-		virtual ~SceneParser();
-		virtual void didFinishLoading(Scene *scene);
-	public:
-		/* Identifiable trait (via Object) */
-		virtual std::string kind(void) const;
+		Light(const std::string kind);
 	};
+
 };
 
-#endif /*!YUKA_SCENEPARSER_HH_*/
+#endif /*!YUKA_LIGHT_HH_*/

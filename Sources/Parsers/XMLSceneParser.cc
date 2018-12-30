@@ -17,7 +17,7 @@
 # include "config.h"
 #endif
 
-#include "p_Yuka.hh"
+#include "p_YukaParsers.hh"
 
 /* Create a new XML-based scene parser for a supplied pathname.
  *
@@ -34,7 +34,7 @@ XMLSceneParser::parserFromPath(const char *pathname)
 	{
 		return NULL;
 	}
-	/* Create a new XMLSceneParser instance which take ownership of the
+	/* Create a new XMLSceneParser instance which will take ownership of the
 	 * xmlTextReader.
 	 */
 	return new XMLSceneParser(reader);

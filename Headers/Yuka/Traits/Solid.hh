@@ -16,7 +16,7 @@
 #ifndef YUKA_TRAITS_SOLID_HH_
 # define YUKA_TRAITS_SOLID_HH_         1
 
-# include "../Trait.hh"
+# include "Trait.hh"
 # include "../decl.h"
 
 namespace Yuka
@@ -25,7 +25,7 @@ namespace Yuka
 	{
 		class Debuggable;
 		
-		const IdentityFlag SolidTrait = 0x00000020;
+		const Identity SolidTrait = 0x00000020;
 		
 		/* Solid objects are those that have meshes */
 		class YUKA_EXPORT_ Solid:
@@ -33,6 +33,7 @@ namespace Yuka
 		{
 			friend class Yuka::Traits::Debuggable;
 		protected:
+			Solid();
 		};
 	}
 };

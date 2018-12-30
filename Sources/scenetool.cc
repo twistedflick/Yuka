@@ -43,7 +43,7 @@ main(int argc, char **argv)
 		return 1;
 	}
 	/* Print the scene graph, then release it and return */
-	Yuka::Object::debug();
+//	Yuka::Object::debug();
 	std::cout << scene << "\n";
 	scene->release();
 	return 0;

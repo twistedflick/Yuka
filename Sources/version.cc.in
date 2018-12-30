@@ -1,3 +1,5 @@
+/* Edit version.cc.in, not version.cc, and re-run configure or config.status */
+
 /* Copyright 2018 Mo McRoberts.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,36 +15,16 @@
  *  limitations under the License.
  */
 
-#ifndef YUKA_TRAITS_LISTENING_HH_
-# define YUKA_TRAITS_LISTENING_HH_     1
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
-# include "Trait.hh"
-# include "../decl.h"
+#include "p_Yuka.hh"
 
-namespace Yuka
+static const char yuka_version_string[] = "@PACKAGE_VERSION@";
+
+std::string
+Yuka::versionString(void)
 {
-	namespace Events
-	{
-		struct Event;
-	};
-	
-	namespace Traits
-	{
-		class Observable;
-		
-		const Identity ListeningTrait = 0x00000080;
-		
-		/* Observable objects are those that receive events */
-		class YUKA_EXPORT_ Listening:
-			public virtual Trait
-		{
-			friend class Yuka::Traits::Observable;
-		protected:
-			virtual bool process(Yuka::Events::Event *event);
-		protected:
-			Listening();
-		};
-	}
-};
-
-#endif /*!YUKA_TRAITS_LISTENING_HH_*/
+	return yuka_version_string;
+}
