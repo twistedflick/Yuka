@@ -23,6 +23,14 @@
 # include <vector>
 # include <unordered_map>
 
+# if WITH_LUA
+extern "C" {
+#  include <lua.h>
+#  include <lualib.h>
+#  include <lauxlib.h>
+}
+# endif
+
 # include "Yuka/Traits.hh"
 
 # include "Yuka/Behaviours/Behaviour.hh"

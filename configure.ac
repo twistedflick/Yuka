@@ -78,6 +78,13 @@ AC_SUBST([AM_LDFLAGS])
 
 AM_PATH_XML2
 
+PKG_CHECK_MODULES([LUA], [lua >= 5.1], [with_lua=yes], [with_lua=no])
+if test $with_lua = yes ; then
+	AC_DEFINE_UNQUOTED([WITH_LUA], [1], [Define if Lua is available])
+	AC_SUBST([LUA_CFLAGS])
+	AC_SUBST([LUA_LIBS])
+fi
+
 #############################################################################
 ## Output files                                                            ##
 #############################################################################

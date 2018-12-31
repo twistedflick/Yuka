@@ -12,7 +12,7 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-AM_CPPFLAGS = @AM_CPPFLAGS@
+AM_CPPFLAGS = @AM_CPPFLAGS@ @LUA_CFLAGS@
 
 noinst_LTLIBRARIES = libYukaTraits.la
 
@@ -26,3 +26,5 @@ libYukaTraits_la_SOURCES = p_YukaTraits.hh \
 	Solid.cc \
 	Observable.cc \
 	Listening.cc
+
+libYukaTraits_la_LIBADD = @LUA_LIBS@
